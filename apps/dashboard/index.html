@@ -10,7 +10,7 @@
   --accent:#111113; --accent-fg:#FFFFFF; --accent-soft:#EDEDF0; --warn:#B4540A; --warn-soft:#FBE9D6; --off:#CFCFD6;
   --shadow:0 1px 2px rgba(17,17,19,.05),0 6px 20px rgba(17,17,19,.04);
   --f-head:"Inter",system-ui,-apple-system,sans-serif; --f-body:"Inter",system-ui,-apple-system,sans-serif;
-  --shell:#121214; --side-w:232px;
+  --shell:#121214; --side-w:var(--side-drag,232px);
   /* меню: токены Figma «1. Color modes» (Light/Dark) */
   --nav-border:#E9EAEB; --nav-fg:#535862; --nav-icon:#535862; --nav-hover:#F5F5F5; --nav-active:#F5F5F5; --nav-active-fg:#181D27;
   --side-bg:#FFFFFF; --page-bg:#FAFAFA; --text-primary:#181D27;
@@ -231,6 +231,12 @@ a.cta{text-align:center;text-decoration:none;display:block}
 .nav a svg{flex:none;width:16px;height:16px;color:var(--nav-icon)}
 .nav a:hover{background:var(--nav-hover)}
 .nav a[aria-current="page"]{background:var(--nav-active);color:var(--nav-active-fg)}
+/* ширина меню регулируется: тянем за правый край (232–400 px), двойной клик — вернуть 232 */
+.side-rz{position:fixed;top:0;bottom:0;left:calc(var(--side-w) - 4px);width:8px;cursor:col-resize;z-index:31;touch-action:none}
+.side-rz::after{content:"";position:absolute;top:0;bottom:0;left:3px;width:2px;background:var(--nav-fg);opacity:0;transition:opacity .15s}
+.side-rz:hover::after,body.rz .side-rz::after{opacity:.35}
+body.rz{cursor:col-resize;user-select:none}
+body.rz *{transition:none!important}
 .main{margin-left:var(--side-w);min-width:0}
 .panel{padding:24px clamp(16px,2.5vw,32px) 110px}
 .page[hidden]{display:none}
@@ -249,6 +255,7 @@ body:not([data-page="booking"]) .panel{padding-bottom:24px}
   :root{--side-w:0px}
   .side{width:240px;transform:translateX(-100%);transition:transform .3s cubic-bezier(.3,.9,.3,1);box-shadow:0 0 40px rgba(0,0,0,.15)}
   body.nav-open .side{transform:none}
+  .side-rz{display:none}
   body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:25}
   .panel{padding:16px 16px 110px}
   body:not([data-page="booking"]) .panel{padding-bottom:16px}
@@ -268,6 +275,7 @@ body:not([data-page="booking"]) .bar{display:none}
   </div>
   <nav class="nav" id="nav2"></nav>
 </aside>
+<div class="side-rz" id="sideRz" role="separator" aria-orientation="vertical" aria-label="Ширина меню" title="Потяните, чтобы изменить ширину"></div>
 <div class="scrim" id="scrim"></div>
 <div class="main">
 <div class="mtop"><button id="burger" aria-expanded="false">Разделы</button><span id="mTitle">Бронирование</span></div>
@@ -749,6 +757,21 @@ $("#ctaIn").addEventListener("input",function(){S.cta=this.value;dirty()});
 $("#offIn").addEventListener("input",function(){S.off.text=this.value;dirty()});
 window.addEventListener("resize",function(){$$(".seg").forEach(thumb)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){$$(".seg").forEach(thumb)});
+/* ширина бокового меню: тянем за край, значение помним в браузере */
+(function(){
+  var MIN=232,MAX=400,root=document.documentElement,rz=$("#sideRz");
+  function set(w){w=Math.round(Math.min(MAX,Math.max(MIN,w)));root.style.setProperty("--side-drag",w+"px");return w}
+  try{var v=+localStorage.getItem("side-w");if(v)set(v)}catch(e){}
+  rz.addEventListener("pointerdown",function(e){
+    e.preventDefault();rz.setPointerCapture(e.pointerId);document.body.classList.add("rz");
+    var w=Math.round($("#side").getBoundingClientRect().width);
+    function mv(ev){w=set(ev.clientX)}
+    function up(){rz.removeEventListener("pointermove",mv);rz.removeEventListener("pointerup",up);rz.removeEventListener("pointercancel",up);
+      document.body.classList.remove("rz");try{localStorage.setItem("side-w",w)}catch(e){}}
+    rz.addEventListener("pointermove",mv);rz.addEventListener("pointerup",up);rz.addEventListener("pointercancel",up);
+  });
+  rz.addEventListener("dblclick",function(){set(MIN);try{localStorage.removeItem("side-w")}catch(e){}});
+})();
 })();
 </script>
 
