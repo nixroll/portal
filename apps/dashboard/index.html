@@ -11,15 +11,18 @@
   --shadow:0 1px 2px rgba(17,17,19,.05),0 6px 20px rgba(17,17,19,.04);
   --f-head:"Inter",system-ui,-apple-system,sans-serif; --f-body:"Inter",system-ui,-apple-system,sans-serif;
   --shell:#121214; --side-w:232px;
+  /* меню: токены Figma «1. Color modes» (Light/Dark) */
+  --nav-border:#E9EAEB; --nav-fg:#535862; --nav-icon:#535862; --nav-hover:#F5F5F5; --nav-active:#F5F5F5; --nav-active-fg:#181D27;
+  --side-bg:#FFFFFF; --page-bg:#FAFAFA; --text-primary:#181D27;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0B0B0C; --surface:#151516; --sunk:#202022; --line:#2E2E31; --fg:#F4F4F5; --muted:#A0A0A6;
   --accent:#FFFFFF; --accent-fg:#111113; --accent-soft:#2A2A2E; --warn:#F0A25C; --warn-soft:#3A2A17; --off:#44444A;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark}}
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark; --nav-border:#22262F; --nav-fg:#94979C; --nav-icon:#94979C; --nav-hover:#22262F; --nav-active:#22262F; --nav-active-fg:#F7F7F7; --side-bg:#0C0E12; --page-bg:#13161B; --text-primary:#F7F7F7;}}
 :root[data-theme="dark"]{
   --bg:#0B0B0C; --surface:#151516; --sunk:#202022; --line:#2E2E31; --fg:#F4F4F5; --muted:#A0A0A6;
   --accent:#FFFFFF; --accent-fg:#111113; --accent-soft:#2A2A2E; --warn:#F0A25C; --warn-soft:#3A2A17; --off:#44444A;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark}
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark; --nav-border:#22262F; --nav-fg:#94979C; --nav-icon:#94979C; --nav-hover:#22262F; --nav-active:#22262F; --nav-active-fg:#F7F7F7; --side-bg:#0C0E12; --page-bg:#13161B; --text-primary:#F7F7F7;}
 *{box-sizing:border-box}
 /* чёткий текст: сглаживание в оттенках серого, как в Figma (на macOS браузер по умолчанию рисует текст жирнее и мягче) */
 html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -220,22 +223,26 @@ a.cta{text-align:center;text-decoration:none;display:block}
 @media (max-width:920px){.top{grid-template-columns:minmax(0,1fr)}.grid{grid-template-columns:minmax(0,1fr)}.prev{position:static}.floorwrap{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:480px){.day{grid-template-columns:34px 46px 1fr}.card{padding:14px}}
 /* ===== Боковое меню: светлое, только текст, в стиле карточек ===== */
-.side{position:fixed;inset:0 auto 0 0;width:var(--side-w);display:flex;flex-direction:column;justify-content:space-between;padding:22px 14px 18px;background:var(--surface);border-right:1px solid #E9EAEB;z-index:30;overflow-y:auto}
-.side .logo{padding:0 10px;margin-bottom:18px;font-weight:600;font-size:16px;letter-spacing:-.015em}
+.side{position:fixed;inset:0 auto 0 0;width:var(--side-w);display:flex;flex-direction:column;justify-content:space-between;padding:22px 14px 18px;background:var(--side-bg);border-right:1px solid var(--nav-border);z-index:30;overflow-y:auto}
+.side .logo{padding:0 10px;margin-bottom:18px;font-weight:600;font-size:16px;letter-spacing:-.015em;color:var(--text-primary)}
 .nav{display:flex;flex-direction:column;gap:2px}
 /* пункт меню по макету Figma (Sidebar / Nav item): пилюля, иконка 16, текст 14/20 Medium */
-.nav a{display:flex;align-items:center;gap:8px;height:36px;padding:8px 13px;border-radius:9999px;color:#535862;text-decoration:none;font-weight:500;font-size:14px;line-height:20px;transition:background .15s,color .15s}
-.nav a svg{flex:none;width:16px;height:16px;color:#535862}
-.nav a:hover{background:#F5F5F5}
-.nav a[aria-current="page"]{background:#F5F5F5;color:#181D27}
+.nav a{display:flex;align-items:center;gap:8px;height:36px;padding:8px 13px;border-radius:9999px;color:var(--nav-fg);text-decoration:none;font-weight:500;font-size:14px;line-height:20px;transition:background .15s,color .15s}
+.nav a svg{flex:none;width:16px;height:16px;color:var(--nav-icon)}
+.nav a:hover{background:var(--nav-hover)}
+.nav a[aria-current="page"]{background:var(--nav-active);color:var(--nav-active-fg)}
 .main{margin-left:var(--side-w);min-width:0}
 .panel{padding:24px clamp(16px,2.5vw,32px) 110px}
 .page[hidden]{display:none}
 .mtop,.scrim{display:none}
 /* пустой раздел: надпись ровно по центру окна */
+/* пустые разделы по макету Figma: фон bg-secondary, контейнер с полями 20, картинка 125×124 + Text lg/Semibold 18/28 */
+body:not([data-page="booking"]){background:var(--page-bg)}
 body:not([data-page="booking"]) .panel{padding-bottom:24px}
 .empty-pg{display:grid;place-items:center;text-align:center;min-height:calc(100vh - 48px);min-height:calc(100dvh - 48px);color:var(--muted)}
-.empty-pg h2{color:var(--fg);font-size:18px;margin-bottom:4px}
+.empty-pg>div{width:100%;padding:0 20px}
+.empty-pg img{display:block;width:125px;height:124px;margin:0 auto;margin-left:round((100% - 125px)/2,1px)} /* ширина нечётная: округляем отступ, чтобы картинка стояла в целых пикселях */
+.empty-pg h2{color:var(--text-primary);font-size:18px;line-height:28px;font-weight:600;letter-spacing:0}
 .empty-pg p{margin:0 auto;max-width:340px}
 .pgtitle{font-size:24px;margin-bottom:4px}
 @media (max-width:900px){
@@ -246,7 +253,7 @@ body:not([data-page="booking"]) .panel{padding-bottom:24px}
   .panel{padding:16px 16px 110px}
   body:not([data-page="booking"]) .panel{padding-bottom:16px}
   .empty-pg{min-height:calc(100vh - 32px - 55px);min-height:calc(100dvh - 32px - 55px)}
-  .mtop{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:15;background:var(--surface);border-bottom:1px solid var(--line);padding:10px 16px;font-weight:600}
+  .mtop{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:15;background:var(--side-bg);border-bottom:1px solid var(--nav-border);padding:10px 16px;font-weight:600}
   .mtop button{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:6px 12px;cursor:pointer;font-weight:500}
 }
 body:not([data-page="booking"]) .bar{display:none}
@@ -729,7 +736,7 @@ function route(){
   lastPage=h;document.body.dataset.page=h;
   var t=TITLES[h];
   $("#pg-booking").hidden=h!="booking";$("#pg-empty").hidden=h=="booking";
-  if(h!="booking")$("#pg-empty").innerHTML='<div class="empty-pg"><div><h2>Раздел пока пустой</h2></div></div>';
+  if(h!="booking")$("#pg-empty").innerHTML='<div class="empty-pg"><div><img src="img/empty-heart.png" alt="" width="125" height="124"><h2>Раздел пока пустой</h2></div></div>';
   $$(".nav a").forEach(function(a){if(a.dataset.nav==h)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   $("#mTitle").textContent=t[1];document.title=t[1]+" — Портал";
   document.body.classList.remove("nav-open");window.scrollTo(0,0);
