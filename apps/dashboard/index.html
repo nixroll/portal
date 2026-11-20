@@ -10,19 +10,19 @@
   --accent:#111113; --accent-fg:#FFFFFF; --accent-soft:#EDEDF0; --warn:#B4540A; --warn-soft:#FBE9D6; --off:#CFCFD6;
   --shadow:0 1px 2px rgba(17,17,19,.05),0 6px 20px rgba(17,17,19,.04);
   --f-head:"Inter",system-ui,-apple-system,sans-serif; --f-body:"Inter",system-ui,-apple-system,sans-serif;
-  --shell:#121214; --side-w:var(--side-drag,232px);
-  /* меню: токены Figma «1. Color modes» (Light/Dark) */
-  --nav-border:#E9EAEB; --nav-fg:#535862; --nav-icon:#535862; --nav-hover:#F5F5F5; --nav-active:#F5F5F5; --nav-active-fg:#181D27;
-  --side-bg:#FFFFFF; --page-bg:#FAFAFA; --text-primary:#181D27;
+  --shell:#121214; --side-w:var(--side-drag,240px);
+  /* оболочка (меню, тулбар, пустые разделы): токены Figma «1. Color modes», Light / Dark */
+  --side-bg:#FAFAFA; --main-bg:#FFFFFF; --nav-border:#E9EAEB; --text-primary:#181D27; --text-secondary:#414651; --text-tertiary:#535862;
+  --fg-primary:#181D27; --fg-tertiary:#535862; --nav-active:#F5F5F5; --nav-hover:#F5F5F5; --search-bg:#FFFFFF; --shadow-xs:0 1px 2px rgba(10,13,18,.05);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0B0B0C; --surface:#151516; --sunk:#202022; --line:#2E2E31; --fg:#F4F4F5; --muted:#A0A0A6;
   --accent:#FFFFFF; --accent-fg:#111113; --accent-soft:#2A2A2E; --warn:#F0A25C; --warn-soft:#3A2A17; --off:#44444A;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark; --nav-border:#22262F; --nav-fg:#94979C; --nav-icon:#94979C; --nav-hover:#22262F; --nav-active:#22262F; --nav-active-fg:#F7F7F7; --side-bg:#0C0E12; --page-bg:#13161B; --text-primary:#F7F7F7;}}
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark; --side-bg:#13161B; --main-bg:#0C0E12; --nav-border:#22262F; --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C; --fg-primary:#FFFFFF; --fg-tertiary:#94979C; --nav-active:#22262F; --nav-hover:#22262F; --search-bg:#0C0E12; --shadow-xs:none;}}
 :root[data-theme="dark"]{
   --bg:#0B0B0C; --surface:#151516; --sunk:#202022; --line:#2E2E31; --fg:#F4F4F5; --muted:#A0A0A6;
   --accent:#FFFFFF; --accent-fg:#111113; --accent-soft:#2A2A2E; --warn:#F0A25C; --warn-soft:#3A2A17; --off:#44444A;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark; --nav-border:#22262F; --nav-fg:#94979C; --nav-icon:#94979C; --nav-hover:#22262F; --nav-active:#22262F; --nav-active-fg:#F7F7F7; --side-bg:#0C0E12; --page-bg:#13161B; --text-primary:#F7F7F7;}
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3); --shell:#000; color-scheme:dark; --side-bg:#13161B; --main-bg:#0C0E12; --nav-border:#22262F; --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C; --fg-primary:#FFFFFF; --fg-tertiary:#94979C; --nav-active:#22262F; --nav-hover:#22262F; --search-bg:#0C0E12; --shadow-xs:none;}
 *{box-sizing:border-box}
 /* чёткий текст: сглаживание в оттенках серого, как в Figma (на macOS браузер по умолчанию рисует текст жирнее и мягче) */
 html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -105,9 +105,9 @@ h1,h2,h3{font-family:var(--f-head);font-weight:600;letter-spacing:-.015em;margin
 /* slider */
 .rng{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 220px;max-width:340px}
 .rng input{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:6px;border-radius:99px;background:linear-gradient(to right,var(--accent) var(--p,0%),var(--sunk) var(--p,0%));outline-offset:6px}
-.rng input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--accent);cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .15s}
+.rng input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:1px solid var(--accent);cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .15s}
 .rng input:active::-webkit-slider-thumb{transform:scale(1.2);cursor:grabbing}
-.rng input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--accent);cursor:grab}
+.rng input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:1px solid var(--accent);cursor:grab}
 .rng output{min-width:76px;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
 /* hours */
 .day{display:grid;grid-template-columns:42px 46px 1fr;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
@@ -124,16 +124,16 @@ h1,h2,h3{font-family:var(--f-head);font-weight:600;letter-spacing:-.015em;margin
 .stat b{color:var(--fg)}
 .floorwrap{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:14px}
 .floor{position:relative;aspect-ratio:16/10;border-radius:12px;background:
-  linear-gradient(var(--line) 1px,transparent 1px) 0 0/10% 12.5%,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/10% 12.5%,var(--sunk);
+  linear-gradient(var(--line) 1px,transparent 1px) 0 0/var(--gx,10%) var(--gy,12.5%),linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/var(--gx,10%) var(--gy,12.5%),var(--sunk);
   border:1px solid var(--line);overflow:hidden;touch-action:none;user-select:none}
 .tbl{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:var(--surface);border:2px solid var(--accent);color:var(--fg);cursor:grab;font-variant-numeric:tabular-nums;
+  background:var(--surface);border:1px solid var(--accent);color:var(--fg);cursor:grab;font-variant-numeric:tabular-nums;
   box-shadow:0 2px 6px rgba(0,0,0,.15);transition:box-shadow .15s,transform .15s,border-color .15s}
 .tbl b{font-family:var(--f-head);font-size:15px}
 .tbl span{font-size:11px;color:var(--muted)}
 .tbl .st{display:inline-flex;align-items:center;gap:2px;font-weight:600}
 .tbl.rect{border-radius:10px}.tbl.round{border-radius:50%}
-.tbl.sel{background:var(--accent);color:var(--accent-fg);box-shadow:0 0 0 4px var(--accent-soft),0 4px 12px rgba(0,0,0,.25)}
+.tbl.sel{background:var(--accent);color:var(--accent-fg);box-shadow:0 4px 12px rgba(0,0,0,.25)}
 .tbl.sel span{color:inherit;opacity:.8}
 .tbl .dp{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;background:var(--warn);color:#fff;font-style:normal;font-size:11px;font-weight:700;display:grid;place-items:center;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .txt{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 10px;width:220px;max-width:100%}
@@ -176,8 +176,8 @@ a.cta{text-align:center;text-decoration:none;display:block}
 .cta{border:0;border-radius:10px;padding:10px;font-weight:600;cursor:pointer;background:var(--wc,var(--accent));color:var(--wcf,var(--accent-fg))}
 /* образцы цвета: тонкая обводка по краю, чтобы тёмный цвет не терялся на тёмном фоне; у выбранного кольцо и галочка */
 .sw-colors{display:flex;gap:8px}
-.sw-colors button{width:28px;height:28px;border-radius:50%;border:2px solid var(--surface);outline:2px solid transparent;cursor:pointer;background:var(--c);
-  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 28%,transparent);display:grid;place-items:center;color:#fff;padding:0}
+.sw-colors button{width:28px;height:28px;border-radius:50%;border:1px solid color-mix(in srgb,var(--fg) 28%,transparent);outline:1px solid transparent;outline-offset:2px;cursor:pointer;background:var(--c);
+  display:grid;place-items:center;color:#fff;padding:0}
 .sw-colors button svg{opacity:0;transform:scale(.6);transition:opacity .15s,transform .2s cubic-bezier(.34,1.56,.64,1)}
 .sw-colors button[aria-pressed="true"]{outline-color:var(--fg)}
 .sw-colors button[aria-pressed="true"] svg{opacity:1;transform:none}
@@ -219,21 +219,44 @@ a.cta{text-align:center;text-decoration:none;display:block}
 .toast{position:fixed;left:0;right:0;margin:0 auto;width:max-content;top:16px;transform:translateY(calc(-100% - 24px));background:var(--accent);color:var(--accent-fg);padding:8px 14px;border-radius:10px;font-weight:600;z-index:30;transition:transform .3s cubic-bezier(.3,.9,.3,1)}
 .toast:not(.show){visibility:hidden;transition:transform .3s,visibility 0s .3s}
 .toast.show{transform:none}
-@media (max-width:1180px) and (min-width:901px){.grid{grid-template-columns:minmax(0,1fr)}.prev{position:static}.top{grid-template-columns:minmax(0,1fr)}}
+
 @media (max-width:920px){.top{grid-template-columns:minmax(0,1fr)}.grid{grid-template-columns:minmax(0,1fr)}.prev{position:static}.floorwrap{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:480px){.day{grid-template-columns:34px 46px 1fr}.card{padding:14px}}
-/* ===== Боковое меню: светлое, только текст, в стиле карточек ===== */
-.side{position:fixed;inset:0 auto 0 0;width:var(--side-w);display:flex;flex-direction:column;justify-content:space-between;padding:22px 14px 18px;background:var(--side-bg);border-right:1px solid var(--nav-border);z-index:30;overflow-y:auto}
-.side .logo{padding:0 10px;margin-bottom:18px;font-weight:600;font-size:16px;letter-spacing:-.015em;color:var(--text-primary)}
-.nav{display:flex;flex-direction:column;gap:2px}
-/* пункт меню по макету Figma (Sidebar / Nav item): пилюля, иконка 16, текст 14/20 Medium */
-.nav a{display:flex;align-items:center;gap:8px;height:36px;padding:8px 13px;border-radius:9999px;color:var(--nav-fg);text-decoration:none;font-weight:500;font-size:14px;line-height:20px;transition:background .15s,color .15s}
-.nav a svg{flex:none;width:16px;height:16px;color:var(--nav-icon)}
-.nav a:hover{background:var(--nav-hover)}
-.nav a[aria-current="page"]{background:var(--nav-active);color:var(--nav-active-fg)}
-/* ширина меню регулируется: тянем за правый край (232–400 px), двойной клик — вернуть 232 */
+/* ===== Боковое меню по макету Figma (Portal → «Аналитика / Пустое состояние»): 240 px, фон bg-secondary ===== */
+.side{position:fixed;inset:0 auto 0 0;width:var(--side-w);display:flex;flex-direction:column;background:var(--side-bg);border-right:1px solid var(--nav-border);z-index:30}
+.side *{letter-spacing:0}
+/* шапка и подвал: линия снаружи (как stroke outside в Figma), высоту не меняет */
+.sh{position:relative;z-index:1;flex:none;display:flex;align-items:center;gap:12px;height:49px;padding:12px;border:0;border-bottom:1px solid var(--nav-border);margin-bottom:-1px;background:none;width:100%;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.sh img{flex:none;width:24px;height:24px;border-radius:6px;display:block}
+.sh .ava{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:6px;background:var(--nav-active);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);font-size:12px;line-height:18px;font-weight:600;color:var(--text-primary)}
+.sh b{flex:1;min-width:0;font-size:16px;line-height:24px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side svg{flex:none;width:16px;height:16px;color:var(--fg-tertiary)}
+.sbody{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px 0;overflow-y:auto;scrollbar-width:none}
+.sbody::-webkit-scrollbar{display:none}
+.stop{display:flex;flex-direction:column;gap:20px}
+.ssearch{padding:0 8px}
+.ssearch label{display:flex;align-items:center;gap:6px;height:28px;padding:4px 8px;border-radius:10px;background:var(--search-bg);box-shadow:var(--shadow-xs);cursor:text}
+.ssearch input{flex:1;min-width:0;border:0;padding:0;margin:0;background:none;outline:none;font:500 14px/20px var(--f-body);color:var(--text-primary)}
+.ssearch input::placeholder{color:var(--text-secondary);opacity:1}
+.nav{display:flex;flex-direction:column;gap:1px;padding:0 8px}
+.ngroup{display:flex;flex-direction:column;gap:4px;padding:0 8px}
+.ngroup .nav{padding:0}
+.ngroup h3{height:18px;padding:0 8px;font-size:12px;line-height:18px;font-weight:500;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* пункт меню (Nav item): 28 px, поля 4/8, иконка 16 + 6 + текст 14/20 Medium, скругление 10 */
+.nav a,.sfoot a{display:flex;align-items:center;gap:6px;height:28px;padding:4px 8px;border-radius:10px;color:var(--text-primary);text-decoration:none;font-weight:500;font-size:14px;line-height:20px}
+.nav a span,.sfoot a span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav a:hover,.sfoot a:hover{background:var(--nav-hover)}
+.nav a[aria-current="page"]{background:var(--nav-active)}
+.nav a[aria-current="page"] svg{color:var(--fg-primary)}
+.nav a[hidden],.ngroup[hidden]{display:none}
+.sfoot{position:relative;z-index:1;flex:none;padding:8px;border-top:1px solid var(--nav-border);margin-top:-1px}
+/* верхняя панель над рабочей областью: 48 px, фон bg-primary, линия снизу */
+.tbar{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:6px;height:48px;padding:0 16px;background:var(--main-bg);box-shadow:0 1px 0 var(--nav-border)}
+.tbar svg{flex:none;width:16px;height:16px;color:var(--fg-tertiary)}
+.tbar span{min-width:0;font-size:14px;line-height:20px;font-weight:500;letter-spacing:0;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ширина меню регулируется: тянем за правый край (240–400 px), двойной клик — вернуть 240 */
 .side-rz{position:fixed;top:0;bottom:0;left:calc(var(--side-w) - 4px);width:8px;cursor:col-resize;z-index:31;touch-action:none}
-.side-rz::after{content:"";position:absolute;top:0;bottom:0;left:3px;width:2px;background:var(--nav-fg);opacity:0;transition:opacity .15s}
+.side-rz::after{content:"";position:absolute;top:0;bottom:0;left:3px;width:2px;background:var(--fg-tertiary);opacity:0;transition:opacity .15s}
 .side-rz:hover::after,body.rz .side-rz::after{opacity:.35}
 body.rz{cursor:col-resize;user-select:none}
 body.rz *{transition:none!important}
@@ -241,10 +264,9 @@ body.rz *{transition:none!important}
 .panel{padding:24px clamp(16px,2.5vw,32px) 110px}
 .page[hidden]{display:none}
 .mtop,.scrim{display:none}
-/* пустой раздел: надпись ровно по центру окна */
-/* пустые разделы по макету Figma: фон bg-secondary, контейнер с полями 20, картинка 125×124 + Text lg/Semibold 18/28 */
-body:not([data-page="booking"]){background:var(--page-bg)}
-body:not([data-page="booking"]) .panel{padding-bottom:24px}
+/* пустые разделы по макету Figma: фон bg-primary, рабочая область под тулбаром, по центру контейнер с полями 20: картинка 125×124 + Text lg/Semibold 18/28 */
+body:not([data-page="booking"]){background:var(--main-bg)}
+body:not([data-page="booking"]) .panel{padding:0}
 .empty-pg{display:grid;place-items:center;text-align:center;min-height:calc(100vh - 48px);min-height:calc(100dvh - 48px);color:var(--muted)}
 .empty-pg>div{width:100%;padding:0 20px}
 .empty-pg img{display:block;width:125px;height:124px;margin:0 auto;margin-left:round((100% - 125px)/2,1px)} /* ширина нечётная: округляем отступ, чтобы картинка стояла в целых пикселях */
@@ -258,27 +280,55 @@ body:not([data-page="booking"]) .panel{padding-bottom:24px}
   .side-rz{display:none}
   body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:25}
   .panel{padding:16px 16px 110px}
-  body:not([data-page="booking"]) .panel{padding-bottom:16px}
-  .empty-pg{min-height:calc(100vh - 32px - 55px);min-height:calc(100dvh - 32px - 55px)}
-  .mtop{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:15;background:var(--side-bg);border-bottom:1px solid var(--nav-border);padding:10px 16px;font-weight:600}
+  body:not([data-page="booking"]) .panel{padding:0}
+  .tbar{display:none}
+  .empty-pg{min-height:calc(100vh - 55px);min-height:calc(100dvh - 55px)}
+  .mtop{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:15;background:var(--main-bg);border-bottom:1px solid var(--nav-border);padding:10px 16px;font-weight:600}
   .mtop button{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:6px 12px;cursor:pointer;font-weight:500}
 }
 body:not([data-page="booking"]) .bar{display:none}
+/* ===== Расписание по макету Figma: тулбар 48+48 (название / «Сохранить»), слева настройки, справа «как увидит гость» ===== */
+body{background:var(--main-bg)}
+.tbar{display:block;height:auto;padding:0;box-shadow:none}
+.trow{display:flex;align-items:center;gap:6px;height:49px;padding:0 16px;border-bottom:1px solid var(--nav-border);margin-bottom:-1px}
+.tact{justify-content:flex-end;position:relative}
+body:not([data-page="booking"]) .tact{display:none}
+.pbtn{display:inline-flex;align-items:center;justify-content:center;gap:4px;height:28px;width:91px;padding:4px 8px;border:0;border-radius:8px;background:#1570EF;color:#fff;font:500 14px/20px var(--f-body);letter-spacing:0;cursor:pointer}
+.pbtn:hover{background:#2E90FA}
+.pbtn:focus-visible{outline:2px solid #2E90FA;outline-offset:2px}
+body[data-page="booking"] .panel{padding:0}
+#pg-booking .wrap{max-width:none}
+#pg-booking .top,#pg-booking .prev .cap,#pg-booking .ex,.bar{display:none!important}
+#pg-booking .grid{grid-template-columns:minmax(0,1fr) 342px;gap:0;align-items:stretch}
+#pg-booking .col{padding:20px;border-right:1px solid var(--nav-border)}
+#pg-booking .card{background:var(--main-bg);border-color:var(--nav-border);box-shadow:none}
+#pg-booking .prev{position:static;background:var(--side-bg);padding:20px}
+#pg-booking .prev .card{position:sticky;top:116px;padding:0;border:0;background:none}
+#pg-booking .guest{width:302px;background:var(--main-bg)}
+/* venue-меню теперь открывается из шапки бокового меню */
+.side .vmenu{position:absolute;left:8px;right:8px;top:52px;z-index:40}
+@media (max-width:1100px){#pg-booking .grid{grid-template-columns:minmax(0,1fr)}#pg-booking .col{border-right:0}#pg-booking .prev .card{position:static}}
+@media (max-width:900px){.tbar{display:block;top:55px}.trow:first-child{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
 <div class="app">
 <aside class="side" id="side" aria-label="Меню кабинета">
-  <div>
-    <div class="logo">Портал</div>
-    <nav class="nav" id="nav"></nav>
+  <button class="sh" id="sVenue" aria-label="Сменить заведение"><span id="sAva"></span><b id="sName"></b><svg id="sChev"></svg></button>
+  <div class="sbody">
+    <div class="stop">
+      <div class="ssearch"><label><svg id="sSearchIc"></svg><input id="sSearch" type="search" placeholder="Поиск" aria-label="Поиск по разделам" autocomplete="off"></label></div>
+      <div id="navTop"></div>
+    </div>
+    <nav class="nav" id="nav2"></nav>
   </div>
-  <nav class="nav" id="nav2"></nav>
+  <div class="sfoot"><a href="#booking" id="sAddr" title=""><svg id="sPin"></svg><span></span></a></div>
 </aside>
 <div class="side-rz" id="sideRz" role="separator" aria-orientation="vertical" aria-label="Ширина меню" title="Потяните, чтобы изменить ширину"></div>
 <div class="scrim" id="scrim"></div>
 <div class="main">
 <div class="mtop"><button id="burger" aria-expanded="false">Разделы</button><span id="mTitle">Бронирование</span></div>
+<div class="tbar"><div class="trow" id="tbar"></div><div class="trow tact" id="tact"></div></div>
 <div class="panel">
 <section class="page" id="pg-booking">
 <div class="wrap">
@@ -443,7 +493,7 @@ function defaults(){
       T(12,"bar","B1",1,20,50,"round"),T(13,"bar","B2",1,40,50,"round"),T(14,"bar","B3",1,60,50,"round"),T(15,"bar","B4",1,80,50,"round")]};
 }
 /* заведения: у каждого свои настройки в localStorage. Названия и адреса примерные */
-var VENUES=[{id:"sever",name:"Бистро «Север»",addr:"ул. Ленина, 12",slug:"bistro-sever",phone:"+375 29 100-20-30"},
+var VENUES=[{id:"sever",name:"Ранак",addr:"пл. Свободы 4, Минск",slug:"ranak",phone:"+375 29 100-20-30",logo:"img/venue-ranak.png"},
   {id:"yug",name:"Кофейня «Юг»",addr:"пр. Мира, 40",slug:"kofeynya-yug",phone:"+375 29 200-30-40"},
   {id:"most",name:"Бар «Мост»",addr:"наб. Речная, 3",slug:"bar-most",phone:"+375 29 300-40-50"}];
 var BASE="bron-settings-v2",cur=VENUES[0],S,saved;
@@ -541,7 +591,7 @@ function renderFloor(){
 }
 /* столы ставим в целые пиксели: дробные координаты и translate(-50%) мылят текст на схеме */
 function place(el,t){var f=$("#floor");el.style.left=Math.round(t.x/100*f.clientWidth-el.offsetWidth/2)+"px";el.style.top=Math.round(t.y/100*f.clientHeight-el.offsetHeight/2)+"px"}
-function placeAll(){var f=$("#floor");f.style.aspectRatio="auto";var h=Math.round(f.clientWidth*.625)+"px";if(f.style.height!==h)f.style.height=h;$$("#floor .tbl").forEach(function(el){var t=S.tables.filter(function(x){return x.id==el.dataset.id})[0];if(t)place(el,t)})}
+function placeAll(){var f=$("#floor");f.style.aspectRatio="auto";var h=Math.round(f.clientWidth*.625)+"px";if(f.style.height!==h)f.style.height=h;f.style.setProperty("--gx",Math.round(f.clientWidth/10)+"px");f.style.setProperty("--gy",Math.round(f.clientWidth*.625/8)+"px");$$("#floor .tbl").forEach(function(el){var t=S.tables.filter(function(x){return x.id==el.dataset.id})[0];if(t)place(el,t)})}
 if(window.ResizeObserver)new ResizeObserver(placeAll).observe($("#floor"));
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function selT(){return S.tables.filter(function(t){return t.id==S.sel})[0]}
@@ -713,28 +763,40 @@ $("#vMenu").addEventListener("click",function(e){var o=e.target.closest("[data-v
   if(o.dataset.v==cur.id){menu(false);return}
   if(JSON.stringify(S)!==saved){menu(false);toast("Сначала сохраните или отмените изменения");return}
   cur=VENUES.filter(function(v){return v.id==o.dataset.v})[0];try{localStorage.setItem("bron-venue",cur.id)}catch(e){}
-  S=load(cur);saved=JSON.stringify(S);pv={day:0,guests:2,slot:null};menu(false);renderVenue();full();$("#vBtn").focus();toast(cur.name)});
+  S=load(cur);saved=JSON.stringify(S);pv={day:0,guests:2,slot:null};menu(false);renderVenue();renderSide();full();$("#vBtn").focus();toast(cur.name)});
 $("#vMenu").addEventListener("keydown",function(e){var o=$$(".vopt",this),i=o.indexOf(document.activeElement);
   if(e.key=="ArrowDown"||e.key=="ArrowUp"){e.preventDefault();o[(i+(e.key=="ArrowDown"?1:-1)+o.length)%o.length].focus()}});
 document.addEventListener("keydown",function(e){if(e.key=="Escape"&&!$("#vMenu").hidden){menu(false);$("#vBtn").focus()}});
-document.addEventListener("click",function(e){if(!e.target.closest("#venue"))menu(false)});
+document.addEventListener("click",function(e){if(!e.target.closest("#venue")&&!e.target.closest("#vMenu")&&!e.target.closest("#sVenue"))menu(false)});
 renderVenue();
 full();
 /* ---------- боковое меню и страницы (роутинг по #hash) ---------- */
-var IC={
-  home:'<path d="M5.33333 11.3333H10.6667M7.34513 1.84267L2.82359 5.35942C2.52135 5.5945 2.37022 5.71204 2.26135 5.85925C2.16491 5.98964 2.09307 6.13653 2.04935 6.29271C2 6.46902 2 6.66047 2 7.04338V11.8667C2 12.6134 2 12.9868 2.14532 13.272C2.27316 13.5229 2.47713 13.7268 2.72801 13.8547C3.01323 14 3.3866 14 4.13333 14H11.8667C12.6134 14 12.9868 14 13.272 13.8547C13.5229 13.7268 13.7268 13.5229 13.8547 13.272C14 12.9868 14 12.6134 14 11.8667V7.04338C14 6.66047 14 6.46902 13.9506 6.29271C13.9069 6.13653 13.8351 5.98964 13.7386 5.85925C13.6298 5.71204 13.4787 5.5945 13.1764 5.35942L8.65487 1.84267C8.42065 1.6605 8.30354 1.56942 8.17423 1.53441C8.06013 1.50351 7.93987 1.50351 7.82577 1.53441C7.69646 1.56942 7.57935 1.6605 7.34513 1.84267Z"/>',
-  menu:'<path d="M9.33333 1.51302V4.26672C9.33333 4.64009 9.33333 4.82677 9.406 4.96938C9.46991 5.09482 9.5719 5.19681 9.69734 5.26072C9.83995 5.33338 10.0266 5.33338 10.4 5.33338H13.1537M10.6667 8.66667H5.33333M10.6667 11.3333H5.33333M6.66667 6H5.33333M9.33333 1.33334H5.86667C4.74656 1.33334 4.18651 1.33334 3.75869 1.55132C3.38236 1.74307 3.0764 2.04903 2.88465 2.42535C2.66667 2.85318 2.66667 3.41323 2.66667 4.53334V11.4667C2.66667 12.5868 2.66667 13.1468 2.88465 13.5746C3.0764 13.951 3.38236 14.2569 3.75869 14.4487C4.18651 14.6667 4.74656 14.6667 5.86667 14.6667H10.1333C11.2534 14.6667 11.8135 14.6667 12.2413 14.4487C12.6176 14.2569 12.9236 13.951 13.1153 13.5746C13.3333 13.1468 13.3333 12.5868 13.3333 11.4667V5.33334L9.33333 1.33334Z"/>',
-  cal:'<path d="M14 6.66666H2M10.6667 1.33333V3.99999M5.33333 1.33333V3.99999M5.2 14.6667H10.8C11.9201 14.6667 12.4802 14.6667 12.908 14.4487C13.2843 14.2569 13.5903 13.951 13.782 13.5746C14 13.1468 14 12.5868 14 11.4667V5.86666C14 4.74656 14 4.1865 13.782 3.75868C13.5903 3.38236 13.2843 3.0764 12.908 2.88465C12.4802 2.66666 11.9201 2.66666 10.8 2.66666H5.2C4.0799 2.66666 3.51984 2.66666 3.09202 2.88465C2.71569 3.0764 2.40973 3.38236 2.21799 3.75868C2 4.1865 2 4.74656 2 5.86666V11.4667C2 12.5868 2 13.1468 2.21799 13.5746C2.40973 13.951 2.71569 14.2569 3.09202 14.4487C3.51984 14.6667 4.0799 14.6667 5.2 14.6667Z"/>',
-  bell:'<path d="M6.23612 13.9999C6.70621 14.4148 7.3237 14.6666 8 14.6666C8.6763 14.6666 9.29379 14.4148 9.76388 13.9999M12 5.33325C12 4.27239 11.5786 3.25497 10.8284 2.50482C10.0783 1.75468 9.06087 1.33325 8 1.33325C6.93913 1.33325 5.92172 1.75468 5.17157 2.50482C4.42143 3.25497 4 4.27239 4 5.33325C4 7.39337 3.48031 8.80389 2.89978 9.73686C2.41009 10.5238 2.16524 10.9173 2.17422 11.0271C2.18416 11.1486 2.20991 11.195 2.30785 11.2676C2.39631 11.3333 2.79506 11.3333 3.59257 11.3333H12.4074C13.2049 11.3333 13.6037 11.3333 13.6921 11.2676C13.7901 11.195 13.8158 11.1486 13.8258 11.0271C13.8348 10.9173 13.5899 10.5238 13.1002 9.73686C12.5197 8.80389 12 7.39338 12 5.33325Z"/>',
-  gear:'<path d="M6.2634 12.914L6.65303 13.7903C6.76886 14.0511 6.95788 14.2728 7.19718 14.4283C7.43648 14.5839 7.71577 14.6666 8.00118 14.6666C8.28659 14.6666 8.56588 14.5839 8.80518 14.4283C9.04448 14.2728 9.2335 14.0511 9.34933 13.7903L9.73896 12.914C9.87766 12.6031 10.111 12.3438 10.4056 12.1733C10.7021 12.0022 11.0452 11.9294 11.3856 11.9651L12.339 12.0666C12.6227 12.0966 12.9091 12.0436 13.1634 11.9141C13.4177 11.7846 13.6289 11.5841 13.7716 11.337C13.9143 11.0899 13.9824 10.8068 13.9674 10.5218C13.9524 10.2369 13.855 9.96245 13.6871 9.73177L13.1227 8.95622C12.9217 8.67801 12.8143 8.34313 12.816 7.99992C12.8159 7.65764 12.9243 7.32415 13.1256 7.04733L13.6901 6.27177C13.858 6.04109 13.9553 5.76663 13.9703 5.4817C13.9853 5.19677 13.9173 4.91361 13.7745 4.66659C13.6319 4.41941 13.4207 4.21891 13.1664 4.0894C12.9121 3.9599 12.6257 3.90694 12.3419 3.93696L11.3886 4.03844C11.0481 4.07419 10.7051 4.00133 10.4086 3.83029C10.1133 3.65875 9.87997 3.39816 9.74192 3.08584L9.34933 2.20955C9.2335 1.9487 9.04448 1.72706 8.80518 1.57152C8.56588 1.41597 8.28659 1.33321 8.00118 1.33325C7.71577 1.33321 7.43648 1.41597 7.19718 1.57152C6.95788 1.72706 6.76886 1.9487 6.65303 2.20955L6.2634 3.08584C6.12536 3.39816 5.89198 3.65875 5.59674 3.83029C5.30021 4.00133 4.95718 4.07419 4.61674 4.03844L3.66044 3.93696C3.37666 3.90694 3.09027 3.9599 2.83598 4.0894C2.5817 4.21891 2.37045 4.41941 2.22785 4.66659C2.08506 4.91361 2.01704 5.19677 2.03203 5.4817C2.04701 5.76663 2.14437 6.04109 2.31229 6.27177L2.87674 7.04733C3.07803 7.32415 3.18643 7.65764 3.18637 7.99992C3.18643 8.34219 3.07803 8.67568 2.87674 8.95251L2.31229 9.72807C2.14437 9.95875 2.04701 10.2332 2.03203 10.5181C2.01704 10.8031 2.08506 11.0862 2.22785 11.3333C2.37059 11.5803 2.58187 11.7807 2.83611 11.9102C3.09036 12.0397 3.37668 12.0927 3.66044 12.0629L4.61377 11.9614C4.95422 11.9256 5.29725 11.9985 5.59377 12.1695C5.89013 12.3406 6.12458 12.6012 6.2634 12.914Z"/><path d="M7.99999 9.99992C9.10456 9.99992 9.99999 9.10449 9.99999 7.99992C9.99999 6.89535 9.10456 5.99992 7.99999 5.99992C6.89542 5.99992 5.99999 6.89535 5.99999 7.99992C5.99999 9.10449 6.89542 9.99992 7.99999 9.99992Z"/>'
-};
-function ico(n){return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.39" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>'}
-var NAV=[["home","Главная","home"],["menu","Меню","menu"],["booking","Бронирование","cal"]];
-var NAV2=[["notifications","Уведомления","bell"],["setup","Настройки","gear"]];
-var TITLES={};NAV.concat(NAV2).forEach(function(i){TITLES[i[0]]=i})
+/* иконки меню: SVG из Figma (Untitled UI, 16 px, линия 1.2), цвет — currentColor */
+var IC={"container":"M13.6666 4.85173L7.99998 7.99987M7.99998 7.99987L2.33331 4.85173M7.99998 7.99987L8 14.3332M14 10.7056V5.29419C14 5.06576 14 4.95155 13.9663 4.84968C13.9366 4.75956 13.8879 4.67684 13.8236 4.60705C13.7509 4.52816 13.651 4.47269 13.4514 4.36176L8.51802 1.62102C8.32895 1.51598 8.23442 1.46346 8.1343 1.44287C8.0457 1.42464 7.95431 1.42464 7.8657 1.44287C7.76559 1.46346 7.67105 1.51598 7.48198 1.62102L2.54865 4.36176C2.34896 4.47269 2.24912 4.52816 2.17642 4.60705C2.11211 4.67684 2.06343 4.75957 2.03366 4.84968C2 4.95155 2 5.06576 2 5.29419V10.7056C2 10.934 2 11.0482 2.03366 11.1501C2.06343 11.2402 2.11211 11.3229 2.17642 11.3927C2.24912 11.4716 2.34897 11.5271 2.54865 11.638L7.48198 14.3788C7.67105 14.4838 7.76559 14.5363 7.8657 14.5569C7.95431 14.5751 8.0457 14.5751 8.1343 14.5569C8.23442 14.5363 8.32895 14.4838 8.51802 14.3788L13.4514 11.638C13.651 11.5271 13.7509 11.4716 13.8236 11.3927C13.8879 11.3229 13.9366 11.2402 13.9663 11.1501C14 11.0482 14 10.934 14 10.7056Z","file-02":"M9.33317 7.3335H5.33317M6.6665 10.0002H5.33317M10.6665 4.66683H5.33317M13.3332 4.5335V11.4668C13.3332 12.5869 13.3332 13.147 13.1152 13.5748C12.9234 13.9511 12.6175 14.2571 12.2412 14.4488C11.8133 14.6668 11.2533 14.6668 10.1332 14.6668H5.8665C4.7464 14.6668 4.18635 14.6668 3.75852 14.4488C3.3822 14.2571 3.07624 13.9511 2.88449 13.5748C2.6665 13.147 2.6665 12.5869 2.6665 11.4668V4.5335C2.6665 3.41339 2.6665 2.85334 2.88449 2.42552C3.07624 2.04919 3.3822 1.74323 3.75852 1.55148C4.18635 1.3335 4.7464 1.3335 5.8665 1.3335H10.1332C11.2533 1.3335 11.8133 1.3335 12.2412 1.55148C12.6175 1.74323 12.9234 2.04919 13.1152 2.42552C13.3332 2.85334 13.3332 3.41339 13.3332 4.5335Z","chevron-down": "M4 6L8 10L12 6","search-lg": "M14 14L11.6667 11.6667M13.3333 7.66667C13.3333 10.7963 10.7963 13.3333 7.66667 13.3333C4.53705 13.3333 2 10.7963 2 7.66667C2 4.53705 4.53705 2 7.66667 2C10.7963 2 13.3333 4.53705 13.3333 7.66667Z","line-chart-up-05": "M11.9999 6.66683L9.71037 8.95637C9.57837 9.08838 9.51237 9.15438 9.43626 9.17911C9.36931 9.20086 9.29719 9.20086 9.23025 9.17911C9.15414 9.15438 9.08813 9.08838 8.95613 8.95637L7.04371 7.04395C6.9117 6.91195 6.8457 6.84594 6.76959 6.82121C6.70264 6.79946 6.63053 6.79946 6.56358 6.82121C6.48747 6.84594 6.42147 6.91195 6.28946 7.04395L3.99992 9.3335M14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335C11.6818 1.3335 14.6666 4.31826 14.6666 8.00016Z","mail-01": "M1.33325 4.6665L6.77653 8.4768C7.21731 8.78535 7.4377 8.93962 7.67743 8.99938C7.88918 9.05216 8.11066 9.05216 8.32241 8.99938C8.56213 8.93962 8.78252 8.78535 9.2233 8.4768L14.6666 4.6665M4.53325 13.3332H11.4666C12.5867 13.3332 13.1467 13.3332 13.5746 13.1152C13.9509 12.9234 14.2569 12.6175 14.4486 12.2412C14.6666 11.8133 14.6666 11.2533 14.6666 10.1332V5.8665C14.6666 4.7464 14.6666 4.18635 14.4486 3.75852C14.2569 3.3822 13.9509 3.07624 13.5746 2.88449C13.1467 2.6665 12.5867 2.6665 11.4666 2.6665H4.53325C3.41315 2.6665 2.85309 2.6665 2.42527 2.88449C2.04895 3.07624 1.74299 3.3822 1.55124 3.75852C1.33325 4.18635 1.33325 4.7464 1.33325 5.8665V10.1332C1.33325 11.2533 1.33325 11.8133 1.55124 12.2412C1.74299 12.6175 2.04895 12.9234 2.42527 13.1152C2.85309 13.3332 3.41315 13.3332 4.53325 13.3332Z","calendar": "M14 6.66683H2M10.6667 1.3335V4.00016M5.33333 1.3335V4.00016M5.2 14.6668H10.8C11.9201 14.6668 12.4802 14.6668 12.908 14.4488C13.2843 14.2571 13.5903 13.9511 13.782 13.5748C14 13.147 14 12.5869 14 11.4668V5.86683C14 4.74672 14 4.18667 13.782 3.75885C13.5903 3.38252 13.2843 3.07656 12.908 2.88482C12.4802 2.66683 11.9201 2.66683 10.8 2.66683H5.2C4.0799 2.66683 3.51984 2.66683 3.09202 2.88482C2.71569 3.07656 2.40973 3.38252 2.21799 3.75885C2 4.18667 2 4.74672 2 5.86683V11.4668C2 12.5869 2 13.147 2.21799 13.5748C2.40973 13.9511 2.71569 14.2571 3.09202 14.4488C3.51984 14.6668 4.0799 14.6668 5.2 14.6668Z","message-square-01": "M6.45583 12H10.8C11.9201 12 12.4802 12 12.908 11.782C13.2843 11.5903 13.5903 11.2843 13.782 10.908C14 10.4802 14 9.9201 14 8.8V5.2C14 4.07989 14 3.51984 13.782 3.09202C13.5903 2.71569 13.2843 2.40973 12.908 2.21799C12.4802 2 11.9201 2 10.8 2H5.2C4.0799 2 3.51984 2 3.09202 2.21799C2.71569 2.40973 2.40973 2.71569 2.21799 3.09202C2 3.51984 2 4.0799 2 5.2V13.557C2 13.9122 2 14.0898 2.07282 14.1811C2.13615 14.2604 2.23218 14.3066 2.33369 14.3065C2.45042 14.3063 2.58911 14.1954 2.8665 13.9735L4.45681 12.7012C4.78168 12.4413 4.94411 12.3114 5.12499 12.219C5.28547 12.137 5.45628 12.0771 5.63281 12.0408C5.83178 12 6.0398 12 6.45583 12Z","user-03": "M2 13.3333C3.55719 11.6817 5.67134 10.6667 8 10.6667C10.3287 10.6667 12.4428 11.6817 14 13.3333M11 5C11 6.65685 9.65685 8 8 8C6.34315 8 5 6.65685 5 5C5 3.34315 6.34315 2 8 2C9.65685 2 11 3.34315 11 5Z","tag-02": "M5.33325 5.3335H5.33992M3.04175 1.95833L1.95809 3.04199C1.72749 3.27259 1.61219 3.38789 1.52973 3.52245C1.45663 3.64175 1.40275 3.77181 1.37009 3.90785C1.33325 4.0613 1.33325 4.22436 1.33325 4.55048L1.33325 6.44984C1.33325 6.77596 1.33325 6.93902 1.37009 7.09247C1.40275 7.22852 1.45663 7.35858 1.52973 7.47788C1.61219 7.61243 1.72749 7.72773 1.95809 7.95833L7.07051 13.0708C7.86254 13.8628 8.25856 14.2588 8.71522 14.4072C9.1169 14.5377 9.5496 14.5377 9.95128 14.4072C10.4079 14.2588 10.804 13.8628 11.596 13.0707L13.0705 11.5962C13.8625 10.8042 14.2586 10.4082 14.4069 9.95153C14.5375 9.54984 14.5375 9.11715 14.4069 8.71546C14.2586 8.2588 13.8625 7.86279 13.0705 7.07075L7.95809 1.95834C7.72749 1.72773 7.61219 1.61243 7.47763 1.52998C7.35833 1.45687 7.22828 1.403 7.09223 1.37034C6.93878 1.3335 6.77572 1.3335 6.4496 1.3335L4.55024 1.3335C4.22412 1.3335 4.06106 1.3335 3.90761 1.37034C3.77156 1.403 3.6415 1.45687 3.52221 1.52998C3.38765 1.61243 3.27235 1.72773 3.04175 1.95833ZM5.66659 5.3335C5.66659 5.51759 5.51735 5.66683 5.33325 5.66683C5.14916 5.66683 4.99992 5.51759 4.99992 5.3335C4.99992 5.1494 5.14916 5.00016 5.33325 5.00016C5.51735 5.00016 5.66659 5.1494 5.66659 5.3335Z","send-01": "M6.99976 9.00012L13.9998 2.00012M7.08482 9.21883L8.83689 13.7242C8.99124 14.1211 9.06841 14.3195 9.17962 14.3774C9.27602 14.4277 9.39085 14.4277 9.48731 14.3776C9.59858 14.3198 9.67599 14.1215 9.8308 13.7247L14.2244 2.46625C14.3641 2.10813 14.434 1.92907 14.3958 1.81465C14.3626 1.71528 14.2846 1.6373 14.1852 1.60411C14.0708 1.56588 13.8918 1.63576 13.5336 1.77552L2.27513 6.16908C1.87842 6.32389 1.68006 6.4013 1.62225 6.51257C1.57214 6.60903 1.57221 6.72386 1.62243 6.82026C1.68037 6.93146 1.87882 7.00864 2.27572 7.16299L6.78105 8.91506C6.86162 8.94639 6.9019 8.96206 6.93582 8.98625C6.96589 9.0077 6.99218 9.03399 7.01362 9.06406C7.03782 9.09798 7.05349 9.13826 7.08482 9.21883Z","globe-01": "M1.33325 8.00016H14.6666M1.33325 8.00016C1.33325 11.6821 4.31802 14.6668 7.99992 14.6668M1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335M14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668M14.6666 8.00016C14.6666 4.31826 11.6818 1.3335 7.99992 1.3335M7.99992 1.3335C9.66744 3.15906 10.6151 5.52819 10.6666 8.00016C10.6151 10.4721 9.66744 12.8413 7.99992 14.6668M7.99992 1.3335C6.3324 3.15906 5.38475 5.52819 5.33325 8.00016C5.38475 10.4721 6.3324 12.8413 7.99992 14.6668","layout-alt-03": "M11.6667 11.3333H4.33333M11.6667 8.66667H4.33333M2 6H14M5.2 2H10.8C11.9201 2 12.4802 2 12.908 2.21799C13.2843 2.40973 13.5903 2.71569 13.782 3.09202C14 3.51984 14 4.0799 14 5.2V10.8C14 11.9201 14 12.4802 13.782 12.908C13.5903 13.2843 13.2843 13.5903 12.908 13.782C12.4802 14 11.9201 14 10.8 14H5.2C4.07989 14 3.51984 14 3.09202 13.782C2.71569 13.5903 2.40973 13.2843 2.21799 12.908C2 12.4802 2 11.9201 2 10.8V5.2C2 4.07989 2 3.51984 2.21799 3.09202C2.40973 2.71569 2.71569 2.40973 3.09202 2.21799C3.51984 2 4.0799 2 5.2 2Z","bell-02": "M9.33343 14.0002H6.66676M12.0001 5.3335C12.0001 4.27263 11.5787 3.25521 10.8285 2.50507C10.0784 1.75492 9.06096 1.3335 8.00009 1.3335C6.93923 1.3335 5.92181 1.75492 5.17167 2.50507C4.42152 3.25521 4.00009 4.27263 4.00009 5.3335C4.00009 7.39362 3.48041 8.80413 2.89987 9.7371C2.41018 10.5241 2.16533 10.9176 2.17431 11.0273C2.18425 11.1489 2.21 11.1952 2.30794 11.2679C2.3964 11.3335 2.79515 11.3335 3.59266 11.3335H12.4075C13.205 11.3335 13.6038 11.3335 13.6922 11.2679C13.7902 11.1952 13.8159 11.1489 13.8259 11.0273C13.8349 10.9176 13.59 10.5241 13.1003 9.73711C12.5198 8.80413 12.0001 7.39362 12.0001 5.3335Z","settings-02": "M6.26344 12.9142L6.65307 13.7905C6.7689 14.0514 6.95792 14.273 7.19722 14.4286C7.43652 14.5841 7.71581 14.6669 8.00122 14.6668C8.28663 14.6669 8.56592 14.5841 8.80522 14.4286C9.04452 14.273 9.23354 14.0514 9.34937 13.7905L9.739 12.9142C9.8777 12.6033 10.111 12.3441 10.4057 12.1735C10.7022 12.0025 11.0452 11.9296 11.3857 11.9653L12.339 12.0668C12.6228 12.0968 12.9092 12.0439 13.1635 11.9144C13.4177 11.7849 13.629 11.5844 13.7716 11.3372C13.9144 11.0902 13.9824 10.807 13.9674 10.5221C13.9524 10.2372 13.8551 9.9627 13.6871 9.73201L13.1227 8.95646C12.9217 8.67825 12.8143 8.34337 12.816 8.00016C12.816 7.65789 12.9244 7.3244 13.1257 7.04757L13.6901 6.27201C13.858 6.04133 13.9554 5.76688 13.9704 5.48194C13.9854 5.19701 13.9173 4.91386 13.7746 4.66683C13.632 4.41965 13.4207 4.21916 13.1664 4.08965C12.9121 3.96014 12.6257 3.90718 12.342 3.9372L11.3886 4.03868C11.0482 4.07444 10.7052 4.00158 10.4086 3.83053C10.1134 3.659 9.88001 3.3984 9.74196 3.08609L9.34937 2.20979C9.23354 1.94894 9.04452 1.72731 8.80522 1.57176C8.56592 1.41622 8.28663 1.33345 8.00122 1.3335C7.71581 1.33345 7.43652 1.41622 7.19722 1.57176C6.95792 1.72731 6.7689 1.94894 6.65307 2.20979L6.26344 3.08609C6.1254 3.3984 5.89202 3.659 5.59678 3.83053C5.30025 4.00158 4.95722 4.07444 4.61678 4.03868L3.66048 3.9372C3.3767 3.90718 3.09031 3.96014 2.83602 4.08965C2.58174 4.21916 2.37049 4.41965 2.22789 4.66683C2.0851 4.91386 2.01708 5.19701 2.03207 5.48194C2.04705 5.76688 2.14441 6.04133 2.31233 6.27201L2.87678 7.04757C3.07807 7.3244 3.18647 7.65789 3.18641 8.00016C3.18647 8.34244 3.07807 8.67593 2.87678 8.95276L2.31233 9.72831C2.14441 9.95899 2.04705 10.2334 2.03207 10.5184C2.01708 10.8033 2.0851 11.0865 2.22789 11.3335C2.37063 11.5805 2.58191 11.7809 2.83615 11.9104C3.0904 12.0399 3.37672 12.093 3.66048 12.0631L4.61381 11.9616C4.95426 11.9259 5.29729 11.9987 5.59381 12.1698C5.89017 12.3408 6.12462 12.6015 6.26344 12.9142ZM10 8.00016C10 9.10473 9.1046 10.0002 8.00003 10.0002C6.89546 10.0002 6.00003 9.10473 6.00003 8.00016C6.00003 6.89559 6.89546 6.00016 8.00003 6.00016C9.1046 6.00016 10 6.89559 10 8.00016Z","marker-pin-02": "M10.0001 6.3335C10.0001 7.43807 9.10465 8.3335 8.00008 8.3335C6.89551 8.3335 6.00008 7.43807 6.00008 6.3335C6.00008 5.22893 6.89551 4.3335 8.00008 4.3335C9.10465 4.3335 10.0001 5.22893 10.0001 6.3335ZM13.3334 6.66683C13.3334 10.279 9.33341 12.0002 8.00008 14.6668C6.66675 12.0002 2.66675 10.279 2.66675 6.66683C2.66675 3.72131 5.05456 1.3335 8.00008 1.3335C10.9456 1.3335 13.3334 3.72131 13.3334 6.66683Z"};
+function ico(n){return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+IC[n]+'"/></svg>'}
+/* структура меню по макету Figma; бронирование — в «Расписании» (группа «Портал»: то, что видит гость) */
+var NAV=[["analytics","Аналитика","line-chart-up-05"],["messages","Сообщения","mail-01"],["calendar","Календарь","calendar"],["reviews","Отзывы","message-square-01"],["clients","Клиенты","user-03"]];
+var GROUPS=[["Портал",[["site","Сайт","globe-01"],["booking","Расписание","layout-alt-03"],["goods","Товары","container"],["menu","Меню","file-02"]]],
+  ["Привлечение",[["promo-reviews","Отзывы","message-square-01"],["loyalty","Лояльность","tag-02"],["mailings","Рассылки","send-01"]]]];
+var NAV2=[["notifications","Уведомления","bell-02"],["setup","Настройки","settings-02"]];
+var TITLES={};NAV.concat(NAV2,GROUPS[0][1],GROUPS[1][1]).forEach(function(i){TITLES[i[0]]=i});
 function navLink(i){return '<a href="#'+i[0]+'" data-nav="'+i[0]+'">'+ico(i[2])+'<span>'+i[1]+'</span></a>'}
-$("#nav").innerHTML=NAV.map(navLink).join("");
+$("#navTop").outerHTML='<nav class="nav" id="nav">'+NAV.map(navLink).join("")+'</nav>'+GROUPS.map(function(g){
+  return '<div class="ngroup"><h3>'+g[0]+'</h3><nav class="nav">'+g[1].map(navLink).join("")+'</nav></div>'}).join("");
 $("#nav2").innerHTML=NAV2.map(navLink).join("");
+$("#sChev").outerHTML=ico("chevron-down");$("#sSearchIc").outerHTML=ico("search-lg");$("#sPin").outerHTML=ico("marker-pin-02");
+/* шапка меню: текущее заведение; подвал: его адрес */
+function renderSide(){
+  $("#sAva").outerHTML=cur.logo?'<img id="sAva" src="'+cur.logo+'" alt="" width="24" height="24">':'<span id="sAva" class="ava">'+esc(ini(cur))+'</span>';
+  $("#sName").textContent=cur.name;$("#sAddr span").textContent=cur.addr;$("#sAddr").title=cur.addr}
+renderSide();
+$("#sVenue").addEventListener("click",function(e){e.stopPropagation();menu($("#vMenu").hidden)});
+/* поиск по разделам */
+$("#sSearch").addEventListener("input",function(){var q=this.value.trim().toLowerCase();
+  $$(".side .nav a").forEach(function(a){a.hidden=!!q&&a.textContent.toLowerCase().indexOf(q)<0});
+  $$(".ngroup").forEach(function(g){g.hidden=!!q&&!$$("a:not([hidden])",g).length})});
+$("#tact").appendChild($("#save"));$("#save").className="pbtn";
+$("#side").appendChild($("#vMenu"));
 $("#burger").addEventListener("click",function(){document.body.classList.add("nav-open")});
 $("#scrim").addEventListener("click",function(){document.body.classList.remove("nav-open")});
 var lastPage=null;
@@ -746,7 +808,7 @@ function route(){
   $("#pg-booking").hidden=h!="booking";$("#pg-empty").hidden=h=="booking";
   if(h!="booking")$("#pg-empty").innerHTML='<div class="empty-pg"><div><img src="img/empty-heart.png" alt="" width="125" height="124"><h2>Раздел пока пустой</h2></div></div>';
   $$(".nav a").forEach(function(a){if(a.dataset.nav==h)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
-  $("#mTitle").textContent=t[1];document.title=t[1]+" — Портал";
+  $("#mTitle").textContent=t[1];$("#tbar").innerHTML=ico(t[2])+"<span>"+esc(t[1])+"</span>";document.title=t[1]+" — Портал";
   document.body.classList.remove("nav-open");window.scrollTo(0,0);
   if(h=="booking")requestAnimationFrame(function(){$$(".seg").forEach(thumb)});
 }
@@ -759,7 +821,7 @@ window.addEventListener("resize",function(){$$(".seg").forEach(thumb)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){$$(".seg").forEach(thumb)});
 /* ширина бокового меню: тянем за край, значение помним в браузере */
 (function(){
-  var MIN=232,MAX=400,root=document.documentElement,rz=$("#sideRz");
+  var MIN=240,MAX=400,root=document.documentElement,rz=$("#sideRz");
   function set(w){w=Math.round(Math.min(MAX,Math.max(MIN,w)));root.style.setProperty("--side-drag",w+"px");return w}
   try{var v=+localStorage.getItem("side-w");if(v)set(v)}catch(e){}
   rz.addEventListener("pointerdown",function(e){
