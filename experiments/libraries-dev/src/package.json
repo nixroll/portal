@@ -1,0 +1,9 @@
+{
+  "name": "portal-libraries-dev-islands",
+  "private": true,
+  "scripts": {
+    "build": "esbuild ld.jsx --bundle --minify --format=iife --jsx=automatic --define:process.env.NODE_ENV='\"production\"' --legal-comments=none --outfile=../libraries-dev.js"
+  },
+  "dependencies": { "react": "^18.3.1", "react-dom": "^18.3.1", "border-beam": "1.4.1", "liquid-gooey": "0.2.2", "metal-fx": "2.0.11" },
+  "devDependencies": { "esbuild": "^0.24.0" }
+}
