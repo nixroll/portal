@@ -351,7 +351,7 @@ body[data-page="portal"] .empty{display:none}
   if(q)f=+q;else if(window.CSS&&CSS.supports("-webkit-touch-callout","none")&&CSS.supports("font","-apple-system-body")){
     var e=document.createElement("div");e.style.cssText="position:absolute;visibility:hidden;font:-apple-system-body";document.body.appendChild(e);f=parseFloat(getComputedStyle(e).fontSize)||0;e.remove()}
   if(!f||f<=16)return;var z=Math.min(f/16,1.25),d=window.devicePixelRatio||1;
-  r.style.zoom=z;r.style.setProperty("--z",z);r.style.setProperty("--h",((d>=2.5?2:1)/d/z)+"px");r.classList.add("ios-zoom")})();
+  r.style.zoom=z;r.style.setProperty("--z",z);r.style.setProperty("--h",(d>=2.5?43.5/64:1/d)/z+"px"); /* после zoom WebKit округляет до 1/64 px: целимся в 43/64 (чуть больше 2 физ. пикселей), иначе линия иногда схлопывается в 1 пиксель */r.classList.add("ios-zoom")})();
 (function(){
 "use strict";
 var $=function(s){return document.querySelector(s)};
