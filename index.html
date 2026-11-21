@@ -223,6 +223,12 @@ body.rzing{cursor:col-resize;user-select:none}
 /* Select (sm): высота 32, поля 10,5 / 8, шеврон 16 fg-quaternary, ширина по содержимому */
 .sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 calc(10px + var(--h));border-radius:8px;background:var(--bg-primary);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);color:var(--text-primary);white-space:nowrap}
+/* нативный список на сенсорных экранах: прозрачный <select> поверх кнопки, шрифт 16 px — чтобы Safari не приближал страницу */
+.selw{position:relative;display:inline-flex}
+.nsel{display:none}
+@media (hover:none) and (pointer:coarse){
+  .selw .nsel{display:block;position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;font-size:16px;-webkit-appearance:none;appearance:none;cursor:pointer}
+}
 .sel span{display:inline-block}
 .sel svg{flex:none;width:16px;height:16px;color:var(--fg-quaternary)}
 .sel:hover{background:var(--bg-primary-hover)}
@@ -435,7 +441,9 @@ function sec(t,cards){return '<section class="psec"><h3>'+t+'</h3>'+cards.join("
 function tgl(k,lbl){return '<button class="tgl" role="switch" data-k="'+k+'" aria-checked="'+(getK(k)?"true":"false")+'" aria-label="'+lbl+'"></button>'}
 function inp(k,cls,ph,ro){return '<input class="pin'+(cls?" "+cls:"")+'" data-k="'+k+'" value="'+esc(getK(k))+'"'+(ph?' placeholder="'+ph+'"':'')+(ro?' readonly':'')+' spellcheck="false">'}
 function url(k,cls){return '<label class="lt'+(cls?" "+cls:"")+'"><span>https://</span><input data-k="'+k+'" value="'+esc(getK(k))+'" placeholder="адрес страницы" spellcheck="false"></label>'}
-function sel(k,lbl){return '<button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'"><span>'+esc(getK(k))+'</span>'+CHEV+'</button>'}
+/* на телефоне поверх кнопки лежит прозрачный нативный <select> — iOS и Android показывают системный список, как у Linear */
+function nsel(k,lbl){var v=getK(k);return '<select class="nsel" data-nsel="'+k+'" aria-label="'+lbl+'" tabindex="-1">'+OPT[k].map(function(o){return '<option'+(o==v?' selected':'')+'>'+esc(o)+'</option>'}).join("")+'</select>'}
+function sel(k,lbl){return '<span class="selw"><button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'"><span>'+esc(getK(k))+'</span>'+CHEV+'</button>'+nsel(k,lbl)+'</span>'}
 function photo(k,cls){return '<span class="thumb'+(cls?" "+cls:"")+'" data-img="'+k+'" style="--img:url('+IMG[k]+')"></span><button class="chip" data-pick="'+k+'"><span>Заменить</span></button>'}
 function chip(id,t){return '<button class="chip" id="'+id+'"><span>'+t+'</span></button>'}
 function onlineSub(){return P.online?'Открыт для всех по ссылке <em>'+esc(P.url)+'</em>':'Портал выключен — гости увидят заглушку'}
@@ -635,7 +643,7 @@ function buildSettings(){$("#sPanels").innerHTML=
   '</div>';
   var cur=document.querySelector(".settings .psel button[aria-selected=true]");if(cur)document.querySelectorAll("#sPanels .pcont").forEach(function(p){p.hidden=p.dataset.p!=cur.dataset.t})}
 function dot(name){return '<i class="dot" style="--c:'+ACC[name][0]+'"></i>'}
-function selDot(k,lbl){return '<button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'">'+dot(getK(k))+'<span>'+esc(getK(k))+'</span>'+CHEV+'</button>'}
+function selDot(k,lbl){return '<span class="selw"><button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'">'+dot(getK(k))+'<span>'+esc(getK(k))+'</span>'+CHEV+'</button>'+nsel(k,lbl)+'</span>'}
 /* акцент: перекрываем брендовые токены в обеих темах */
 var accEl=document.createElement("style");document.head.appendChild(accEl);
 function applySettings(){var a=ACC[P.set.accent]||ACC["Фиолетовый"],L="--brand-solid:"+a[0]+";--fg-brand-primary:"+a[0]+";--brand-solid-hover:"+a[1]+";--border-brand:"+a[3]+";--indigo-500:"+a[5],
@@ -691,6 +699,9 @@ var gKey=0;document.addEventListener("keydown",function(e){var t=e.target;if(/IN
 /* цвет статус-бара Safari = фон страницы, чтобы на телефоне всё было одного цвета */
 function setThemeColor(){var m=$("#themeColor");if(m)m.content=getComputedStyle(document.body).backgroundColor}
 ["(prefers-color-scheme:dark)","(max-width:1023px)"].forEach(function(q){var mq=matchMedia(q);(mq.addEventListener?mq.addEventListener("change",setThemeColor):mq.addListener(setThemeColor))});
+function onNative(e){var t=e.target;if(!t.dataset||!t.dataset.nsel)return;var k=t.dataset.nsel;setK(k,t.value);
+  var b=t.previousElementSibling;b.querySelector("span").textContent=t.value;b.querySelector("span").style.width="";save();render();applySettings();snapText()}
+$("#pPanels").addEventListener("change",onNative);$("#sPanels").addEventListener("change",onNative);
 buildSettings();applySettings();render();
 route();
 })();
