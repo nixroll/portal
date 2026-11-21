@@ -159,6 +159,23 @@ body.rzing{cursor:col-resize;user-select:none}
 }
 .scrim{display:none}
 @media (max-width:1023px){.scrim{display:block}}
+/* ===== TABBAR: нижняя панель на телефоне (до 767 px), как в мобильных приложениях. Откат — ?tabbar=0 или убрать блоки TABBAR =====
+   Высота 56, иконки 24, неактивные fg-tertiary, активная — акцентный цвет; «•••» открывает боковое меню */
+.tabbar{display:none}
+@media (max-width:767px){
+  body.tb-on .tabbar{position:fixed;z-index:15;left:0;right:0;bottom:0;display:flex;height:calc(56px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
+    background:var(--bg-primary-alt);box-shadow:inset 0 var(--h) 0 var(--border-secondary-alt)}
+  body.tb-on .app{padding-bottom:calc(56px + env(safe-area-inset-bottom))}
+  body.tb-on .sbb{display:none}
+  .tabbar button{position:relative;flex:1;display:grid;place-items:center;color:var(--fg-tertiary);-webkit-tap-highlight-color:transparent}
+  .tabbar button svg{width:24px;height:24px}
+  .tabbar button[aria-current="page"]{color:var(--indigo-500)}
+  .tabbar button:active svg{transform:scale(.92)}
+  .tabbar .bd{position:absolute;top:8px;left:calc(50% + 6px);min-width:16px;height:16px;padding:0 4px;border-radius:9999px;background:var(--brand-solid);color:#fff;
+    font-size:10px;line-height:16px;font-weight:600;text-align:center;box-shadow:0 0 0 2px var(--bg-primary-alt)}
+  body.nobadge .tabbar .bd{display:none}
+}
+/* ===== /TABBAR ===== */
 @media (prefers-reduced-motion:reduce){.side,.scrim{transition:none!important}}
 /* =================== Портал (мини-сайт заведения): вкладки, настройки, превью справа =================== */
 /* Selector: 28 px, капсула, поля 0 12, рамка 0,5 border-primary, тень shadow-xs, текст Text xs/Medium 12/18.
@@ -347,6 +364,8 @@ body[data-page="portal"] .empty{display:none}
       </div>
     </aside>
   </main>
+  <!-- TABBAR: нижняя панель на телефоне. Откат: ?tabbar=0 или удалить блоки с пометкой TABBAR -->
+  <nav class="tabbar" id="tabbar" aria-label="Основные разделы"></nav>
 </div>
 <script>
 /* iPhone и iPad: как у Linear — интерфейс следует системному размеру текста iOS (Dynamic Type).
@@ -705,6 +724,21 @@ function onNative(e){var t=e.target;if(!t.dataset||!t.dataset.nsel)return;var k=
 $("#pPanels").addEventListener("change",onNative);$("#sPanels").addEventListener("change",onNative);
 buildSettings();applySettings();render();
 route();
+
+/* ===== TABBAR: Главная · Мультичат · Календарь · «•••» (открывает боковое меню) ===== */
+(function(){var q=new URLSearchParams(location.search).get("tabbar");if(q=="0")return;document.body.classList.add("tb-on");
+  var bar=$("#tabbar"),T=[["home","Главная","home-smile"],["chat","Мультичат","inbox-01"],["calendar","Календарь","calendar"]];
+  function big(n){return ico(n).replace('width="16" height="16"','width="24" height="24"').replace('stroke-width="1.2"','stroke-width="1.33"')}
+  var DOTS='<svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="3.33" cy="8" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="12.67" cy="8" r="1"/></svg>';
+  bar.innerHTML=T.map(function(t){var c=NAV.filter(function(n){return n[0]==t[0]})[0];return '<button data-id="'+t[0]+'" aria-label="'+t[1]+'">'+big(t[2])+(c&&c[3]?'<span class="bd">'+c[3]+'</span>':'')+'</button>'}).join("")+
+    '<button data-id="more" aria-label="Все разделы" aria-controls="side">'+DOTS+'</button>';
+  function mark(){var h=document.body.dataset.page;bar.querySelectorAll("button").forEach(function(b){var on=b.dataset.id==h||(b.dataset.id=="more"&&!T.some(function(t){return t[0]==h}));if(on)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")})}
+  bar.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;e.stopPropagation();
+    if(b.dataset.id=="more"){navOpen(!document.body.classList.contains("nav-open"));return}
+    navOpen(false);location.hash="#"+b.dataset.id});
+  addEventListener("hashchange",mark);mark();
+})();
+/* ===== /TABBAR ===== */
 })();
 
 </script>
