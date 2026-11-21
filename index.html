@@ -1,5 +1,242 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"><title>Портал</title>
-<meta http-equiv="refresh" content="0; url=apps/dashboard-v3/">
-<script>location.replace('apps/dashboard-v3/'+location.hash)</script>
-</head><body><a href="apps/dashboard-v3/">Открыть кабинет</a></body></html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Главная — Портал</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<style>
+/* =====================================================================
+   Портал v3 — оболочка кабинета по макету Figma (Portal → Portal Light / Portal Dark,
+   Sidebar и Toolbar design system). Цвета — токены коллекции «1. Color modes»:
+   Light mode / Dark mode. Размеры и отступы — один в один с Figma.
+   ===================================================================== */
+:root{
+  --bg-secondary-alt:#FAFAFA;     /* фон страницы */
+  --bg-primary-alt:#FFFFFF;       /* рабочая панель и тулбар */
+  --bg-primary:#FFFFFF;           /* плашка аватара без картинки */
+  --bg-secondary-hover:#F5F5F5;   /* наведение / выбранный пункт */
+  --border-primary:#D5D7DA;       /* рамка выбранного пункта */
+  --border-secondary-alt:rgba(0,0,0,.08); /* рамка панели и линия тулбара */
+  --text-primary:#181D27;
+  --text-secondary:#414651;
+  --text-tertiary:#535862;
+  --fg-primary:#181D27;
+  --fg-secondary:#414651;
+  --fg-tertiary:#535862;
+  --indigo-500:#6172F3;           /* иконка выбранного пункта (примитив, одинаков в обеих темах) */
+  --side-w:var(--side-drag,240px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
+    --border-primary:#373A41; --border-secondary-alt:#22262F;
+    --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
+    --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; color-scheme:dark}
+}
+:root[data-theme="dark"]{
+  --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
+  --border-primary:#373A41; --border-secondary-alt:#22262F;
+  --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
+  --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; color-scheme:dark}
+
+/* ---------- чёткий рендер ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+body{height:100vh;height:100dvh;overflow:hidden;background:var(--bg-secondary-alt);color:var(--text-primary);
+  font:400 14px/20px Inter,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+svg{display:block;flex:none}
+:focus-visible{outline:2px solid var(--indigo-500);outline-offset:2px}
+
+/* ---------- каркас: поля 8, между сайдбаром и панелью 8 ---------- */
+.app{display:flex;gap:8px;height:100%;padding:8px;min-width:720px}
+
+/* ---------- Sidebar: 240–360 px, без фона, три зоны: Top 64 / навигация по центру / Bottom 64 ---------- */
+.side{position:relative;flex:none;width:var(--side-w);display:grid;grid-template-rows:64px minmax(0,1fr) 64px;row-gap:16px;min-height:0}
+.s-top{padding:5px 4px;overflow:hidden}
+.s-mid{min-height:0;overflow-y:auto;scrollbar-width:none}
+.s-mid::-webkit-scrollbar{display:none}
+.s-bot{display:flex;flex-direction:column;justify-content:flex-end;padding:6px 0;overflow:hidden}
+
+/* Account row: 34 px, поля 4 8 4 4, между картинкой и текстом 10; Hover — bg-secondary_hover */
+.acct{display:inline-flex;align-items:center;gap:10px;max-width:100%;height:34px;padding:4px 8px 4px 4px;border-radius:10px}
+.acct:hover{background:var(--bg-secondary-hover)}
+.acct .ava{position:relative;flex:none;width:26px;height:26px;border-radius:8px;overflow:hidden;background:var(--bg-primary)}
+.acct .ava img{display:block;width:26px;height:26px}
+.acct .ava::after{content:"";position:absolute;inset:0;border-radius:8px;border:1px solid rgba(0,0,0,.1)} /* stroke 1 inside, #000 10% */
+.acct .ava b{display:grid;place-items:center;width:26px;height:26px;font-weight:500;color:var(--text-primary)}
+.acct span{min-width:0;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Навигация: поля 0 4, между пунктами 2 px */
+.nav{display:flex;flex-direction:column;gap:2px;padding:0 4px}
+/* Nav item: 37 px (рамка 0,5 внутри + 8 + 20 + 8), поля 8 12 8 10, иконка 16, отступ 8, скругление 10.
+   Normal — текст text-secondary, иконка fg-tertiary, счётчик text-tertiary;
+   Hover и Selected — фон bg-secondary_hover, рамка border-primary 0,5, иконка Indigo 500, текст text-primary, счётчик text-secondary */
+/* рамку 0,5 рисуем тенью внутрь: браузер округляет border меньше 1 px до 1 px и сдвигает раскладку, тень — нет */
+.nav a{display:flex;align-items:center;gap:8px;height:37px;padding:8.5px 12.5px 8.5px 10.5px;border-radius:10px;
+  font-weight:500;color:var(--text-secondary)}
+.nav a svg{width:16px;height:16px;color:var(--fg-tertiary)}
+.nav a .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav a .c{flex:none;font-weight:400;color:var(--text-tertiary)}
+.nav a:hover,.nav a[aria-current="page"]{background:var(--bg-secondary-hover);box-shadow:inset 0 0 0 .5px var(--border-primary);color:var(--text-primary)}
+.nav a:hover svg,.nav a[aria-current="page"] svg{color:var(--indigo-500)}
+.nav a:hover .c,.nav a[aria-current="page"] .c{color:var(--text-secondary)}
+
+/* Location row: 28 px, поля 4 8, иконка 16, отступ 8; Hover — фон bg-secondary_hover, иконка fg-secondary, текст text-primary */
+.loc{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;max-width:100%;height:28px;padding:4px 8px;border-radius:10px;font-weight:500;color:var(--text-secondary)}
+.loc svg{width:16px;height:16px;color:var(--fg-tertiary)}
+.loc span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loc:hover{background:var(--bg-secondary-hover);color:var(--text-primary)}
+.loc:hover svg{color:var(--fg-secondary)}
+
+/* ширина сайдбара: тянем за промежуток справа (240–360 px), двойной клик — 240 */
+.rz{position:absolute;top:0;bottom:0;right:-8px;width:8px;cursor:col-resize;touch-action:none;z-index:2}
+body.rzing{cursor:col-resize;user-select:none}
+
+/* ---------- Playground: рабочая панель, bg-primary_alt, рамка 0,5 border-secondary_alt внутри, скругление 10 ---------- */
+.pg{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg-primary-alt);
+  border-radius:10px;overflow:hidden}
+.pg::after{content:"";position:absolute;inset:0;z-index:4;border-radius:10px;box-shadow:inset 0 0 0 .5px var(--border-secondary-alt);pointer-events:none} /* stroke 0,5 inside */
+/* Toolbar: 44 px, линия 0,5 снизу снаружи; Container 28 px, поля 0 8 0 16 */
+.tb{position:absolute;top:.5px;left:.5px;right:.5px;z-index:3;height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:0 8px 0 16px;background:var(--bg-primary-alt);box-shadow:0 .5px 0 var(--border-secondary-alt)} /* линия 0,5 снизу снаружи */
+.tl{flex:1;min-width:0;display:flex;align-items:center;gap:16px}
+/* Sidebar button: 20×20, иконка layout-left 14 (слева, по центру по высоте); Normal — fg-secondary, Hover — fg-primary. На десктопе скрыта */
+.sbb{display:none;flex:none;align-items:center;width:20px;height:20px;color:var(--fg-secondary)}
+.sbb svg{width:14px;height:14px}
+.sbb:hover{color:var(--fg-primary)}
+.tb h1{flex:1;min-width:0;font-size:14px;line-height:20px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Add button: 28 px, капсула, поля 0 12 0 8, иконка plus 14, отступ 6, текст Text xs/Semibold 12/18; Hover — bg-secondary_hover */
+.addb{flex:none;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 8px;border-radius:9999px;
+  font-size:12px;line-height:18px;font-weight:600;color:var(--text-secondary)}
+.addb svg{width:14px;height:14px;color:var(--fg-secondary)}
+.addb:hover{background:var(--bg-secondary-hover)}
+.body{flex:1;min-height:0;position:relative;margin-top:44px;overflow:auto}
+
+/* Пустое состояние: картинка 96×96, отступ 8, текст Text md/Medium 16/24 text-secondary, поля 0 16 */
+.empty{position:absolute;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 16px}
+.empty img{display:block;width:96px;height:96px}
+.empty p{font-size:16px;line-height:24px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
+
+/* ---------- Планшет и телефон (уже 1024 px): сайдбар прячется, панель во весь экран, в тулбаре кнопка меню ---------- */
+@media (max-width:1023px){
+  .app{padding:0;gap:0;min-width:0}
+  .pg{border-radius:0}
+  .pg::after{display:none}
+  .tb{top:1px;left:0;right:0}
+  .sbb{display:flex}
+  .rz{display:none}
+  /* Mobile Sidebar: лист 256 px (поля 8 + меню 240), фон bg-primary_alt, линия 1 px справа снаружи, скругление справа 10 */
+  .side{position:fixed;z-index:20;top:0;left:0;bottom:0;width:256px;height:100%;padding:8px;background:var(--bg-primary-alt);
+    border-radius:0 10px 10px 0;box-shadow:1px 0 0 var(--border-secondary-alt);transform:translateX(calc(-100% - 2px));visibility:hidden;
+    transition:transform .3s cubic-bezier(0,0,.58,1),visibility 0s linear .3s}
+  body.nav-open .side{transform:none;visibility:visible;transition:transform .3s cubic-bezier(0,0,.58,1)}
+  /* затемнение под шторкой: как overlay в прототипе Figma — #000 30 %, закрывается нажатием мимо; выезд 0,3 с ease-out */
+  .scrim{position:fixed;inset:0;z-index:19;background:rgba(0,0,0,.3);opacity:0;visibility:hidden;transition:opacity .3s cubic-bezier(0,0,.58,1),visibility 0s linear .3s}
+  body.nav-open .scrim{opacity:1;visibility:visible;transition:opacity .3s cubic-bezier(0,0,.58,1)}
+}
+.scrim{display:none}
+@media (max-width:1023px){.scrim{display:block}}
+@media (prefers-reduced-motion:reduce){.side,.scrim{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side" aria-label="Меню кабинета">
+    <div class="s-top">
+      <button class="acct" id="acct" title="Ранак"><span class="ava"><img src="img/venue-ranak.png" alt="" width="26" height="26"></span><span>Ранак</span></button>
+    </div>
+    <div class="s-mid" id="sMid"><nav class="nav" id="nav"></nav></div>
+    <div class="s-bot">
+      <button class="loc" id="loc" title="пл. Свободы 4"><svg id="locIc"></svg><span>пл. Свободы 4</span></button>
+    </div>
+    <div class="rz" id="rz" role="separator" aria-orientation="vertical" aria-label="Ширина меню"></div>
+  </aside>
+  <div class="scrim" id="scrim" aria-hidden="true"></div>
+  <main class="pg">
+    <header class="tb"><div class="tl"><button class="sbb" id="sbb" aria-label="Открыть меню" aria-expanded="false" aria-controls="side"><svg id="sbbIc"></svg></button><h1 id="title">Главная</h1></div><button class="addb" id="addb"><svg id="plusIc"></svg><span data-w="47">Виджет</span></button></header>
+    <div class="body" id="body">
+      <div class="empty" id="empty"><img src="img/empty-heart.png" alt="" width="96" height="96"><p data-w="157">Раздел пока пустой</p></div>
+    </div>
+  </main>
+</div>
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+/* тема для проверки: ?theme=dark или ?theme=light; без параметра — как в системе */
+var th=new URLSearchParams(location.search).get("theme");if(th=="dark"||th=="light")document.documentElement.dataset.theme=th;
+
+/* иконки из Figma (Untitled UI, линия 1.2), цвет — currentColor */
+var IC={
+"home-smile":"M5.41735 9.33332C5.71337 10.4835 6.75744 11.3333 8 11.3333C9.24256 11.3333 10.2866 10.4835 10.5827 9.33332M7.34513 1.84267L2.82359 5.35942C2.52135 5.5945 2.37022 5.71204 2.26135 5.85924C2.16491 5.98963 2.09307 6.13652 2.04935 6.2927C2 6.46901 2 6.66046 2 7.04337V11.8667C2 12.6134 2 12.9868 2.14532 13.272C2.27316 13.5229 2.47713 13.7268 2.72801 13.8547C3.01323 14 3.3866 14 4.13333 14H11.8667C12.6134 14 12.9868 14 13.272 13.8547C13.5229 13.7268 13.7268 13.5229 13.8547 13.272C14 12.9868 14 12.6134 14 11.8667V7.04337C14 6.66046 14 6.46901 13.9506 6.2927C13.9069 6.13652 13.8351 5.98963 13.7386 5.85924C13.6298 5.71204 13.4787 5.5945 13.1764 5.35942L8.65487 1.84267C8.42065 1.6605 8.30354 1.56941 8.17423 1.5344C8.06013 1.50351 7.93987 1.50351 7.82577 1.5344C7.69646 1.56941 7.57935 1.6605 7.34513 1.84267Z",
+"inbox-01":"M1.66667 7.99996H3.92131C4.37812 7.99996 4.79571 8.25805 5 8.66663C5.20429 9.0752 5.62189 9.33329 6.07869 9.33329H9.92131C10.3781 9.33329 10.7957 9.0752 11 8.66663C11.2043 8.25805 11.6219 7.99996 12.0787 7.99996H14.3333M5.97771 2.66663H10.0223C10.7402 2.66663 11.0992 2.66663 11.4161 2.77594C11.6963 2.8726 11.9516 3.03036 12.1634 3.23779C12.4029 3.47236 12.5634 3.79343 12.8845 4.43554L14.3288 7.32429C14.4548 7.57628 14.5178 7.70228 14.5623 7.83432C14.6017 7.95159 14.6302 8.07227 14.6474 8.1948C14.6667 8.33278 14.6667 8.47364 14.6667 8.75538V10.1333C14.6667 11.2534 14.6667 11.8135 14.4487 12.2413C14.2569 12.6176 13.951 12.9236 13.5746 13.1153C13.1468 13.3333 12.5868 13.3333 11.4667 13.3333H4.53334C3.41323 13.3333 2.85318 13.3333 2.42535 13.1153C2.04903 12.9236 1.74307 12.6176 1.55132 12.2413C1.33334 11.8135 1.33334 11.2534 1.33334 10.1333V8.75538C1.33334 8.47364 1.33334 8.33278 1.35265 8.1948C1.36981 8.07227 1.39829 7.95159 1.43775 7.83432C1.48218 7.70228 1.54517 7.57628 1.67117 7.32429L3.11554 4.43554C3.43661 3.79342 3.59714 3.47236 3.83663 3.23779C4.04842 3.03036 4.30368 2.8726 4.58393 2.77594C4.90084 2.66663 5.2598 2.66663 5.97771 2.66663Z",
+"calendar":"M14 6.66671H2M10.6667 1.33337V4.00004M5.33333 1.33337V4.00004M5.2 14.6667H10.8C11.9201 14.6667 12.4802 14.6667 12.908 14.4487C13.2843 14.257 13.5903 13.951 13.782 13.5747C14 13.1469 14 12.5868 14 11.4667V5.86671C14 4.7466 14 4.18655 13.782 3.75873C13.5903 3.3824 13.2843 3.07644 12.908 2.88469C12.4802 2.66671 11.9201 2.66671 10.8 2.66671H5.2C4.0799 2.66671 3.51984 2.66671 3.09202 2.88469C2.71569 3.07644 2.40973 3.3824 2.21799 3.75873C2 4.18655 2 4.7466 2 5.86671V11.4667C2 12.5868 2 13.1469 2.21799 13.5747C2.40973 13.951 2.71569 14.257 3.09202 14.4487C3.51984 14.6667 4.0799 14.6667 5.2 14.6667Z",
+"send-01":"M6.99968 8.99999L13.9997 1.99999M7.08473 9.2187L8.83681 13.724C8.99116 14.1209 9.06833 14.3194 9.17953 14.3773C9.27593 14.4275 9.39077 14.4276 9.48722 14.3775C9.59849 14.3197 9.6759 14.1213 9.83072 13.7246L14.2243 2.46612C14.364 2.108 14.4339 1.92894 14.3957 1.81453C14.3625 1.71516 14.2845 1.63718 14.1851 1.60399C14.0707 1.56576 13.8917 1.63564 13.5335 1.77539L2.27505 6.16895C1.87833 6.32377 1.67998 6.40118 1.62217 6.51245C1.57206 6.60891 1.57212 6.72374 1.62235 6.82014C1.68029 6.93134 1.87874 7.00852 2.27563 7.16286L6.78097 8.91494C6.86153 8.94627 6.90182 8.96194 6.93574 8.98613C6.9658 9.00758 6.9921 9.03387 7.01354 9.06393C7.03774 9.09785 7.0534 9.13814 7.08473 9.2187Z",
+"user-03":"M2 13.3333C3.55719 11.6817 5.67134 10.6667 8 10.6667C10.3287 10.6667 12.4428 11.6817 14 13.3333M11 5C11 6.65685 9.65685 8 8 8C6.34315 8 5 6.65685 5 5C5 3.34315 6.34315 2 8 2C9.65685 2 11 3.34315 11 5Z",
+"globe-01":"M1.33334 7.99992H14.6667M1.33334 7.99992C1.33334 11.6818 4.3181 14.6666 8 14.6666M1.33334 7.99992C1.33334 4.31802 4.3181 1.33325 8 1.33325M14.6667 7.99992C14.6667 11.6818 11.6819 14.6666 8 14.6666M14.6667 7.99992C14.6667 4.31802 11.6819 1.33325 8 1.33325M8 1.33325C9.66752 3.15882 10.6152 5.52794 10.6667 7.99992C10.6152 10.4719 9.66752 12.841 8 14.6666M8 1.33325C6.33248 3.15882 5.38483 5.52794 5.33334 7.99992C5.38483 10.4719 6.33248 12.841 8 14.6666",
+"settings-02":"M6.2634 12.914L6.65303 13.7903C6.76886 14.0511 6.95789 14.2728 7.19719 14.4283C7.43648 14.5839 7.71577 14.6666 8.00118 14.6666C8.28659 14.6666 8.56588 14.5839 8.80518 14.4283C9.04448 14.2728 9.2335 14.0511 9.34933 13.7903L9.73896 12.914C9.87766 12.6031 10.111 12.3438 10.4056 12.1733C10.7022 12.0022 11.0452 11.9294 11.3856 11.9651L12.339 12.0666C12.6227 12.0966 12.9091 12.0436 13.1634 11.9141C13.4177 11.7846 13.629 11.5841 13.7716 11.337C13.9143 11.0899 13.9824 10.8068 13.9674 10.5218C13.9524 10.2369 13.855 9.96245 13.6871 9.73177L13.1227 8.95622C12.9217 8.67801 12.8143 8.34313 12.816 7.99992C12.8159 7.65764 12.9243 7.32415 13.1256 7.04733L13.6901 6.27177C13.858 6.04109 13.9553 5.76663 13.9703 5.4817C13.9853 5.19677 13.9173 4.91361 13.7745 4.66659C13.6319 4.41941 13.4207 4.21891 13.1664 4.0894C12.9121 3.9599 12.6257 3.90694 12.3419 3.93696L11.3886 4.03844C11.0481 4.07419 10.7051 4.00133 10.4086 3.83029C10.1133 3.65875 9.87997 3.39816 9.74192 3.08584L9.34933 2.20955C9.2335 1.9487 9.04448 1.72706 8.80518 1.57152C8.56588 1.41597 8.28659 1.33321 8.00118 1.33325C7.71577 1.33321 7.43648 1.41597 7.19719 1.57152C6.95789 1.72706 6.76886 1.9487 6.65303 2.20955L6.2634 3.08584C6.12536 3.39816 5.89199 3.65875 5.59674 3.83029C5.30021 4.00133 4.95718 4.07419 4.61674 4.03844L3.66044 3.93696C3.37666 3.90694 3.09027 3.9599 2.83599 4.0894C2.5817 4.21891 2.37045 4.41941 2.22785 4.66659C2.08506 4.91361 2.01704 5.19677 2.03203 5.4817C2.04702 5.76663 2.14438 6.04109 2.31229 6.27177L2.87674 7.04733C3.07803 7.32415 3.18643 7.65764 3.18637 7.99992C3.18643 8.34219 3.07803 8.67568 2.87674 8.95251L2.31229 9.72807C2.14438 9.95875 2.04702 10.2332 2.03203 10.5181C2.01704 10.8031 2.08506 11.0862 2.22785 11.3333C2.37059 11.5803 2.58187 11.7807 2.83611 11.9102C3.09036 12.0397 3.37668 12.0927 3.66044 12.0629L4.61378 11.9614C4.95422 11.9256 5.29725 11.9985 5.59378 12.1695C5.89013 12.3406 6.12458 12.6012 6.2634 12.914ZM9.99999 7.99992C9.99999 9.10449 9.10456 9.99992 7.99999 9.99992C6.89542 9.99992 5.99999 9.10449 5.99999 7.99992C5.99999 6.89535 6.89542 5.99992 7.99999 5.99992C9.10456 5.99992 9.99999 6.89535 9.99999 7.99992Z",
+"marker-pin-02":"M10 6.33325C10 7.43782 9.10457 8.33325 8 8.33325C6.89543 8.33325 6 7.43782 6 6.33325C6 5.22868 6.89543 4.33325 8 4.33325C9.10457 4.33325 10 5.22868 10 6.33325ZM13.3333 6.66658C13.3333 10.2788 9.33333 11.9999 8 14.6666C6.66666 11.9999 2.66666 10.2788 2.66666 6.66658C2.66666 3.72107 5.05448 1.33325 8 1.33325C10.9455 1.33325 13.3333 3.72107 13.3333 6.66658Z"
+};
+var IC14={"plus":"M6.99996 2.91663V11.0833M2.91663 6.99996H11.0833",
+"layout-left":"M5.25 1.75V12.25M4.55 1.75H9.45C10.4301 1.75 10.9201 1.75 11.2945 1.94074C11.6238 2.10852 11.8915 2.37623 12.0593 2.70552C12.25 3.07986 12.25 3.56991 12.25 4.55V9.45C12.25 10.4301 12.25 10.9201 12.0593 11.2945C11.8915 11.6238 11.6238 11.8915 11.2945 12.0593C10.9201 12.25 10.4301 12.25 9.45 12.25H4.55C3.56991 12.25 3.07986 12.25 2.70552 12.0593C2.37623 11.8915 2.10852 11.6238 1.94074 11.2945C1.75 10.9201 1.75 10.4301 1.75 9.45V4.55C1.75 3.56991 1.75 3.07986 1.94074 2.70552C2.10852 2.37623 2.37623 2.10852 2.70552 1.94074C3.07986 1.75 3.56991 1.75 4.55 1.75Z"};
+function ico(n,s){s=s||16;return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 '+s+' '+s+'" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+(s==14?IC14[n]:IC[n])+'"/></svg>'}
+
+/* разделы по макету; у «Мультичата» счётчик */
+var NAV=[["home","Главная","home-smile"],["chat","Мультичат","inbox-01",9],["calendar","Календарь","calendar"],["clients","Клиенты","user-03"],
+  ["portal","Портал","globe-01"],["promo","Продвижение","send-01"],["settings","Настройки","settings-02"]];
+$("#nav").innerHTML=NAV.map(function(n){return '<a href="#'+n[0]+'" data-id="'+n[0]+'">'+ico(n[2])+'<span class="t">'+n[1]+'</span>'+(n[3]!=null?'<span class="c">'+n[3]+'</span>':'')+'</a>'}).join("");
+$("#locIc").outerHTML=ico("marker-pin-02");$("#plusIc").outerHTML=ico("plus",14);$("#sbbIc").outerHTML=ico("layout-left",14);
+/* меню на планшете и телефоне: открывается кнопкой в тулбаре, закрывается выбором раздела, нажатием мимо или Esc */
+function navOpen(o){document.body.classList.toggle("nav-open",o);$("#sbb").setAttribute("aria-expanded",o?"true":"false");if(o)requestAnimationFrame(layout)}
+$("#sbb").addEventListener("click",function(e){e.stopPropagation();navOpen(!document.body.classList.contains("nav-open"))});
+document.addEventListener("click",function(e){if(document.body.classList.contains("nav-open")&&!e.target.closest("#side"))navOpen(false)});
+document.addEventListener("keydown",function(e){if(e.key=="Escape")navOpen(false)});
+$("#nav").addEventListener("click",function(e){if(e.target.closest("a"))navOpen(false)});
+
+/* навигация по центру между Top и Bottom — отступ в целых пикселях, чтобы текст не мылился */
+/* позиции округляем до физических пикселей экрана: на ретине допускаются половинки, как в Figma, на обычном экране — целые */
+function snap(v){var d=window.devicePixelRatio||1;return Math.floor(v*d)/d}
+/* ширины текста «по содержимому» — вверх до целого (или как в Figma, если указано data-w) */
+function snapText(){document.querySelectorAll("#acct span:last-child,#nav .c,#loc span,#addb span").forEach(function(e){e.style.width="";e.style.display="inline-block";
+  e.style.width=(e.dataset.w||Math.ceil(e.getBoundingClientRect().width))+"px"})}
+function centerNav(){var m=$("#sMid"),n=$("#nav");n.style.marginTop="0px";
+  var off=Math.max(0,snap((m.clientHeight-n.getBoundingClientRect().height)/2));n.style.marginTop=off+"px"}
+/* пустое состояние по центру панели — тоже в целых пикселях */
+function centerEmpty(){var b=$("#body"),e=$("#empty");
+  var p=e.querySelector("p");p.style.width="";p.style.width=(p.dataset.w||Math.ceil(p.getBoundingClientRect().width))+"px";
+  var r=e.getBoundingClientRect();
+  e.style.left=Math.max(0,snap((b.clientWidth-r.width)/2))+"px";
+  e.style.top=Math.max(0,snap((b.clientHeight-r.height)/2))+"px"}
+function layout(){snapText();centerNav();centerEmpty()}
+
+function route(){var h=location.hash.slice(1),it=NAV.filter(function(n){return n[0]==h})[0]||NAV[0];
+  document.querySelectorAll("#nav a").forEach(function(a){if(a.dataset.id==it[0])a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  $("#title").textContent=it[1];document.title=it[1]+" — Портал";layout()}
+window.addEventListener("hashchange",route);
+
+/* ширина сайдбара: 240–360 px, запоминается в браузере, двойной клик — 240 */
+var MIN=240,MAX=360,root=document.documentElement,rz=$("#rz");
+function setW(w){w=Math.round(Math.min(MAX,Math.max(MIN,w)));root.style.setProperty("--side-drag",w+"px");return w}
+try{var sv=+localStorage.getItem("portal-v3-side");if(sv)setW(sv)}catch(e){}
+rz.addEventListener("pointerdown",function(e){e.preventDefault();rz.setPointerCapture(e.pointerId);document.body.classList.add("rzing");
+  var x0=e.clientX,w0=$("#side").getBoundingClientRect().width,w=w0;
+  function mv(ev){w=setW(w0+ev.clientX-x0);layout()}
+  function up(){rz.removeEventListener("pointermove",mv);rz.removeEventListener("pointerup",up);rz.removeEventListener("pointercancel",up);
+    document.body.classList.remove("rzing");try{localStorage.setItem("portal-v3-side",w)}catch(e){}}
+  rz.addEventListener("pointermove",mv);rz.addEventListener("pointerup",up);rz.addEventListener("pointercancel",up)});
+rz.addEventListener("dblclick",function(){setW(MIN);layout();try{localStorage.removeItem("portal-v3-side")}catch(e){}});
+
+new ResizeObserver(layout).observe(document.body);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
+route();
+})();
+
+</script>
+</body>
+</html>
