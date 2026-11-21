@@ -1,0 +1,10 @@
+# GitHub Pages: публикуем только актуальный кабинет (v3).
+# Старые версии v1 и v2 лежат в репозитории и на компьютере, но на сайт не попадают.
+exclude:
+  - apps/dashboard
+  - apps/dashboard-v2
+  - v1
+  - v2
+  - experiments
+  - CLAUDE.md
+  - README.md
