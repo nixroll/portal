@@ -26,7 +26,14 @@
   --fg-primary:#181D27;
   --fg-secondary:#414651;
   --fg-tertiary:#535862;
-  --indigo-500:#6172F3;           /* иконка выбранного пункта (примитив, одинаков в обеих темах) */
+  --indigo-500:#6172F3;
+  --bg-tertiary:#F5F5F5;          /* фон соцкнопок и выключенного тумблера */
+  --border-secondary:#E9EAEB;     /* рамка карточки настройки */
+  --border-tertiary:#F5F5F5;      /* обводка аватара в превью */
+  --brand-solid:#7F56D9; --brand-solid-hover:#6941C6; /* включённый тумблер */
+  --border-brand:#9E77ED; --text-placeholder:#717680; --bg-primary-hover:#FAFAFA;
+  --shadow-xs:0 1px 2px rgba(10,13,18,.05);
+  --shadow-sm:0 1px 3px rgba(10,13,18,.1),0 1px 2px -1px rgba(10,13,18,.1);           /* иконка выбранного пункта (примитив, одинаков в обеих темах) */
   --side-w:var(--side-drag,240px);
   color-scheme:light;
 }
@@ -35,13 +42,13 @@
     --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
     --border-primary:#373A41; --border-secondary-alt:#22262F;
     --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
-    --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; color-scheme:dark}
+    --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; color-scheme:dark}
 }
 :root[data-theme="dark"]{
   --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
   --border-primary:#373A41; --border-secondary-alt:#22262F;
   --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
-  --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; color-scheme:dark}
+  --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; color-scheme:dark}
 
 /* ---------- чёткий рендер ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -143,6 +150,85 @@ body.rzing{cursor:col-resize;user-select:none}
 .scrim{display:none}
 @media (max-width:1023px){.scrim{display:block}}
 @media (prefers-reduced-motion:reduce){.side,.scrim{transition:none!important}}
+/* =================== Портал (мини-сайт заведения): вкладки, настройки, превью справа =================== */
+/* Selector: 28 px, капсула, поля 0 12, рамка 0,5 border-primary, тень shadow-xs, текст Text xs/Medium 12/18.
+   Normal — bg-primary_alt, text-secondary; Hover и Selected — bg-secondary_hover, text-primary */
+.psel{display:flex;flex-wrap:wrap;gap:6px;padding:16px}
+.psel button{display:inline-flex;align-items:center;height:28px;padding:0 12.5px;border-radius:9999px;background:var(--bg-primary-alt);
+  box-shadow:inset 0 0 0 .5px var(--border-primary),var(--shadow-xs);font-size:12px;line-height:18px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
+.psel button span{display:inline-block}
+.psel button:hover,.psel button[aria-selected="true"]{background:var(--bg-secondary-hover);color:var(--text-primary)}
+.psel.m{display:none}
+/* Карточка настройки: поля вокруг 16, рамка 0,5 border-secondary, скругление 10, поля внутри 16, отступ 10 */
+/* Содержимое вкладки: отступ 10 после вкладок, поля 16, между карточками 16 */
+.pcont{display:flex;flex-direction:column;gap:16px;margin-top:10px;padding:16px}
+.pcont[hidden]{display:none}
+/* Карточка настроек: рамка 0,5 border-secondary внутри (в раскладке), скругление 10 */
+.pc{padding:.5px;border-radius:10px;box-shadow:inset 0 0 0 .5px var(--border-secondary)}
+/* Строка: поля 16, отступ 16; со второй строки — линия 0,5 сверху (в раскладке) */
+.pr{display:flex;align-items:center;gap:16px;padding:16px}
+.pr+.pr{padding-top:16.5px;box-shadow:inset 0 .5px 0 var(--border-secondary)}
+.pr .tx{flex:1;min-width:0}
+.pr .tx b{display:block;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr .tx small{display:block;font-size:12px;line-height:18px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr .tx small em{font-style:normal;color:var(--text-primary)}
+.pr .ct{flex:none;display:flex;align-items:center;gap:8px}
+/* Поле ввода портала: 32 px, скругление 8, bg-primary, рамка 0,5 border-primary, тень shadow-xs, текст Text sm/Regular; фокус — рамка border-brand */
+.pin{display:block;width:280px;height:32px;padding:0 10.5px;border:0;border-radius:8px;background:var(--bg-primary);color:var(--text-primary);
+  box-shadow:inset 0 0 0 .5px var(--border-primary),var(--shadow-xs);font:400 14px/20px Inter,system-ui,sans-serif;outline:none;text-overflow:ellipsis}
+.pin::placeholder{color:var(--text-placeholder)}
+.pin:focus{box-shadow:inset 0 0 0 1px var(--border-brand),var(--shadow-xs)}
+.pin[readonly]{cursor:default}
+.pin.w184{width:184px}.pin.w224{width:224px}
+/* Кнопка — тот же компонент Selector: капсула 28 px */
+.chip{display:inline-flex;align-items:center;height:28px;padding:0 12.5px;border-radius:9999px;background:var(--bg-primary-alt);
+  box-shadow:inset 0 0 0 .5px var(--border-primary),var(--shadow-xs);font-size:12px;line-height:18px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
+.chip:hover{background:var(--bg-secondary-hover);color:var(--text-primary)}
+/* Миниатюры: логотип 32 кругом, фото 56×36 со скруглением 6, рамка 0,5 border-secondary */
+.thumb{position:relative;flex:none;width:56px;height:36px;border-radius:6px;background:var(--img) center/cover}
+.thumb.logo{width:32px;height:32px;border-radius:9999px}
+.thumb::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 .5px var(--border-secondary)}
+/* _Toggle base sm: 36×20, поля 2, кружок 16 (fg-white, тень shadow-sm). Вкл — bg-brand-solid (наведение — brand-solid_hover), выкл — bg-tertiary */
+.tgl{flex:none;position:relative;width:36px;height:20px;padding:2px;border-radius:9999px;background:var(--bg-tertiary)}
+.tgl::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:9999px;background:#fff;box-shadow:var(--shadow-sm);transition:left .15s ease}
+.tgl[aria-checked="true"]{background:var(--brand-solid)}
+.tgl[aria-checked="true"]:hover{background:var(--brand-solid-hover)}
+.tgl[aria-checked="true"]::after{left:18px}
+/* Превью (View): 402 px справа, линия 0,5 слева; Page — поля 64 16, отступы 40, всё по центру */
+.view{display:none}
+.pv{display:flex;flex-direction:column;align-items:center;gap:40px;padding:64px 16px}
+.pv .hd{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+.pv .ava{width:96px;height:96px;border-radius:9999px;box-shadow:0 0 0 .5px var(--border-tertiary);overflow:hidden}
+.pv .ava img{display:block;width:96px;height:96px}
+.pv .nm{display:flex;flex-direction:column;gap:2px;width:100%;text-align:center}
+.pv .nm b{font-size:20px;line-height:30px;font-weight:600;color:var(--text-primary)}
+.pv .nm span{color:var(--text-tertiary)}
+.pv .cards{display:flex;flex-direction:column;gap:12px;width:100%}
+/* Card: 240,5 px, скругление 20, рамка 1 px #FFF 8 % внутри, фото + градиент сверху вниз (#2D3232 0 % → #101212 60 %), текст снизу, поля 20 */
+.pcard{position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:240.5px;padding:21px;border-radius:20px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(45,50,50,0),rgba(16,18,18,.6)),var(--img) center/cover;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),var(--shadow-xs)}
+.pcard b{font-size:18px;line-height:28px;font-weight:600;color:#fff}
+.pcard span{color:rgba(255,255,255,.6)}
+.pv .soc{display:flex;gap:16px}
+.pv .soc a[hidden],.pcard[hidden]{display:none}
+.pv .soc a{display:grid;place-items:center;width:48px;height:48px;border-radius:9999px;background:var(--bg-tertiary);box-shadow:inset 0 0 0 .5px var(--border-primary),var(--shadow-xs);color:var(--fg-tertiary)}
+.pv .soc svg{width:24px;height:24px}
+.portal{display:none}
+body[data-page="portal"] .portal{display:block}
+body[data-page="portal"] .empty{display:none}
+@media (min-width:1024px){
+  /* на десктопе раздел «Портал» делится на две колонки: настройки (с тулбаром) и превью 402 px */
+  body[data-page="portal"] .tb{top:1px;left:1px;right:403px}
+  body[data-page="portal"] .body{margin:44.5px 402.5px .5px .5px}
+  body[data-page="portal"] .view{display:block;position:absolute;top:.5px;right:.5px;bottom:.5px;width:402px;overflow-y:auto;scrollbar-width:none;
+    box-shadow:inset .5px 0 0 var(--border-secondary-alt)}
+  body[data-page="portal"] .view::-webkit-scrollbar{display:none}
+}
+@media (max-width:1023px){
+  /* на планшете и телефоне — только вкладки «Профиль · Меню · Ссылки», как в макете */
+  .psel.d,.pcont{display:none}
+  .psel.m{display:flex}
+}
 </style>
 </head>
 <body>
@@ -159,10 +245,25 @@ body.rzing{cursor:col-resize;user-select:none}
   </aside>
   <div class="scrim" id="scrim" aria-hidden="true"></div>
   <main class="pg">
-    <header class="tb"><div class="tl"><button class="sbb" id="sbb" aria-label="Открыть меню" aria-expanded="false" aria-controls="side"><svg id="sbbIc"></svg></button><h1 id="title">Главная</h1></div><button class="addb" id="addb"><svg id="plusIc"></svg><span data-w="47">Виджет</span></button></header>
+    <header class="tb"><div class="tl"><button class="sbb" id="sbb" aria-label="Открыть меню" aria-expanded="false" aria-controls="side"><svg id="sbbIc"></svg></button><h1 id="title">Главная</h1></div><button class="addb" id="addb"><svg id="plusIc"></svg><span id="addTx" data-w="47">Виджет</span></button></header>
     <div class="body" id="body">
       <div class="empty" id="empty"><img src="img/empty-heart.png" alt="" width="96" height="96"><p data-w="157">Раздел пока пустой</p></div>
+      <div class="portal" id="portal">
+        <div class="psel d" role="tablist"><button role="tab" aria-selected="true" data-t="general"><span data-w="42">Общее</span></button><button role="tab" aria-selected="false" data-t="menu"><span data-w="35">Меню</span></button><button role="tab" aria-selected="false" data-t="loyalty"><span data-w="71">Лояльность</span></button><button role="tab" aria-selected="false" data-t="links"><span data-w="46">Ссылки</span></button></div>
+        <div class="psel m" role="tablist"><button role="tab" aria-selected="true" data-t="profile"><span data-w="54">Профиль</span></button><button role="tab" aria-selected="false" data-t="menu"><span data-w="35">Меню</span></button><button role="tab" aria-selected="false" data-t="links"><span data-w="46">Ссылки</span></button></div>
+        <div id="pPanels"></div>
+      </div>
     </div>
+    <aside class="view" id="view" aria-label="Так увидит гость">
+      <div class="pv">
+        <div class="hd"><div class="ava"><img id="pvLogo" src="img/portal-avatar.jpg" alt="" width="96" height="96"></div><div class="nm"><b id="pvName">Ранак</b><span id="pvHours">Ежедневно · 11:00 - 23:00</span></div></div>
+        <div class="cards">
+          <div class="pcard" id="pvMenu" style="--img:url(img/portal-card-autumn.jpg)"><b>Попробуй осень</b><span>Сезонное меню</span></div>
+          <div class="pcard" id="pvLoyalty" style="--img:url(img/portal-card-takeaway.jpg)"><b>5% на вынос</b><span>Лояльность</span></div>
+        </div>
+        <div class="soc"><a href="#portal" id="pvGoogle" aria-label="Google"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.8426 6.54781C15.6036 5.36611 13.9501 4.72235 12.2392 4.74881C9.10863 4.74881 6.44981 6.86086 5.5018 9.70486V9.70493C4.99913 11.1953 4.99913 12.8091 5.50179 14.2994H5.50619C6.45861 17.139 9.11303 19.2511 12.2437 19.2511C13.8597 19.2511 15.247 18.8378 16.3223 18.1077V18.1047C17.5878 17.2669 18.452 15.9486 18.721 14.4582H12.2393V9.83722H23.558C23.6991 10.6397 23.7653 11.4599 23.7653 12.2756C23.7653 15.9254 22.4609 19.0112 20.1913 21.1012L20.1937 21.103C18.2051 22.9373 15.4757 24 12.2392 24C7.70204 24 3.55286 21.4426 1.51575 17.3904V17.3904C-0.186243 13.9996 -0.186239 10.0048 1.51576 6.61398H1.51579L1.51575 6.61395C3.55286 2.55737 7.70204 -4.58262e-05 12.2392 -4.58262e-05C15.22 -0.0353205 18.0992 1.08465 20.2686 3.12176L16.8426 6.54781Z"/></svg></a><a href="#portal" id="pvLinkedin" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z"/></svg></a><a href="#portal" id="pvTelegram" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.4301 8.85893C11.263 9.3444 8.93026 10.3492 5.43201 11.8733C4.86395 12.0992 4.56638 12.3202 4.53929 12.5363C4.49351 12.9015 4.95083 13.0453 5.57359 13.2411C5.6583 13.2678 5.74608 13.2954 5.83606 13.3246C6.44876 13.5238 7.27295 13.7568 7.70141 13.766C8.09007 13.7744 8.52385 13.6142 9.00276 13.2853C12.2713 11.079 13.9585 9.96381 14.0644 9.93977C14.1392 9.92281 14.2427 9.90148 14.3129 9.96385C14.3831 10.0262 14.3762 10.1443 14.3687 10.176C14.3234 10.3691 12.5282 12.0381 11.5992 12.9018C11.3096 13.171 11.1042 13.362 11.0622 13.4056C10.9681 13.5033 10.8722 13.5958 10.7801 13.6846C10.2109 14.2333 9.78403 14.6448 10.8037 15.3168C11.2938 15.6397 11.6859 15.9067 12.0771 16.1731C12.5043 16.4641 12.9304 16.7543 13.4817 17.1157C13.6222 17.2077 13.7564 17.3034 13.887 17.3965C14.3842 17.751 14.8309 18.0694 15.3827 18.0186C15.7034 17.9891 16.0346 17.6876 16.2028 16.7884C16.6003 14.6631 17.3817 10.0585 17.5623 8.16097C17.5782 7.99473 17.5583 7.78197 17.5423 7.68857C17.5263 7.59518 17.4929 7.46211 17.3715 7.3636C17.2277 7.24694 17.0058 7.22234 16.9065 7.22408C16.4551 7.23203 15.7627 7.47282 12.4301 8.85893Z"/></svg></a></div>
+      </div>
+    </aside>
   </main>
 </div>
 <script>
@@ -203,7 +304,7 @@ $("#nav").addEventListener("click",function(e){if(e.target.closest("a"))navOpen(
 /* позиции округляем до физических пикселей экрана: на ретине допускаются половинки, как в Figma, на обычном экране — целые */
 function snap(v){var d=window.devicePixelRatio||1;return Math.floor(v*d)/d}
 /* ширины текста «по содержимому» — вверх до целого (или как в Figma, если указано data-w) */
-function snapText(){document.querySelectorAll("#acct span:last-child,#nav .c,#loc span,#addb span").forEach(function(e){e.style.width="";e.style.display="inline-block";
+function snapText(){document.querySelectorAll("#acct span:last-child,#nav .c,#loc span,#addb span,.psel button span,.chip span").forEach(function(e){e.style.width="";e.style.display="inline-block";if(!e.dataset.w&&!e.offsetParent)return;
   e.style.width=(e.dataset.w||Math.ceil(e.getBoundingClientRect().width))+"px"})}
 function centerNav(){var m=$("#sMid"),n=$("#nav");n.style.marginTop="0px";
   var off=Math.max(0,snap((m.clientHeight-n.getBoundingClientRect().height)/2));n.style.marginTop=off+"px"}
@@ -217,8 +318,67 @@ function layout(){snapText();centerNav();centerEmpty()}
 
 function route(){var h=location.hash.slice(1),it=NAV.filter(function(n){return n[0]==h})[0]||NAV[0];
   document.querySelectorAll("#nav a").forEach(function(a){if(a.dataset.id==it[0])a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
-  $("#title").textContent=it[1];document.title=it[1]+" — Портал";layout()}
+  $("#title").textContent=it[1];document.body.dataset.page=it[0];$("#addTx").textContent=it[0]=="portal"?"Секцию":"Виджет";$("#addTx").dataset.w=it[0]=="portal"?48:47;document.title=it[1]+" — Портал";layout()}
 window.addEventListener("hashchange",route);
+/* ================= Портал: вкладки «Общее · Меню · Лояльность · Ссылки», каждая управляет превью справа ================= */
+var P={online:true,name:"Ранак",hours:"Ежедневно · 11:00 - 23:00",url:"portal.ranak.by",
+  menu:{show:true,title:"Попробуй осень",sub:"Сезонное меню"},loyalty:{show:true,title:"5% на вынос",sub:"Лояльность"},
+  links:{google:{show:true,url:"g.page/ranak"},linkedin:{show:true,url:"linkedin.com/company/ranak"},telegram:{show:true,url:"t.me/ranak"}}};
+try{var sv=JSON.parse(localStorage.getItem("portal-settings")||"null");if(sv)P=Object.assign(P,sv,{menu:Object.assign(P.menu,sv.menu),loyalty:Object.assign(P.loyalty,sv.loyalty),links:Object.assign(P.links,sv.links)})}catch(e){}
+var IMG={logo:"img/portal-avatar.jpg",menu:"img/portal-card-autumn.jpg",loyalty:"img/portal-card-takeaway.jpg"}; /* заменённые фото живут до перезагрузки */
+function save(){try{localStorage.setItem("portal-settings",JSON.stringify(P))}catch(e){}}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function row(t,sub,ctl){return '<div class="pr"><div class="tx"><b>'+t+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div><div class="ct">'+ctl+'</div></div>'}
+function tgl(k,on,lbl){return '<button class="tgl" role="switch" data-k="'+k+'" aria-checked="'+(on?"true":"false")+'" aria-label="'+lbl+'"></button>'}
+function inp(k,v,cls,ph){return '<input class="pin'+(cls?" "+cls:"")+'" data-k="'+k+'" value="'+esc(v)+'"'+(ph?' placeholder="'+ph+'"':'')+' spellcheck="false">'}
+function photo(k,cls){return '<span class="thumb'+(cls?" "+cls:"")+'" data-img="'+k+'" style="--img:url('+IMG[k]+')"></span><button class="chip" data-pick="'+k+'"><span>Заменить</span></button>'}
+function card(rows){return '<div class="pc">'+rows.join("")+'</div>'}
+function cardTab(k,label){var c=P[k];return card([
+  row("Показывать на портале","Карточка «"+esc(c.title)+"» в ленте портала",tgl(k+".show",c.show,"Показывать на портале")),
+  row("Фото","Горизонтальное, от 1110 × 722 px",photo(k)),
+  row("Заголовок","Крупная строка на фото",inp(k+".title",c.title,"","Например, «Попробуй осень»")),
+  row("Подпись","Строка под заголовком",inp(k+".sub",c.sub,"",label))])}
+function onlineSub(){return P.online?'Портал включен и доступен онлайн для всех по ссылке <em>'+esc(P.url)+'</em>':'Портал выключен. Гости увидят его, когда вы включите доступ'}
+$("#pPanels").innerHTML=
+  '<div class="pcont" data-p="general">'+
+    card([row("Доступен онлайн",'<span id="pOnlineTx">'+onlineSub()+'</span>',tgl("online",P.online,"Доступен онлайн"))])+
+    card([row("Логотип","Квадратное изображение от 256 px, показывается кругом",photo("logo","logo")),
+          row("Название","Крупно под логотипом",inp("name",P.name,"","Название заведения")),
+          row("Время работы","Строка под названием",inp("hours",P.hours,"","Например, «Ежедневно · 11:00 - 23:00»"))])+
+    card([row("Адрес портала","По этой ссылке гости откроют портал",inp("url",P.url,"w184")+'<button class="chip" id="pCopy"><span>Копировать</span></button>')])+
+  '</div>'+
+  '<div class="pcont" data-p="menu" hidden>'+cardTab("menu","Сезонное меню")+'</div>'+
+  '<div class="pcont" data-p="loyalty" hidden>'+cardTab("loyalty","Лояльность")+'</div>'+
+  '<div class="pcont" data-p="links" hidden>'+card([
+    row("Google","Карточка заведения в Google Картах",inp("links.google.url",P.links.google.url,"w224","Ссылка")+tgl("links.google.show",P.links.google.show,"Показывать Google")),
+    row("LinkedIn","Страница компании",inp("links.linkedin.url",P.links.linkedin.url,"w224","Ссылка")+tgl("links.linkedin.show",P.links.linkedin.show,"Показывать LinkedIn")),
+    row("Telegram","Канал или чат с гостями",inp("links.telegram.url",P.links.telegram.url,"w224","Ссылка")+tgl("links.telegram.show",P.links.telegram.show,"Показывать Telegram"))])+
+  '</div>';
+var file=document.createElement("input");file.type="file";file.accept="image/*";file.hidden=true;document.body.appendChild(file);var pickKey=null;
+function getK(k){return k.split(".").reduce(function(o,x){return o[x]},P)}
+function setK(k,v){var a=k.split("."),o=P;for(var i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v}
+function href(u){return /^https?:\/\//.test(u)?u:"https://"+u}
+/* превью справа — всегда по текущим настройкам */
+function renderPreview(){
+  $("#pvName").textContent=P.name;$("#pvHours").textContent=P.hours;$("#pvLogo").src=IMG.logo;
+  ["menu","loyalty"].forEach(function(k){var el=$(k=="menu"?"#pvMenu":"#pvLoyalty");el.hidden=!P[k].show;el.style.setProperty("--img","url("+IMG[k]+")");
+    el.querySelector("b").textContent=P[k].title;el.querySelector("span").textContent=P[k].sub});
+  [["google","#pvGoogle"],["linkedin","#pvLinkedin"],["telegram","#pvTelegram"]].forEach(function(x){var l=P.links[x[0]],a=$(x[1]);a.hidden=!l.show||!l.url;a.href=l.url?href(l.url):"#portal";a.target=l.url?"_blank":"";a.rel="noopener"});
+  $("#pOnlineTx").innerHTML=onlineSub();
+  document.querySelectorAll('[data-p] .pr .tx small').forEach(function(s){var t=s.closest('[data-p]').dataset.p;if((t=="menu"||t=="loyalty")&&/^Карточка/.test(s.textContent))s.textContent="Карточка «"+P[t].title+"» в ленте портала"});
+}
+$("#pPanels").addEventListener("input",function(e){var k=e.target.dataset.k;if(!k)return;setK(k,e.target.value);save();renderPreview()});
+$("#pPanels").addEventListener("click",function(e){var t=e.target.closest(".tgl");
+  if(t){var on=t.getAttribute("aria-checked")!="true";t.setAttribute("aria-checked",on?"true":"false");setK(t.dataset.k,on);save();renderPreview();return}
+  var pk=e.target.closest("[data-pick]");if(pk){pickKey=pk.dataset.pick;file.value="";file.click();return}
+  if(e.target.closest("#pCopy")){var b=$("#pCopy span");try{navigator.clipboard.writeText("https://"+P.url)}catch(er){}b.textContent="Скопировано";b.style.width="";snapText();setTimeout(function(){b.textContent="Копировать";snapText()},1500)}});
+file.addEventListener("change",function(){var f=file.files&&file.files[0];if(!f||!pickKey)return;IMG[pickKey]=URL.createObjectURL(f);
+  document.querySelectorAll('[data-img="'+pickKey+'"]').forEach(function(x){x.style.setProperty("--img","url("+IMG[pickKey]+")")});renderPreview()});
+/* вкладки */
+document.querySelectorAll(".psel").forEach(function(g){g.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+  g.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-selected",x==b?"true":"false")});
+  document.querySelectorAll("#pPanels .pcont").forEach(function(p){p.hidden=p.dataset.p!=b.dataset.t});snapText()})});
+renderPreview();
 
 /* ширина сайдбара: 240–360 px, запоминается в браузере, двойной клик — 240 */
 var MIN=240,MAX=360,root=document.documentElement,rz=$("#rz");
