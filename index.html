@@ -38,7 +38,7 @@
   --border-tertiary:#F5F5F5;      /* обводка аватара в превью */
   --brand-solid:#7F56D9; --brand-solid-hover:#6941C6; /* включённый тумблер */
   --border-brand:#9E77ED; --text-placeholder:#717680; --bg-primary-hover:#FAFAFA;
-  --fg-quaternary:#A4A7AE; --fg-brand-primary:#7F56D9;
+  --fg-quaternary:#A4A7AE; --fg-brand-primary:#7F56D9; --bg-quaternary:#E9EAEB;
   --shadow-lg:0 12px 16px -4px rgba(10,13,18,.08),0 4px 6px -2px rgba(10,13,18,.03),0 2px 2px -1px rgba(10,13,18,.04);
   --shadow-xs:0 1px 2px rgba(10,13,18,.05);
   --shadow-sm:0 1px 3px rgba(10,13,18,.1),0 1px 2px -1px rgba(10,13,18,.1);           /* иконка выбранного пункта (примитив, одинаков в обеих темах) */
@@ -50,13 +50,13 @@
     --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
     --border-primary:#373A41; --border-secondary-alt:#22262F;
     --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
-    --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
+    --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --bg-quaternary:#373A41; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
 }
 :root[data-theme="dark"],.pv[data-theme="dark"]{
   --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
   --border-primary:#373A41; --border-secondary-alt:#22262F;
   --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
-  --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
+  --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --bg-quaternary:#373A41; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
 
 /* ---------- чёткий рендер ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -169,22 +169,22 @@ body.rzing{cursor:col-resize;user-select:none}
 .psel button span{display:inline-block}
 .psel button:hover,.psel button[aria-selected="true"]{background:var(--bg-secondary-hover);color:var(--text-primary)}
 .psel.m{display:none}
-/* Карточка настройки: поля вокруг 16, рамка 0,5 border-secondary, скругление 10, поля внутри 16, отступ 10 */
+/* Карточка настройки: фон bg-tertiary, рамка и разделители 0,5 border-primary, поля и контролы на bg-primary_alt; скругление 10, поля внутри 16, отступ 10 */
 /* Содержимое вкладки: отступ 10 после вкладок, поля 16, между карточками 16 */
 .pcont{display:flex;flex-direction:column;gap:32px;margin-top:10px;padding:16px 16px 32px}
 .pcont[hidden]{display:none}
 /* Карточка настроек: рамка 0,5 border-secondary внутри (в раскладке), скругление 10 */
-.pc{padding:var(--h);border-radius:10px;box-shadow:inset 0 0 0 var(--h) var(--border-secondary)}
+.pc{padding:var(--h);border-radius:10px;background:var(--bg-tertiary);box-shadow:inset 0 0 0 var(--h) var(--border-primary)}
 /* Строка: поля 16, отступ 16; со второй строки — линия 0,5 сверху (в раскладке) */
 .pr{display:flex;align-items:center;gap:16px;padding:16px}
-.pr+.pr{padding-top:calc(16px + var(--h));box-shadow:inset 0 var(--h) 0 var(--border-secondary)}
+.pr+.pr{padding-top:calc(16px + var(--h));box-shadow:inset 0 var(--h) 0 var(--border-primary)}
 .pr .tx{flex:1;min-width:0}
 .pr .tx b{display:block;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pr .tx small{display:block;font-size:12px;line-height:18px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pr .tx small em{font-style:normal;color:var(--text-primary)}
 .pr .ct{flex:none;display:flex;align-items:center;gap:8px}
 /* Поле ввода портала: 32 px, скругление 8, bg-primary, рамка 0,5 border-primary, тень shadow-xs, текст Text sm/Regular; фокус — рамка border-brand */
-.pin{display:block;width:280px;height:32px;padding:0 calc(10px + var(--h));border:0;border-radius:8px;background:var(--bg-primary);color:var(--text-primary);
+.pin{display:block;width:280px;height:32px;padding:0 calc(10px + var(--h));border:0;border-radius:8px;background:var(--bg-primary-alt);color:var(--text-primary);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);font:400 14px/20px Inter,system-ui,sans-serif;outline:none;text-overflow:ellipsis}
 .pin::placeholder{color:var(--text-placeholder)}
 .pin:focus{box-shadow:inset 0 0 0 1px var(--border-brand),var(--shadow-xs)}
@@ -204,6 +204,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .tgl[aria-checked="true"]{background:var(--brand-solid)}
 .tgl[aria-checked="true"]:hover{background:var(--brand-solid-hover)}
 .tgl[aria-checked="true"]::after{left:18px}
+.pc .tgl:not([aria-checked="true"]){background:var(--bg-quaternary)} /* на карточке bg-tertiary выключенный тумблер темнее/светлее фона, иначе сливается */
 /* Разделы вкладки (как в настройках Linear): между разделами 32, заголовок → карточки 12, между карточками 8.
    Заголовок — Text md/Semibold, по левому краю совпадает с названиями строк (16 внутри карточки) */
 .psec{display:flex;flex-direction:column;gap:8px}
@@ -213,7 +214,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .pin.w120{width:120px}.pin.w280{width:280px}
 .dash{font-style:normal;color:var(--text-tertiary)}
 /* Поле со вставкой «https://» (Input field / Leading text): вставка text-tertiary, поле со своей рамкой слева */
-.lt{display:flex;width:260px;height:32px;border-radius:8px;background:var(--bg-primary);box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);cursor:text}
+.lt{display:flex;width:260px;height:32px;border-radius:8px;background:var(--bg-primary-alt);box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);cursor:text}
 .lt.w280{width:280px}
 .lt span{flex:none;padding:6px 10px 6px calc(10px + var(--h));color:var(--text-tertiary)}
 .lt input{flex:1;min-width:0;height:32px;padding:0 calc(10px + var(--h));border:0;border-radius:0 8px 8px 0;background:none;color:var(--text-primary);
@@ -221,7 +222,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .lt input::placeholder{color:var(--text-placeholder)}
 .lt:focus-within{box-shadow:inset 0 0 0 1px var(--border-brand),var(--shadow-xs)}
 /* Select (sm): высота 32, поля 10,5 / 8, шеврон 16 fg-quaternary, ширина по содержимому */
-.sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 calc(10px + var(--h));border-radius:8px;background:var(--bg-primary);
+.sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 calc(10px + var(--h));border-radius:8px;background:var(--bg-primary-alt);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);color:var(--text-primary);white-space:nowrap}
 /* нативный список на сенсорных экранах: прозрачный <select> поверх кнопки, шрифт 16 px — чтобы Safari не приближал страницу */
 .selw{position:relative;display:inline-flex}
