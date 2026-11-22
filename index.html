@@ -246,13 +246,12 @@ body.rzing{cursor:col-resize;user-select:none}
 /* Таблица локаций (по образцу Attio): шапка 36 — xs/Medium text-tertiary, строки 44, разделители 0,5 border-primary, «⋮» 32 */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .sh h3{margin:0}
-.tbl .th,.tbl .tr{display:grid;grid-template-columns:minmax(0,1fr) 120px 140px 32px;align-items:center;gap:16px;padding:0 8px 0 16px}
+.tbl .th,.tbl .tr{display:grid;grid-template-columns:minmax(0,1fr) 120px 32px;align-items:center;gap:16px;padding:0 8px 0 16px}
 .tbl .th{height:36px;font-size:12px;line-height:18px;font-weight:500;color:var(--text-tertiary)}
 .tbl .tr{height:calc(44px + var(--h));padding-top:var(--h);box-shadow:inset 0 var(--h) 0 var(--border-primary)}
 .tbl .c1{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap}
 .tbl .c1 b{font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis}
 .tbl .c1 small{font-size:14px;line-height:20px;color:var(--text-tertiary);overflow:hidden;text-overflow:ellipsis}
-.tbl .ctz{color:var(--text-secondary)}
 .badge{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:9999px;font-style:normal;font-size:12px;line-height:18px;font-weight:500;
   color:var(--fg-brand-primary);background:color-mix(in srgb,var(--brand-solid) 14%,transparent);box-shadow:inset 0 0 0 var(--h) color-mix(in srgb,var(--brand-solid) 35%,transparent)}
 .kb{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;color:var(--fg-quaternary)}
@@ -279,7 +278,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .mdl .pin{width:100%}
 .mdl .selw{display:flex}.mdl .sel{width:100%;justify-content:space-between}
 .mdl .mf{display:flex;justify-content:flex-end;gap:12px;padding:16px 20px;box-shadow:inset 0 var(--h) 0 var(--border-secondary)}
-@media (max-width:640px){.tbl .th,.tbl .tr{grid-template-columns:minmax(0,1fr) auto 32px}.tbl .ctz{display:none}.tbl .c1{flex-direction:column;gap:0;align-items:flex-start}.tbl .tr{height:auto;min-height:calc(56px + var(--h))}}
+@media (max-width:640px){.tbl .th,.tbl .tr{grid-template-columns:minmax(0,1fr) auto 32px}.tbl .c1{flex-direction:column;gap:0;align-items:flex-start}.tbl .tr{height:auto;min-height:calc(56px + var(--h))}}
 /* нативный список на сенсорных экранах: прозрачный <select> поверх кнопки, шрифт 16 px — чтобы Safari не приближал страницу */
 .selw{position:relative;display:inline-flex}
 .nsel{display:none}
@@ -647,12 +646,11 @@ P.set={name:"Ранак",kind:"Ресторан",tz:"Минск · GMT+3",
 P.nl={tz:"Минск · GMT+3"}; /* поля окна «Новая локация» */
 (function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-2")||"null");if(sv&&sv.set)for(var k in sv.set)if(k in P.set)P.set[k]=sv.set[k]}catch(e){}})();
 P.set.locs=P.set.locs.map(function(l){return typeof l=="string"?{name:"Ранак",addr:l,tz:P.set.tz}:l}); /* раньше локация была просто адресом */
-OPT["nl.tz"]=OPT["set.tz"];
-/* Локации — таблица как в Attio (Members): шапка 36, строки 44, колонки «Локация · Статус · Часовой пояс · ⋮» */
+/* Локации — таблица как в Attio (Members): шапка 36, строки 44, колонки «Локация · Статус · ⋮» */
 var DOTSV='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.33" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12.67" r="1"/></svg>';
 var XIC='<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true"><path d="M12 4 4 12M4 4l8 8"/></svg>';
-function locTable(){return '<div class="th" role="row"><span role="columnheader">Локация</span><span role="columnheader">Статус</span><span role="columnheader" class="ctz">Часовой пояс</span><span></span></div>'+
-  P.set.locs.map(function(l,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(l.name)+'</b><small>'+esc(l.addr)+'</small></span><span role="cell">'+(i==P.set.loc?'<i class="badge">Текущая</i>':'')+'</span><span role="cell" class="ctz">'+esc(l.tz)+'</span><button class="kb" data-lockb="'+i+'" aria-label="Действия с локацией" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}
+function locTable(){return '<div class="th" role="row"><span role="columnheader">Локация</span><span role="columnheader">Статус</span><span></span></div>'+
+  P.set.locs.map(function(l,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(l.name)+'</b><small>'+esc(l.addr)+'</small></span><span role="cell">'+(i==P.set.loc?'<i class="badge">Текущая</i>':'')+'</span><button class="kb" data-lockb="'+i+'" aria-label="Действия с локацией" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}
 function buildSettings(){$("#sPanels").innerHTML=
   '<div class="pcont" data-p="general">'+
     sec("Компания",[card([
@@ -728,16 +726,15 @@ function openLocActions(b){closeAct();var i=+b.dataset.lockb,el=document.createE
 document.addEventListener("mousedown",function(e){if(amenu&&!amenu.contains(e.target)&&!e.target.closest("[data-lockb]"))closeAct()});
 addEventListener("resize",closeAct);$("#body").addEventListener("scroll",closeAct,{passive:true});
 /* окно «Новая локация» (как Invite members в Attio): шапка · поля · футер с кнопками */
-function openNewLoc(){closeLoc();closeAct();if($("#mdl"))return;P.nl.tz=(P.set.locs[P.set.loc]||{}).tz||P.set.tz; /* по умолчанию — пояс текущей локации */var bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
+function openNewLoc(){closeLoc();closeAct();if($("#mdl"))return;var bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
   bg.innerHTML='<div class="mdl" role="dialog" aria-modal="true" aria-labelledby="mdlT"><div class="mh"><h2 id="mdlT">Новая локация</h2><button class="x" data-x aria-label="Закрыть">'+XIC+'</button></div>'+
     '<div class="mb"><label><span>Название</span><input class="pin" id="nlName" placeholder="Например, Ранак на Немиге" spellcheck="false"></label>'+
-    '<label><span>Адрес</span><input class="pin" id="nlAddr" placeholder="Улица и дом" spellcheck="false"></label>'+
-    '<div class="fld"><span>Часовой пояс</span>'+sel("nl.tz","Часовой пояс")+'</div></div>'+
+    '<label><span>Адрес</span><input class="pin" id="nlAddr" placeholder="Улица и дом" spellcheck="false"></label>'+'</div>'+
     '<div class="mf"><button class="btn sec" data-x>Отмена</button><button class="btn pri" id="nlOk" disabled>Добавить</button></div></div>';
   document.body.appendChild(bg);var a=$("#nlAddr"),n=$("#nlName"),ok=$("#nlOk"),last=document.activeElement;
   function upd(){ok.disabled=!a.value.trim()}a.addEventListener("input",upd);
   function close(){bg.remove();closeMenu();if(last&&last.focus)last.focus()}
-  function submit(){if(ok.disabled)return;var ad=a.value.trim();addLoc({name:n.value.trim()||"Ранак · "+ad,addr:ad,tz:P.nl.tz});close()}
+  function submit(){if(ok.disabled)return;var ad=a.value.trim();addLoc({name:n.value.trim()||"Ранак · "+ad,addr:ad});close()}
   ok.addEventListener("click",submit);
   bg.addEventListener("mousedown",function(e){if(e.target==bg)close()});
   bg.addEventListener("click",function(e){if(e.target.closest("[data-x]")){close();return}var s=e.target.closest(".sel");if(s){if(menu&&menu.btn==s)closeMenu();else openMenu(s)}});
