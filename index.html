@@ -657,8 +657,7 @@ function buildSettings(){$("#sPanels").innerHTML=
   '<div class="pcont" data-p="general">'+
     sec("Компания",[card([
       row("Название","Видят сотрудники и гости в SMS",inp("set.name","","Название компании")),
-      row("Сфера","Подстроим разделы и шаблоны под бизнес",sel("set.kind","Сфера")),
-      row("Часовой пояс","Для броней, напоминаний и отчётов",sel("set.tz","Часовой пояс"))])])+
+      row("Сфера","Подстроим разделы и шаблоны под бизнес",sel("set.kind","Сфера"))])])+
     '<section class="psec"><div class="sh"><h3>Локации</h3><button class="btn pri" id="sLocAdd">'+ico("plus",14)+'<span>Добавить</span></button></div><div class="pc tbl" id="sLocs" role="table">'+locTable()+'</div></section>'+
   '</div>'+
   '<div class="pcont" data-p="booking" hidden>'+
@@ -729,7 +728,7 @@ function openLocActions(b){closeAct();var i=+b.dataset.lockb,el=document.createE
 document.addEventListener("mousedown",function(e){if(amenu&&!amenu.contains(e.target)&&!e.target.closest("[data-lockb]"))closeAct()});
 addEventListener("resize",closeAct);$("#body").addEventListener("scroll",closeAct,{passive:true});
 /* окно «Новая локация» (как Invite members в Attio): шапка · поля · футер с кнопками */
-function openNewLoc(){closeLoc();closeAct();if($("#mdl"))return;P.nl.tz=P.set.tz;var bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
+function openNewLoc(){closeLoc();closeAct();if($("#mdl"))return;P.nl.tz=(P.set.locs[P.set.loc]||{}).tz||P.set.tz; /* по умолчанию — пояс текущей локации */var bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
   bg.innerHTML='<div class="mdl" role="dialog" aria-modal="true" aria-labelledby="mdlT"><div class="mh"><h2 id="mdlT">Новая локация</h2><button class="x" data-x aria-label="Закрыть">'+XIC+'</button></div>'+
     '<div class="mb"><label><span>Название</span><input class="pin" id="nlName" placeholder="Например, Ранак на Немиге" spellcheck="false"></label>'+
     '<label><span>Адрес</span><input class="pin" id="nlAddr" placeholder="Улица и дом" spellcheck="false"></label>'+
