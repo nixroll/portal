@@ -180,7 +180,7 @@ body.rzing{cursor:col-resize;user-select:none}
 /* Selector: 28 px, капсула, поля 0 12, рамка 0,5 border-primary, тень shadow-xs, текст Text xs/Medium 12/18.
    Normal — bg-primary_alt, text-secondary; Hover и Selected — bg-secondary_hover, text-primary */
 .psel{display:flex;flex-wrap:wrap;gap:6px;padding:16px}
-.psel button{display:inline-flex;align-items:center;height:28px;padding:0 calc(12px + var(--h));border-radius:9999px;background:var(--bg-primary-alt);
+.psel button{display:inline-flex;align-items:center;height:32px;padding:0 calc(12px + var(--h));border-radius:9999px;background:var(--bg-primary-alt);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);font-size:12px;line-height:18px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
 .psel button span{display:inline-block}
 .psel button:hover,.psel button[aria-selected="true"]{background:var(--bg-secondary-hover);color:var(--text-primary)}
@@ -207,7 +207,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .pin[readonly]{cursor:default}
 .pin.w184{width:184px}.pin.w224{width:224px}
 /* Кнопка — тот же компонент Selector: капсула 28 px */
-.chip{display:inline-flex;align-items:center;height:28px;padding:0 calc(12px + var(--h));border-radius:9999px;background:var(--bg-primary-alt);
+.chip{display:inline-flex;align-items:center;height:32px;padding:0 calc(12px + var(--h));border-radius:9999px;background:var(--bg-primary-alt);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);font-size:12px;line-height:18px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
 .chip:hover{background:var(--bg-secondary-hover);color:var(--text-primary)}
 /* Миниатюры: логотип 32 кругом, фото 56×36 со скруглением 6, рамка 0,5 border-secondary */
@@ -596,14 +596,12 @@ var ACC={"Фиолетовый":["#7F56D9","#6941C6","#9E77ED","#9E77ED","#B692F
   "Оранжевый":["#E04F16","#B93815","#EF6820","#EF6820","#F38744","#EF6820"],"Розовый":["#DD2590","#C11574","#EE46BC","#EE46BC","#F670C7","#EE46BC"]};
 /* 600 · hover светлой (700) · hover тёмной (500) · border светлой (500) · border тёмной (400) · иконка пункта меню (500; у фиолетового — indigo-500 из макета) */
 Object.assign(OPT,{"set.kind":["Ресторан","Кафе","Бар","Клиника","Салон красоты","Автосервис","Другое"],"set.tz":["Минск · GMT+3","Москва · GMT+3","Вильнюс · GMT+2","Варшава · GMT+1"],
-  "set.cur":["BYN","RUB","USD","EUR","PLN"],"set.hfmt":["24 часа","12 часов"],"set.week":["Понедельник","Воскресенье"],"set.ui":["Русский","Беларуская","English"],
   "set.confirm":["Автоматически","Вручную"],"set.step":["15 минут","30 минут","1 час"],"set.dur":["1 час","1,5 часа","2 часа","3 часа"],
   "set.ahead":["7 дней","14 дней","30 дней","60 дней"],"set.late":["15 минут","1 час","3 часа","Сутки"],"set.party":["До 4 гостей","До 6 гостей","До 8 гостей","До 12 гостей","До 20 гостей"],
-  "set.cancel":["В любое время","За 1 час","За 3 часа","За сутки"],"set.depsum":["10 BYN","20 BYN","50 BYN","100 BYN"],
   "set.remind":["Не напоминать","За 2 часа","За сутки","За сутки и за 2 часа"],"set.channel":["SMS","Telegram","Email"],"set.digest":["Не присылать","В 9:00","В 18:00"],
   "set.theme":["Как в системе","Светлая","Тёмная"],"set.accent":Object.keys(ACC),"set.start":NAV.map(function(n){return n[1]})});
-P.set={name:"Ранак",kind:"Ресторан",tz:"Минск · GMT+3",cur:"BYN",hfmt:"24 часа",week:"Понедельник",ui:"Русский",
-  online:true,confirm:"Автоматически",step:"30 минут",dur:"2 часа",ahead:"30 дней",late:"1 час",party:"До 8 гостей",wait:true,cancel:"За 3 часа",deposit:false,depsum:"20 BYN",
+P.set={name:"Ранак",kind:"Ресторан",tz:"Минск · GMT+3",
+  online:true,confirm:"Автоматически",step:"30 минут",dur:"2 часа",ahead:"30 дней",late:"1 час",party:"До 8 гостей",wait:true,
   gconfirm:true,remind:"За 2 часа",review:true,channel:"SMS",tnew:true,tchat:true,tcancel:true,digest:"В 9:00",sound:false,
   theme:"Как в системе",accent:"Фиолетовый",badge:true,start:"Главная",locs:["пл. Свободы 4","пр. Победителей 9","ул. Зыбицкая 6"],loc:0};
 (function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-2")||"null");if(sv&&sv.set)for(var k in sv.set)if(k in P.set)P.set[k]=sv.set[k]}catch(e){}})();
@@ -615,13 +613,8 @@ function buildSettings(){$("#sPanels").innerHTML=
     sec("Компания",[card([
       row("Название","Видят сотрудники и гости в SMS",inp("set.name","","Название компании")),
       row("Сфера","Подстроим разделы и шаблоны под бизнес",sel("set.kind","Сфера")),
-      row("Часовой пояс","Для броней, напоминаний и отчётов",sel("set.tz","Часовой пояс")),
-      row("Валюта","Для депозитов и отчётов",sel("set.cur","Валюта"))])])+
+      row("Часовой пояс","Для броней, напоминаний и отчётов",sel("set.tz","Часовой пояс"))])])+
     sec("Локации",['<div class="pc" id="sLocs">'+locRows().join("")+'</div>'])+
-    sec("Форматы",[card([
-      row("Формат времени","Как показывать часы в календаре",sel("set.hfmt","Формат времени")),
-      row("Первый день недели","Для календаря и отчётов",sel("set.week","Первый день недели")),
-      row("Язык кабинета","Для меню и подписей в кабинете",sel("set.ui","Язык кабинета"))])])+
   '</div>'+
   '<div class="pcont" data-p="booking" hidden>'+
     sec("Онлайн-запись",[card([
@@ -634,10 +627,6 @@ function buildSettings(){$("#sPanels").innerHTML=
       row("Не позже чем за","Сколько времени нужно на подготовку",sel("set.late","Не позже чем за"),{dep:"set.online"}),
       row("Гостей в одной брони","Большие компании — через звонок",sel("set.party","Гостей в одной брони"),{dep:"set.online"}),
       row("Лист ожидания","Если мест нет, гость встанет в очередь",tgl("set.wait","Лист ожидания"),{dep:"set.online"})])])+
-    sec("Отмена и депозит",[card([
-      row("Отмена гостем","До какого времени можно отменить",sel("set.cancel","Отмена гостем")),
-      row("Депозит за бронь","Гость платит при записи, сумма уходит в счёт",tgl("set.deposit","Депозит за бронь")),
-      row("Сумма депозита","За одну бронь",sel("set.depsum","Сумма депозита"),{dep:"set.deposit"})])])+
   '</div>'+
   '<div class="pcont" data-p="notify" hidden>'+
     sec("Гостям",[card([
