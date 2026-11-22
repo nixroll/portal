@@ -232,26 +232,20 @@ body.rzing{cursor:col-resize;user-select:none}
 .pr.off .ct{opacity:.5;pointer-events:none}
 .pin.w120{width:120px}.pin.w280{width:280px}
 .dash{font-style:normal;color:var(--text-tertiary)}
-/* Поле со вставкой «https://» (Input field / Leading text): вставка text-tertiary, поле со своей рамкой слева */
-.lt{display:flex;width:260px;height:32px;border-radius:8px;background:var(--bg-primary-alt);box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);cursor:text}
-.lt.w280{width:280px}
-.lt span{flex:none;padding:6px 10px 6px calc(10px + var(--h));color:var(--text-tertiary)}
-.lt input{flex:1;min-width:0;height:32px;padding:0 calc(10px + var(--h));border:0;border-radius:0 8px 8px 0;background:none;color:var(--text-primary);
-  box-shadow:inset var(--h) 0 0 var(--border-primary);font:400 14px/20px Inter,system-ui,sans-serif;outline:none;text-overflow:ellipsis}
-.lt input::placeholder{color:var(--text-placeholder)}
-.lt:focus-within{box-shadow:inset 0 0 0 1px var(--border-brand),var(--shadow-xs)}
 /* Select (sm): высота 32, поля 10,5 / 8, шеврон 16 fg-quaternary, ширина по содержимому */
-.sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 calc(10px + var(--h));border-radius:8px;background:var(--bg-primary-alt);
-  box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);color:var(--text-primary);white-space:nowrap}
+.sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 calc(10px + var(--h));border-radius:8px;background:var(--bg-quaternary);
+  box-shadow:inset 0 0 0 var(--h) var(--fg-quaternary),var(--shadow-xs);color:var(--text-primary);white-space:nowrap}
 /* Таблица локаций (по образцу Attio): шапка 36 — xs/Medium text-tertiary, строки 44, разделители 0,5 border-primary, «⋮» 32 */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .sh h3{margin:0}
 .tbl .th,.tbl .tr{display:grid;grid-template-columns:minmax(0,1fr) 120px 32px;align-items:center;gap:16px;padding:0 8px 0 16px}
+/* Таблица: карточка .pc, шапка 36 — xs/Medium text-tertiary, строки 52 в две строки (как Members в Linear), разделители с отступами 16 */
 .tbl .th{height:36px;font-size:12px;line-height:18px;font-weight:500;color:var(--text-tertiary)}
-.tbl .tr{height:calc(44px + var(--h));padding-top:var(--h);box-shadow:inset 0 var(--h) 0 var(--border-primary)}
-.tbl .c1{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap}
+.tbl .tr{height:calc(52px + var(--h));padding-top:var(--h);background:linear-gradient(var(--border-primary),var(--border-primary)) 16px 0/calc(100% - 32px) var(--h) no-repeat} /* в карточке, линии с отступами как у строк настроек */
+.tbl .c1{display:flex;flex-direction:column;min-width:0;white-space:nowrap}
 .tbl .c1 b{font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis}
-.tbl .c1 small{font-size:14px;line-height:20px;color:var(--text-tertiary);overflow:hidden;text-overflow:ellipsis}
+.tbl .c1 small{font-size:12px;line-height:18px;color:var(--text-tertiary);overflow:hidden;text-overflow:ellipsis}
+.tbl .muted{font-size:12px;line-height:18px;color:var(--text-tertiary)}
 .badge{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:9999px;font-style:normal;font-size:12px;line-height:18px;font-weight:500;
   color:var(--fg-brand-primary);background:color-mix(in srgb,var(--brand-solid) 14%,transparent);box-shadow:inset 0 0 0 var(--h) color-mix(in srgb,var(--brand-solid) 35%,transparent)}
 .kb{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;color:var(--fg-quaternary)}
@@ -278,11 +272,11 @@ body.rzing{cursor:col-resize;user-select:none}
 .mdl .pin{width:100%}
 .mdl .selw{display:flex}.mdl .sel{width:100%;justify-content:space-between}
 .mdl .mf{display:flex;justify-content:flex-end;gap:12px;padding:16px 20px;box-shadow:inset 0 var(--h) 0 var(--border-secondary)}
-@media (max-width:640px){.tbl .th,.tbl .tr{grid-template-columns:minmax(0,1fr) auto 32px}.tbl .c1{flex-direction:column;gap:0;align-items:flex-start}.tbl .tr{height:auto;min-height:calc(56px + var(--h))}}
+@media (max-width:640px){.tbl .th,.tbl .tr{grid-template-columns:minmax(0,1fr) auto 32px}}
 /* Кнопка-иконка (Icon button): 32 × 32, круглая, как Selector — bg-primary_alt, рамка 0,5 border-primary, иконка 16 fg-tertiary */
-.ibtn{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:9999px;background:var(--bg-primary-alt);color:var(--fg-tertiary);
-  box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs)}
-.ibtn:hover{background:var(--bg-secondary-hover);color:var(--fg-secondary)}
+.ibtn{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:9999px;background:var(--bg-quaternary);color:var(--fg-tertiary);
+  box-shadow:inset 0 0 0 var(--h) var(--fg-quaternary),var(--shadow-xs)}
+.ibtn:hover{color:var(--fg-secondary)}
 .ibtn.ghost{background:none;box-shadow:none;border-radius:8px}
 .ibtn.ghost:hover{background:var(--bg-primary-hover)}
 button.thumb{padding:0;border:0;cursor:pointer}
@@ -294,7 +288,7 @@ button.thumb:hover{opacity:.85}
 .selw .nsel{display:block;position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;font-size:16px;-webkit-appearance:none;appearance:none;cursor:pointer}
 .sel span{display:inline-block}
 .sel svg{flex:none;width:16px;height:16px;color:var(--fg-quaternary)}
-.sel:hover{background:var(--bg-primary-hover)}
+.sel:hover,.ibtn:not(.ghost):hover{background:color-mix(in srgb,var(--bg-quaternary),var(--fg-primary) 6%)} /* Select и Icon button: bg-quaternary + рамка fg-quaternary (макет Сфера, 21589:1192) */
 .sel[aria-expanded="true"]{box-shadow:inset 0 0 0 1px var(--border-brand),var(--shadow-xs)}
 /* Меню списка: поля 4, пункты 32, скругление 8 / 6, рамка 0,5 border-secondary_alt, shadow-lg */
 .menu{position:fixed;z-index:70;display:flex;flex-direction:column;max-height:288px;overflow-y:auto;padding:4px;border-radius:8px;background:var(--bg-primary);
@@ -310,7 +304,7 @@ body[data-page="settings"] .settings{display:block}
 body[data-page="settings"] .empty{display:none}
 body[data-page="settings"] .addb{visibility:hidden}
 body.nobadge .nav a .c{display:none}
-.dot{flex:none;width:8px;height:8px;margin-right:2px;border-radius:9999px;background:var(--c)}
+.dot{flex:none;width:8px;height:8px;margin-right:2px;border-radius:9999px;background:var(--c);box-shadow:inset 0 0 0 var(--h) rgba(0,0,0,.16)}
 .mi .dot{margin:0}
 /* меню локаций: подпись раздела, разделитель 0,5, подсказка клавиш справа */
 .menu .lbl{padding:6px 8px 2px;font-size:12px;line-height:18px;font-weight:500;color:var(--text-tertiary)}
@@ -328,32 +322,70 @@ body.nobadge .nav a .c{display:none}
   .portal .psel::after,.settings .psel::after{content:"";flex:none;width:10px} /* Safari не учитывает правый отступ у прокручиваемого ряда — добиваем до 16 */
   .pr{flex-wrap:wrap;row-gap:12px}
   .pr .tx{flex:1 1 160px}
-  .pr .ct:has(.pin,.lt){flex:1 1 100%}
-  .pr .ct .pin,.pr .ct .lt{flex:1;width:auto;min-width:0}
+  .pr .ct:has(.pin){flex:1 1 100%}
+  .pr .ct .pin{flex:1;width:auto;min-width:0}
 }
 
 
 /* Превью (View): 402 px справа, линия 0,5 слева; Page — поля 64 16, отступы 40, всё по центру */
 .view{display:none}
 /* Портал гостя — отдельный контейнер со своей темой: скругление 10 и рамка 0,5 как у карточек настроек, поля 16 вокруг */
-.pv{display:flex;flex-direction:column;align-items:center;gap:40px;min-height:100%;padding:48px 16px;border-radius:10px;background:var(--bg-primary);
-  box-shadow:inset 0 0 0 var(--h) var(--border-secondary);color:var(--text-primary)}
-.pv .hd{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
-.pv .ava{width:96px;height:96px;border-radius:9999px;box-shadow:0 0 0 var(--h) var(--border-tertiary);overflow:hidden}
-.pv .ava img{display:block;width:96px;height:96px}
-.pv .nm{display:flex;flex-direction:column;gap:2px;width:100%;text-align:center}
-.pv .nm b{font-size:20px;line-height:30px;font-weight:600;color:var(--text-primary)}
-.pv .nm span{color:var(--text-tertiary)}
-.pv .cards{display:flex;flex-direction:column;gap:12px;width:100%}
-/* Card: 240,5 px, скругление 20, рамка 1 px #FFF 8 % внутри, фото + градиент сверху вниз (#2D3232 0 % → #101212 60 %), текст снизу, поля 20 */
-.pcard{position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:calc(240px + var(--h));padding:21px;border-radius:20px;overflow:hidden;
-  background:linear-gradient(180deg,rgba(45,50,50,0),rgba(16,18,18,.6)),var(--img) center/cover;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),var(--shadow-xs)}
-.pcard b{font-size:18px;line-height:28px;font-weight:600;color:#fff}
-.pcard span{color:rgba(255,255,255,.6)}
-.pv .soc{display:flex;gap:16px}
-.pv .soc a[hidden],.pcard[hidden]{display:none}
-.pv .soc a{display:grid;place-items:center;width:48px;height:48px;border-radius:9999px;background:var(--bg-tertiary);box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);color:var(--fg-tertiary)}
-.pv .soc svg{width:24px;height:24px}
+/* превью — страница гостя (guest.html) в iframe: скругление 10 и рамка 0,5 поверх */
+.pv{position:relative;height:100%;border-radius:10px;overflow:hidden;background:#624F40}
+.pv::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 var(--h) var(--border-secondary);pointer-events:none}
+.pv iframe{display:block;width:100%;height:100%;border:0}
+/* ===== Портал: публикация, карточки, меню ===== */
+.addb .pub{display:none}
+body[data-page="portal"] .addb .pub{display:block}
+body[data-page="portal"] .addb svg:not(.pub){display:none}
+.addb.dirty::after{content:"";width:6px;height:6px;margin-left:2px;border-radius:9999px;background:var(--brand-solid)} /* есть неопубликованные изменения */
+.addb:disabled{opacity:.6;pointer-events:none}
+.tbl .tg{display:flex;align-items:center;gap:8px;height:calc(36px + var(--h));padding:var(--h) 16px 0;font-size:12px;line-height:18px;font-weight:600;color:var(--text-secondary);
+  background:linear-gradient(var(--border-primary),var(--border-primary)) 16px 0/calc(100% - 32px) var(--h) no-repeat}
+.tbl .tg i{font-style:normal;font-weight:500;color:var(--text-tertiary)}
+.tbl .tr.hid .c1{opacity:.5}
+.tbl .num{color:var(--text-primary);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl .te{padding:calc(16px + var(--h)) 16px 16px;color:var(--text-tertiary);background:linear-gradient(var(--border-primary),var(--border-primary)) 16px 0/calc(100% - 32px) var(--h) no-repeat}
+.thumb.noimg{display:grid;place-items:center;background:var(--bg-quaternary);color:var(--fg-quaternary)}
+.thumb.big{width:112px;height:80px;border-radius:8px}
+.mdl .mb{max-height:calc(100dvh - 180px);overflow-y:auto}
+.mdl .phr{display:flex;align-items:center;gap:12px}
+.mdl .phr small,.mdl .mt{margin:0;color:var(--text-tertiary)}
+.mdl .mt em{font-style:normal;color:var(--text-primary)}
+.mdl .merr{margin:0;color:var(--text-error)}
+.mdl .mlink{align-self:flex-start;font-weight:500;color:var(--fg-brand-primary)}
+.mdl .frow{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.mdl .frow>span{font-weight:500;color:var(--text-secondary)}
+.mdl .frow2{display:flex;align-items:center;gap:8px}
+.mdl [hidden]{display:none!important}
+.mdl input::-webkit-calendar-picker-indicator{display:none!important}
+.mdl .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mdl select.nat{width:100%;-webkit-appearance:none;appearance:none;background:var(--bg-primary-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2394979C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 8px center;padding-right:32px}
+.scan{display:flex;gap:16px;align-items:flex-start}
+.scimg{flex:none;width:96px;height:128px;border-radius:8px;background:var(--img) center/cover,var(--bg-quaternary);box-shadow:inset 0 0 0 var(--h) var(--border-secondary)}
+.scimg.doc{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;color:var(--fg-quaternary);text-align:center;overflow:hidden}
+.scimg.doc small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;line-height:18px}
+.steps{display:flex;flex-direction:column;gap:12px;margin:0;padding:4px 0 0;list-style:none;color:var(--text-quaternary,var(--text-tertiary))}
+.steps li{display:flex;align-items:center;gap:8px;opacity:.5}
+.steps li::before{content:"";flex:none;width:8px;height:8px;border-radius:9999px;background:var(--bg-quaternary)}
+.steps li.on{opacity:1;color:var(--text-primary)}
+.steps li.on::before{background:var(--brand-solid);animation:pulse 1s ease-in-out infinite}
+.steps li.done{opacity:1;color:var(--text-secondary)}
+.steps li.done::before{background:var(--fg-brand-primary)}
+@keyframes pulse{50%{opacity:.3}}
+.scl{display:flex;flex-direction:column;max-height:220px;overflow-y:auto;margin-top:12px;border-radius:8px;box-shadow:inset 0 0 0 var(--h) var(--border-secondary)}
+.scl div{display:flex;align-items:center;gap:12px;padding:8px 12px;box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.scl span{flex:1;min-width:0;font-weight:500;color:var(--text-primary)}
+.scl span small{display:block;font-weight:400;font-size:12px;line-height:18px;color:var(--text-tertiary)}
+.scl b{font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+.scl s{color:var(--text-tertiary);font-weight:400}
+.toast{position:fixed;left:0;right:0;bottom:calc(24px + env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 32px);margin:0 auto;padding:8px 8px 8px 16px;
+  border-radius:12px;background:var(--text-primary);color:var(--bg-primary);box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1;pointer-events:auto}
+.toast span{padding:2px 0}
+.toast a,.toast button{flex:none;height:28px;padding:4px 10px;border-radius:8px;font-weight:600;color:inherit;background:rgba(127,127,127,.2)}
+.toast:not(:has(a,button)){padding-right:16px}
+body.tb-on .toast{bottom:calc(72px + env(safe-area-inset-bottom))}
 .portal{display:none}
 body[data-page="portal"] .portal{display:block}
 body[data-page="portal"] .empty{display:none}
@@ -389,8 +421,7 @@ body[data-page="portal"] .empty{display:none}
     <div class="body" id="body">
       <div class="empty" id="empty"><img src="img/empty-heart.png" alt="" width="96" height="96"><p data-w="157">Раздел пока пустой</p></div>
       <div class="portal" id="portal">
-        <div class="psel d" role="tablist"><button role="tab" aria-selected="true" data-t="general"><span data-w="42">Общее</span></button><button role="tab" aria-selected="false" data-t="menu"><span data-w="35">Меню</span></button><button role="tab" aria-selected="false" data-t="loyalty"><span data-w="71">Лояльность</span></button><button role="tab" aria-selected="false" data-t="links"><span data-w="46">Ссылки</span></button></div>
-        <div class="psel m" role="tablist"><button role="tab" aria-selected="true" data-t="profile"><span data-w="54">Профиль</span></button><button role="tab" aria-selected="false" data-t="menu"><span data-w="35">Меню</span></button><button role="tab" aria-selected="false" data-t="links"><span data-w="46">Ссылки</span></button></div>
+        <div class="psel d" role="tablist"><button role="tab" aria-selected="true" data-t="general"><span>Общее</span></button><button role="tab" aria-selected="false" data-t="cards"><span>Карточки</span></button><button role="tab" aria-selected="false" data-t="menu"><span>Меню</span></button><button role="tab" aria-selected="false" data-t="loyalty"><span>Лояльность</span></button><button role="tab" aria-selected="false" data-t="links"><span>Ссылки</span></button></div>
         <div id="pPanels"></div>
       </div>
       <div class="settings" id="settings">
@@ -399,14 +430,7 @@ body[data-page="portal"] .empty{display:none}
       </div>
     </div>
     <aside class="view" id="view" aria-label="Так увидит гость">
-      <div class="pv">
-        <div class="hd"><div class="ava"><img id="pvLogo" src="img/portal-avatar.jpg" alt="" width="96" height="96"></div><div class="nm"><b id="pvName">Ранак</b><span id="pvHours">Ежедневно · 11:00 - 23:00</span></div></div>
-        <div class="cards">
-          <div class="pcard" id="pvMenu" style="--img:url(img/portal-card-autumn.jpg)"><b>Попробуй осень</b><span>Сезонное меню</span></div>
-          <div class="pcard" id="pvLoyalty" style="--img:url(img/portal-card-takeaway.jpg)"><b>5% на вынос</b><span>Лояльность</span></div>
-        </div>
-        <div class="soc"><a href="#portal" id="pvGoogle" aria-label="Google"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.8426 6.54781C15.6036 5.36611 13.9501 4.72235 12.2392 4.74881C9.10863 4.74881 6.44981 6.86086 5.5018 9.70486V9.70493C4.99913 11.1953 4.99913 12.8091 5.50179 14.2994H5.50619C6.45861 17.139 9.11303 19.2511 12.2437 19.2511C13.8597 19.2511 15.247 18.8378 16.3223 18.1077V18.1047C17.5878 17.2669 18.452 15.9486 18.721 14.4582H12.2393V9.83722H23.558C23.6991 10.6397 23.7653 11.4599 23.7653 12.2756C23.7653 15.9254 22.4609 19.0112 20.1913 21.1012L20.1937 21.103C18.2051 22.9373 15.4757 24 12.2392 24C7.70204 24 3.55286 21.4426 1.51575 17.3904V17.3904C-0.186243 13.9996 -0.186239 10.0048 1.51576 6.61398H1.51579L1.51575 6.61395C3.55286 2.55737 7.70204 -4.58262e-05 12.2392 -4.58262e-05C15.22 -0.0353205 18.0992 1.08465 20.2686 3.12176L16.8426 6.54781Z"/></svg></a><a href="#portal" id="pvLinkedin" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z"/></svg></a><a href="#portal" id="pvTelegram" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.4301 8.85893C11.263 9.3444 8.93026 10.3492 5.43201 11.8733C4.86395 12.0992 4.56638 12.3202 4.53929 12.5363C4.49351 12.9015 4.95083 13.0453 5.57359 13.2411C5.6583 13.2678 5.74608 13.2954 5.83606 13.3246C6.44876 13.5238 7.27295 13.7568 7.70141 13.766C8.09007 13.7744 8.52385 13.6142 9.00276 13.2853C12.2713 11.079 13.9585 9.96381 14.0644 9.93977C14.1392 9.92281 14.2427 9.90148 14.3129 9.96385C14.3831 10.0262 14.3762 10.1443 14.3687 10.176C14.3234 10.3691 12.5282 12.0381 11.5992 12.9018C11.3096 13.171 11.1042 13.362 11.0622 13.4056C10.9681 13.5033 10.8722 13.5958 10.7801 13.6846C10.2109 14.2333 9.78403 14.6448 10.8037 15.3168C11.2938 15.6397 11.6859 15.9067 12.0771 16.1731C12.5043 16.4641 12.9304 16.7543 13.4817 17.1157C13.6222 17.2077 13.7564 17.3034 13.887 17.3965C14.3842 17.751 14.8309 18.0694 15.3827 18.0186C15.7034 17.9891 16.0346 17.6876 16.2028 16.7884C16.6003 14.6631 17.3817 10.0585 17.5623 8.16097C17.5782 7.99473 17.5583 7.78197 17.5423 7.68857C17.5263 7.59518 17.4929 7.46211 17.3715 7.3636C17.2277 7.24694 17.0058 7.22234 16.9065 7.22408C16.4551 7.23203 15.7627 7.47282 12.4301 8.85893Z"/></svg></a></div>
-      </div>
+      <div class="pv"><iframe id="pvf" src="guest.html?embed=1" title="Так увидит гость" loading="eager"></iframe></div>
     </aside>
   </main>
   <!-- TABBAR: нижняя панель на телефоне. Откат: ?tabbar=0 или удалить блоки с пометкой TABBAR -->
@@ -448,7 +472,7 @@ function ico(n,s){s=s||16;return '<svg width="'+s+'" height="'+s+'" viewBox="0 0
 var NAV=[["home","Главная","home-smile"],["chat","Мультичат","inbox-01",9],["calendar","Календарь","calendar"],["clients","Клиенты","user-03"],
   ["portal","Портал","globe-01"],["promo","Продвижение","send-01"],["settings","Настройки","settings-02"]];
 $("#nav").innerHTML=NAV.map(function(n){return '<a href="#'+n[0]+'" data-id="'+n[0]+'">'+ico(n[2])+'<span class="t">'+n[1]+'</span>'+(n[3]!=null?'<span class="c">'+n[3]+'</span>':'')+'</a>'}).join("");
-$("#locIc").outerHTML=ico("marker-pin-02");$("#plusIc").outerHTML=ico("plus",14);$("#sbbIc").outerHTML=ico("layout-left",14);
+$("#locIc").outerHTML=ico("marker-pin-02");$("#plusIc").outerHTML=ico("plus",14);$("#addb").insertAdjacentHTML("afterbegin",'<svg class="pub" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15V16.2C21 17.88 21 18.72 20.67 19.36C20.39 19.93 19.93 20.39 19.36 20.67C18.72 21 17.88 21 16.2 21H7.8C6.12 21 5.28 21 4.64 20.67C4.07 20.39 3.61 19.93 3.33 19.36C3 18.72 3 17.88 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"/></svg>');$("#sbbIc").outerHTML=ico("layout-left",14);
 /* меню на планшете и телефоне: открывается кнопкой в тулбаре, закрывается выбором раздела, нажатием мимо или Esc */
 function navOpen(o){document.body.classList.toggle("nav-open",o);$("#sbb").setAttribute("aria-expanded",o?"true":"false");if(o)requestAnimationFrame(layout)}
 $("#sbb").addEventListener("click",function(e){e.stopPropagation();navOpen(!document.body.classList.contains("nav-open"))});
@@ -474,26 +498,39 @@ function layout(){snapText();centerNav();centerEmpty()}
 
 function route(){var h=location.hash.slice(1),it=NAV.filter(function(n){return n[0]==h})[0]||NAV.filter(function(n){return P.set&&n[1]==P.set.start})[0]||NAV[0];
   document.querySelectorAll("#nav a").forEach(function(a){if(a.dataset.id==it[0])a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
-  $("#title").textContent=it[1];document.body.dataset.page=it[0];$("#addTx").textContent=it[0]=="portal"?"Секцию":"Виджет";$("#addTx").dataset.w=it[0]=="portal"?48:47;document.title=it[1]+" — Портал";layout()}
+  $("#title").textContent=it[1];document.body.dataset.page=it[0];$("#addTx").textContent=it[0]=="portal"?"Опубликовать":"Виджет";if(it[0]=="portal")delete $("#addTx").dataset.w;else $("#addTx").dataset.w=47;$("#addb").disabled=false;if(it[0]=="portal")pubBtn();document.title=it[1]+" — Портал";layout()}
 window.addEventListener("hashchange",route);
 /* ================= Портал: вкладки «Общее · Меню · Лояльность · Ссылки» =================
    Структура как в настройках Linear: заголовок раздела → карточки со строками «название + подпись | контрол».
    Каждая настройка сразу отражается в превью справа. */
 function times(a,b){var r=[];for(var h=a;h<=b;h++)for(var m=0;m<60;m+=30){if(h==b&&m)break;r.push(String(h%24).padStart(2,"0")+":"+(m?"30":"00"))}return r}
-var OPT={lang:["Русский","Беларуская","English"],mode:["Ежедневно","Пн–Пт","Пн–Сб","Круглосуточно"],open:times(6,13),close:times(18,26),
-  ptheme:["Как у гостя","Светлая","Тёмная"],
-  "menu.action":["Меню в PDF","Ссылка на сайт"],"loyalty.action":["Условия программы","Ссылка на сайт"],
+/* Цвет портала гостя: один на всех, без светлой и тёмной темы; текст подбирается по яркости фона */
+var PCOL={"Кофейный":"#624F40","Графит":"#202327","Хвойный":"#2E4636","Морской":"#1E3A56","Бордовый":"#5A2A2F","Песочный":"#EDE5D8","Белый":"#FFFFFF"};
+var OPT={pcolor:Object.keys(PCOL),lang:["Русский","Беларуская","English"],mode:["Ежедневно","Пн–Пт","Пн–Сб","Круглосуточно"],open:times(6,13),close:times(18,26),
   "loyalty.kind":["Скидка","Кэшбэк баллами","Подарок"],"loyalty.size":["3%","5%","7%","10%","15%"],
   "loyalty.scope":["Заказы на вынос","Все заказы","Доставка"],"loyalty.welcome":["Без бонуса","100 баллов","Кофе в подарок"]};
-var P={online:true,seo:true,lang:"Русский",url:"portal.ranak.by",name:"Ранак",addr:"пл. Свободы 4",phone:"+375 29 123-45-67",
-  mode:"Ежедневно",open:"11:00",close:"23:00",ptheme:"Как у гостя",
-  menu:{show:true,title:"Попробуй осень",sub:"Сезонное меню",action:"Меню в PDF",file:"menu-autumn.pdf · 2,4 МБ",link:"ranak.by/menu",sched:true,from:"01.09.2026",to:"30.11.2026"},
-  loyalty:{show:true,title:"5% на вынос",sub:"Лояльность",action:"Условия программы",link:"ranak.by/loyalty",kind:"Скидка",size:"5%",scope:"Заказы на вынос",stack:false,phone:true,welcome:"Без бонуса"},
-  links:{google:{show:true,url:"g.page/ranak"},linkedin:{show:true,url:"linkedin.com/company/ranak"},telegram:{show:true,url:"t.me/ranak"},newtab:true,utm:false}};
+/* Публикация: страница гостя живёт в том же репозитории GitHub Pages — nixroll.github.io/portal/<адрес>/ */
+var REPO="nixroll/portal",SITE="nixroll.github.io/portal/";
+function fid(){return Math.random().toString(36).slice(2,8)}
+/* Меню заведения: категория · блюдо · описание · выход · цена (BYN). Пока придуманное, как будто уже распознано с фото */
+var FOOD=[["Кофе","Эспрессо","","30 мл",3.5],["Кофе","Американо","","200 мл",4],["Кофе","Капучино","","250 мл",5.5],["Кофе","Флэт уайт","Двойной эспрессо и молоко","200 мл",6],["Кофе","Раф ванильный","","300 мл",6.5],["Кофе","Латте","","350 мл",6],
+  ["Альтернатива","Воронка V60","Зерно недели","300 мл",8],["Альтернатива","Аэропресс","","200 мл",7.5],["Альтернатива","Колд брю","Холодное заваривание 18 часов","300 мл",6.5],
+  ["Завтраки","Сырники","Со сметаной и ягодным соусом","220 г",9.5],["Завтраки","Омлет с ветчиной","","250 г",10],["Завтраки","Гранола","С йогуртом и сезонными ягодами","200 г",8.5],["Завтраки","Тост с авокадо","Яйцо пашот, микрозелень","230 г",12],
+  ["Десерты","Чизкейк Нью-Йорк","","120 г",8],["Десерты","Морковный торт","","130 г",7.5],["Десерты","Круассан","Сливочное масло","70 г",4.5],
+  ["Чай","Чёрный чай","Ассам","400 мл",5],["Чай","Пряный чай","Имбирь, корица, апельсин","400 мл",6]];
+function food(a){return a.map(function(r){return {id:fid(),cat:r[0],name:r[1],desc:r[2],out:r[3],price:r[4],show:true}})}
+var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак",addr:"пл. Свободы 4",phone:"+375 29 123-45-67",
+  mode:"Ежедневно",open:"11:00",close:"23:00",pcolor:"Кофейный",logo:"img/portal-avatar.jpg",
+  cards:[{id:"menu",kind:"menu",show:true,title:"Попробуй осень",sub:"Сезонное меню",img:"img/portal-card-autumn.jpg",sched:false,from:"01.09.2026",to:"30.11.2026",link:""},
+         {id:"loyalty",kind:"loyalty",show:true,title:"5% на вынос",sub:"Лояльность",img:"img/portal-card-takeaway.jpg",sched:false,from:"",to:"",link:""}],
+  food:food(FOOD),
+  loyalty:{kind:"Скидка",size:"5%",scope:"Заказы на вынос",stack:false,phone:true,welcome:"Без бонуса"},
+  links:{google:{show:true,url:"g.page/ranak"},linkedin:{show:true,url:"linkedin.com/company/ranak"},telegram:{show:true,url:"t.me/ranak"},newtab:true,utm:false},
+  pub:{at:"",hash:""}};
+/* сохранённое в браузере: объекты сливаем по ключам, списки (карточки, меню) берём целиком */
 (function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-2")||"null");if(!sv)return;
-  function deep(a,b){for(var k in b){if(b[k]&&typeof b[k]=="object"&&a[k]&&typeof a[k]=="object")deep(a[k],b[k]);else if(k in a)a[k]=b[k]}}deep(P,sv)}catch(e){}})();
-var IMG={logo:"img/portal-avatar.jpg",menu:"img/portal-card-autumn.jpg",loyalty:"img/portal-card-takeaway.jpg"}; /* заменённые фото живут до перезагрузки */
-function save(){try{localStorage.setItem("portal-settings-2",JSON.stringify(P))}catch(e){}}
+  function deep(a,b){for(var k in b){if(!(k in a))continue;if(Array.isArray(a[k])){if(Array.isArray(b[k]))a[k]=b[k]}else if(b[k]&&typeof b[k]=="object"&&a[k]&&typeof a[k]=="object")deep(a[k],b[k]);else a[k]=b[k]}}deep(P,sv)}catch(e){}})();
+function save(){try{localStorage.setItem("portal-settings-2",JSON.stringify(P))}catch(e){toast("Не хватает места в браузере для фото",4000)}}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function getK(k){return k.split(".").reduce(function(o,x){return o[x]},P)}
 function setK(k,v){var a=k.split("."),o=P;for(var i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v}
@@ -505,37 +542,41 @@ function card(rows){return '<div class="pc">'+rows.join("")+'</div>'}
 function sec(t,cards){return '<section class="psec"><h3>'+t+'</h3>'+cards.join("")+'</section>'}
 function tgl(k,lbl){return '<button class="tgl" role="switch" data-k="'+k+'" aria-checked="'+(getK(k)?"true":"false")+'" aria-label="'+lbl+'"></button>'}
 function inp(k,cls,ph,ro){return '<input class="pin'+(cls?" "+cls:"")+'" data-k="'+k+'" value="'+esc(getK(k))+'"'+(ph?' placeholder="'+ph+'"':'')+(ro?' readonly':'')+' spellcheck="false">'}
-function url(k,cls){return '<label class="lt'+(cls?" "+cls:"")+'"><span>https://</span><input data-k="'+k+'" value="'+esc(getK(k))+'" placeholder="адрес страницы" spellcheck="false"></label>'}
+var DOTSV='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.33" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12.67" r="1"/></svg>';
+var XIC='<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true"><path d="M12 4 4 12M4 4l8 8"/></svg>';
+var NETS=[["google","Google"],["linkedin","LinkedIn"],["telegram","Telegram"]];
+var LINKPH={"links.google.url":"g.page/ranak","links.linkedin.url":"linkedin.com/company/ranak","links.telegram.url":"t.me/ranak"};
 /* на телефоне поверх кнопки лежит прозрачный нативный <select> — iOS и Android показывают системный список, как у Linear */
 function nsel(k,lbl){var v=getK(k);return '<select class="nsel" data-nsel="'+k+'" aria-label="'+lbl+'" tabindex="-1">'+OPT[k].map(function(o){return '<option'+(o==v?' selected':'')+'>'+esc(o)+'</option>'}).join("")+'</select>'}
 function sel(k,lbl){return '<span class="selw"><button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'"><span>'+esc(getK(k))+'</span>'+CHEV+'</button>'+nsel(k,lbl)+'</span>'}
 /* как в Linear: без кнопки «Заменить» — сама картинка кликабельна */
-function photo(k,cls){return '<button class="thumb'+(cls?" "+cls:"")+'" data-pick="'+k+'" data-img="'+k+'" style="--img:url('+IMG[k]+')" aria-label="Заменить изображение" title="Заменить"></button>'}
+function photo(k,src,cls){return '<button class="thumb'+(cls?" "+cls:"")+(src?'':' noimg')+'" data-pick="'+k+'"'+(src?' style="--img:url(\''+src+'\')"':'')+' aria-label="Заменить изображение" title="Заменить">'+(src?'':IC_UPLOAD)+'</button>'}
 /* иконки из библиотеки Figma (Untitled UI, 24 → 16 px) */
 function svg24(d){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+d+'"/></svg>'}
 var IC_COPY=svg24("M5 15C4.06812 15 3.60218 15 3.23463 14.8478C2.74458 14.6448 2.35523 14.2554 2.15224 13.7654C2 13.3978 2 12.9319 2 12V5.2C2 4.0799 2 3.51984 2.21799 3.09202C2.40973 2.71569 2.71569 2.40973 3.09202 2.21799C3.51984 2 4.0799 2 5.2 2H12C12.9319 2 13.3978 2 13.7654 2.15224C14.2554 2.35523 14.6448 2.74458 14.8478 3.23463C15 3.60218 15 4.06812 15 5M12.2 22H18.8C19.9201 22 20.4802 22 20.908 21.782C21.2843 21.5903 21.5903 21.2843 21.782 20.908C22 20.4802 22 19.9201 22 18.8V12.2C22 11.0799 22 10.5198 21.782 10.092C21.5903 9.71569 21.2843 9.40973 20.908 9.21799C20.4802 9 19.9201 9 18.8 9H12.2C11.0799 9 10.5198 9 10.092 9.21799C9.71569 9.40973 9.40973 9.71569 9.21799 10.092C9 10.5198 9 11.0799 9 12.2V18.8C9 19.9201 9 20.4802 9.21799 20.908C9.40973 21.2843 9.71569 21.5903 10.092 21.782C10.5198 22 11.0799 22 12.2 22Z"),
   IC_UPLOAD=svg24("M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M7 8L12 3L17 8M12 3V15"),
+  IC_EXT=svg24("M21 9L21 3M21 3H15M21 3L13 10M10 5H7.8C6.11984 5 5.27976 5 4.63803 5.32698C4.07354 5.6146 3.6146 6.07354 3.32698 6.63803C3 7.27976 3 8.11984 3 9.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H14.2C15.8802 21 16.7202 21 17.362 20.673C17.9265 20.3854 18.3854 19.9265 18.673 19.362C19 18.7202 19 17.8802 19 16.2V14"),
+  IC_CAM=svg24("M2 8.37722C2 8.0269 2 7.85174 2.01462 7.70421C2.1556 6.28127 3.28127 5.1556 4.70421 5.01462C4.85174 5 5.03636 5 5.40558 5C5.54785 5 5.61899 5 5.67939 4.99634C6.45061 4.94963 7.12595 4.46288 7.41414 3.746C7.43671 3.68986 7.45781 3.62657 7.5 3.5C7.54219 3.37343 7.56329 3.31014 7.58586 3.254C7.87405 2.53712 8.54939 2.05037 9.32061 2.00366C9.38101 2 9.44772 2 9.58114 2H14.4189C14.5523 2 14.619 2 14.6794 2.00366C15.4506 2.05037 16.126 2.53712 16.4141 3.254C16.4367 3.31014 16.4578 3.37343 16.5 3.5C16.5422 3.62657 16.5633 3.68986 16.5859 3.746C16.874 4.46288 17.5494 4.94963 18.3206 4.99634C18.381 5 18.4521 5 18.5944 5C18.9636 5 19.1483 5 19.2958 5.01462C20.7187 5.1556 21.8444 6.28127 21.9854 7.70421C22 7.85174 22 8.0269 22 8.37722V16.2C22 17.8802 22 18.7202 21.673 19.362C21.3854 19.9265 20.9265 20.3854 20.362 20.673C19.7202 21 18.8802 21 17.2 21H6.8C5.11984 21 4.27976 21 3.63803 20.673C3.07354 20.3854 2.6146 19.9265 2.32698 19.362C2 18.7202 2 17.8802 2 16.2V8.37722Z M12 16.5C14.2091 16.5 16 14.7091 16 12.5C16 10.2909 14.2091 8.5 12 8.5C9.79086 8.5 8 10.2909 8 12.5C8 14.7091 9.79086 16.5 12 16.5Z"),
   IC_PLUS=svg24("M12 5V19M5 12H19"),IC_CHECK=svg24("M20 6L9 17L4 12");
 /* круглая кнопка-иконка 32 (как «изменить» у Linear); ghost — без подложки, для заголовков разделов */
 function ibtn(id,label,icon,attrs,cls){return '<button class="ibtn'+(cls?" "+cls:"")+'"'+(id?' id="'+id+'"':'')+' aria-label="'+label+'" title="'+label+'" '+(attrs||'')+'>'+icon+'</button>'}
 function chip(id,t){return '<button class="chip" id="'+id+'"><span>'+t+'</span></button>'}
-function onlineSub(){return P.online?'Открыт по ссылке <em>'+esc(P.url)+'</em>':'Скрыт от гостей'}
-function cardTab(k,actions,extra){var c=P[k];return [
-  sec("Карточка",[
-    card([row("Показывать на портале","",tgl(k+".show","Показывать на портале"))]),
-    card([row("Фото","От 1110 × 722 px",photo(k),{dep:k+".show"}),
-          row("Заголовок","",inp(k+".title","","Например, «Попробуй осень»"),{dep:k+".show"}),
-          row("Подпись","",inp(k+".sub","","Короткая подпись"),{dep:k+".show"})])]),
-  sec("По нажатию",[card(actions)])].concat(extra||[]).join("")}
+var KIND={menu:"Меню",loyalty:"Лояльность",link:"Ссылка"};
+var HOURS={"Русский":{},"Беларуская":{"Ежедневно":"Штодня","Круглосуточно":"Кругласутачна"},"English":{"Ежедневно":"Daily","Пн–Пт":"Mon–Fri","Пн–Сб":"Mon–Sat","Круглосуточно":"Open 24/7"}};
+function purl(){return SITE+P.slug}
+function when(iso){var d=new Date(iso);return d.toLocaleDateString("ru-RU",{day:"numeric",month:"long"})+", "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
+function pubSub(){return !P.online?"Скрыт от гостей":!P.pub.at?"Ещё не опубликован":dirty()?"Есть неопубликованные изменения":"Опубликован "+when(P.pub.at)}
+function thead(a,b){return '<div class="th" role="row"><span role="columnheader">'+a+'</span><span role="columnheader">'+b+'</span><span></span></div>'}
+function shead(t,btn){return '<div class="sh"><h3>'+t+'</h3>'+(btn||'')+'</div>'}
 $("#pPanels").innerHTML=
   '<div class="pcont" data-p="general">'+
     sec("Доступ",[card([
-      row("Доступен онлайн",onlineSub(),tgl("online","Доступен онлайн"),{sid:"pOnlineTx"}),
-      row("Адрес портала","",inp("url","w184","",true)+ibtn("pCopy","Копировать ссылку",IC_COPY)),
+      row("Доступен онлайн",pubSub(),tgl("online","Доступен онлайн"),{sid:"pOnlineTx"}),
+      row("Адрес портала","",'<input class="pin w280" id="pUrl" value="'+purl()+'" readonly spellcheck="false" aria-label="Адрес портала">'+ibtn("pCopy","Копировать ссылку",IC_COPY)+ibtn("pOpen","Открыть портал",IC_EXT)),
       row("Показывать в поисковиках","Google и Яндекс",tgl("seo","Показывать в поисковиках")),
       row("Язык портала","",sel("lang","Язык портала"))])])+
     sec("Заведение",[
-      card([row("Логотип","",photo("logo","logo")),
+      card([row("Логотип","",photo("logo",P.logo,"logo")),
             row("Название","",inp("name","","Название заведения"))]),
       card([row("Адрес","",inp("addr","","Улица и дом")),
             row("Телефон","",inp("phone","","+375 ..."))])])+
@@ -544,57 +585,75 @@ $("#pPanels").innerHTML=
       row("Открытие","",sel("open","Открытие"),{dep:"!24"}),
       row("Закрытие","",sel("close","Закрытие"),{dep:"!24"})])])+
     sec("Оформление",[card([
-      row("Тема портала","Как увидят гости",sel("ptheme","Тема портала"))])])+
+      row("Цвет портала","",selDot("pcolor","Цвет портала"))])])+
   '</div>'+
-  '<div class="pcont" data-p="menu" hidden>'+cardTab("menu",[
-      row("Открывать","",sel("menu.action","Открывать"),{dep:"menu.show"}),
-      row("Файл меню",'<span id="pMenuFile">'+esc(P.menu.file)+'</span>',ibtn("","Загрузить другой файл",IC_UPLOAD,'data-pdf="menu"'),{dep:"menu.show",show:"menu.action=Меню в PDF"}),
-      row("Ссылка","",url("menu.link","w280"),{dep:"menu.show",show:"menu.action=Ссылка на сайт"})],
-    [sec("Показ",[card([
-      row("По расписанию","Только в выбранные даты",tgl("menu.sched","По расписанию"),{dep:"menu.show"}),
-      row("Период","",inp("menu.from","w120","дд.мм.гггг")+'<i class="dash">–</i>'+inp("menu.to","w120","дд.мм.гггг"),{dep:"menu.show menu.sched"})])])])+
+  '<div class="pcont" data-p="cards" hidden>'+
+    '<section class="psec">'+shead("Карточки",ibtn("pCardAdd","Добавить карточку",IC_PLUS,"","ghost"))+'<div class="pc tbl" id="pCards" role="table">'+cardTable()+'</div></section>'+
   '</div>'+
-  '<div class="pcont" data-p="loyalty" hidden>'+cardTab("loyalty",[
-      row("Открывать","",sel("loyalty.action","Открывать"),{dep:"loyalty.show"}),
-      row("Ссылка","",url("loyalty.link","w280"),{dep:"loyalty.show",show:"loyalty.action=Ссылка на сайт"})],
-    [sec("Программа",[card([
+  '<div class="pcont" data-p="menu" hidden>'+
+    sec("Распознавание",[card([row("Фото меню","ИИ найдёт блюда, цены и категории",'<button class="btn sec" id="pScan">'+IC_CAM+'<span>Загрузить фото</span></button>')])])+
+    '<section class="psec">'+shead("Меню",ibtn("pFoodAdd","Добавить блюдо",IC_PLUS,"","ghost"))+'<div class="pc tbl" id="pFood" role="table">'+foodTable()+'</div></section>'+
+  '</div>'+
+  '<div class="pcont" data-p="loyalty" hidden>'+
+    sec("Программа",[card([
       row("Тип","",sel("loyalty.kind","Тип")),
       row("Размер","От суммы заказа",sel("loyalty.size","Размер")),
       row("Действует на","",sel("loyalty.scope","Действует на")),
-      row("Вместе с другими акциями","",tgl("loyalty.stack","Вместе с другими акциями"))])]),
-     sec("Участие",[card([
+      row("Вместе с другими акциями","",tgl("loyalty.stack","Вместе с другими акциями"))])])+
+    sec("Участие",[card([
       row("Вход по номеру телефона","Карта по коду из SMS",tgl("loyalty.phone","Вход по номеру телефона")),
-      row("Приветственный бонус","После первого заказа",sel("loyalty.welcome","Приветственный бонус"),{dep:"loyalty.phone"})])])])+
+      row("Приветственный бонус","После первого заказа",sel("loyalty.welcome","Приветственный бонус"),{dep:"loyalty.phone"})])])+
   '</div>'+
   '<div class="pcont" data-p="links" hidden>'+
-    sec("Социальные сети",[card([
-      row("Google","",url("links.google.url")+tgl("links.google.show","Показывать Google")),
-      row("LinkedIn","",url("links.linkedin.url")+tgl("links.linkedin.show","Показывать LinkedIn")),
-      row("Telegram","",url("links.telegram.url")+tgl("links.telegram.show","Показывать Telegram"))])])+
+    '<section class="psec">'+shead("Социальные сети")+'<div class="pc tbl" id="pLinks" role="table">'+linkTable()+'</div></section>'+
     sec("Переходы",[card([
       row("Открывать в новой вкладке","",tgl("links.newtab","Открывать в новой вкладке")),
       row("UTM-метки",'Добавляем <em>utm_source=portal</em> к ссылкам',tgl("links.utm","UTM-метки"))])])+
   '</div>';
-var file=document.createElement("input");file.type="file";file.hidden=true;document.body.appendChild(file);var pickKey=null;
+var file=document.createElement("input");file.type="file";file.hidden=true;document.body.appendChild(file);
+/* Соцсети — та же таблица: «Сеть · Статус · ⋮»; ссылка второй строкой, правка в окне */
+function linkTable(){return thead("Сеть","Статус")+
+  NETS.map(function(n){var l=P.links[n[0]];return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+n[1]+'</b><small>'+(l.url?esc(l.url):'Нет ссылки')+'</small></span><span role="cell">'+(l.show&&l.url?'<i class="badge">Показана</i>':'<span class="muted">Скрыта</span>')+'</span><button class="kb" data-netkb="'+n[0]+'" aria-label="Действия со ссылкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}
+function saveLinks(){save();render();$("#pLinks").innerHTML=linkTable();snapText()}
+/* Карточки портала: меню и лояльность открывают экран на портале, ссылка ведёт на сайт */
+function cardState(c){return !c.show?'<span class="muted">Скрыта</span>':c.kind=="menu"&&!inRange(c)?'<span class="muted">Не по расписанию</span>':c.kind=="link"&&!c.link?'<span class="muted">Нет ссылки</span>':'<i class="badge">Показана</i>'}
+function cardTable(){return thead("Карточка","Статус")+(P.cards.length?P.cards.map(function(c,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(c.title||"Без заголовка")+'</b><small>'+esc(c.kind=="link"?(c.link||"Ссылка"):KIND[c.kind]+" на портале")+'</small></span><span role="cell">'+cardState(c)+'</span><button class="kb" data-cardkb="'+i+'" aria-label="Действия с карточкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join(""):'<div class="te">Карточек пока нет</div>')}
+function saveCards(){save();render();$("#pCards").innerHTML=cardTable()}
+/* Меню: одна таблица, блюда сгруппированы по категориям (как группы в таблицах Linear) */
+function money(v){return v===""||v==null||isNaN(v)?"—":Number(v).toFixed(2).replace(".",",")+" BYN"}
+function cats(){var r=[];P.food.forEach(function(f){if(r.indexOf(f.cat)<0)r.push(f.cat)});return r}
+function foodTable(){var cs=cats();return thead("Блюдо","Цена")+(cs.length?cs.map(function(c){var it=P.food.filter(function(f){return f.cat==c});
+  return '<div class="tg" role="row"><span>'+esc(c)+'</span><i>'+it.length+'</i></div>'+it.map(function(f){var sub=f.show?[f.desc,f.out].filter(Boolean).join(" · "):"Скрыто";
+    return '<div class="tr'+(f.show?'':' hid')+'" role="row"><span class="c1" role="cell"><b>'+esc(f.name)+'</b>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</span><span role="cell" class="num">'+money(f.price)+'</span><button class="kb" data-foodkb="'+f.id+'" aria-label="Действия с блюдом" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}).join(""):'<div class="te">Загрузите фото меню или добавьте блюдо</div>')}
+function saveFood(){save();render();$("#pFood").innerHTML=foodTable()}
 function href(u){u=/^https?:\/\//.test(u)?u:"https://"+u;return P.links.utm?u+(u.indexOf("?")<0?"?":"&")+"utm_source=portal":u}
-var HOURS={"Русский":{},"Беларуская":{"Ежедневно":"Штодня","Круглосуточно":"Кругласутачна"},"English":{"Ежедневно":"Daily","Пн–Пт":"Mon–Fri","Пн–Сб":"Mon–Sat","Круглосуточно":"Open 24/7"}};
 function hours(){var m=HOURS[P.lang][P.mode]||P.mode;return P.mode=="Круглосуточно"?m:m+" · "+P.open+" - "+P.close}
 function inRange(c){if(!c.sched)return true;function d(s){var a=/^(\d\d)\.(\d\d)\.(\d{4})$/.exec(s);return a?new Date(+a[3],a[2]-1,+a[1]):null}
   var f=d(c.from),t=d(c.to),n=new Date();n.setHours(0,0,0,0);return (!f||n>=f)&&(!t||n<=t)}
-/* превью справа и состояние строк — всегда по текущим настройкам */
-function render(){
-  $("#pvName").textContent=P.name;$("#pvHours").textContent=hours();$("#pvLogo").src=IMG.logo;
-  var v=document.querySelector("#view .pv");if(P.ptheme=="Светлая")v.dataset.theme="light";else if(P.ptheme=="Тёмная")v.dataset.theme="dark";else delete v.dataset.theme;
-  ["menu","loyalty"].forEach(function(k){var el=$(k=="menu"?"#pvMenu":"#pvLoyalty"),c=P[k];el.hidden=!c.show||(k=="menu"&&!inRange(c));el.style.setProperty("--img","url("+IMG[k]+")");
-    el.querySelector("b").textContent=c.title;el.querySelector("span").textContent=c.sub});
-  [["google","#pvGoogle"],["linkedin","#pvLinkedin"],["telegram","#pvTelegram"]].forEach(function(x){var l=P.links[x[0]],a=$(x[1]);a.hidden=!l.show||!l.url;
-    a.href=l.url?href(l.url):"#portal";if(P.links.newtab){a.target="_blank";a.rel="noopener"}else{a.removeAttribute("target");a.removeAttribute("rel")}});
-  $("#pOnlineTx").innerHTML=onlineSub();
+/* данные для страницы гостя: rel — путь от страницы к общим картинкам ("" в превью, "../" в опубликованной папке) */
+function pdata(rel){var r=function(s){return !s||/^(data:|https?:|blob:)/.test(s)?s:rel+s};
+  return {name:P.name,hours:hours(),lang:{"Русский":"ru","Беларуская":"be","English":"en"}[P.lang]||"ru",color:PCOL[P.pcolor]||PCOL["Кофейный"],online:P.online,seo:P.seo,newtab:P.links.newtab,cur:"BYN",logo:r(P.logo),
+    cards:P.cards.filter(function(c){return c.show&&(c.kind!="link"||c.link)}).map(function(c){var o={kind:c.kind,title:c.title,sub:c.sub,img:r(c.img)};if(c.kind=="link")o.href=href(c.link);if(c.kind=="menu"&&c.sched){o.from=c.from;o.to=c.to}return o}),
+    menu:P.food.filter(function(f){return f.show}).map(function(f){return {cat:f.cat,name:f.name,desc:f.desc,out:f.out,price:f.price}}),
+    loyalty:{kind:P.loyalty.kind,size:P.loyalty.size,scope:P.loyalty.scope,stack:P.loyalty.stack,phone:P.loyalty.phone,welcome:P.loyalty.welcome},
+    links:NETS.filter(function(n){var l=P.links[n[0]];return l.show&&l.url}).map(function(n){return {id:n[0],name:n[1],href:href(P.links[n[0]].url)}})}}
+window.portalData=pdata; /* для проверки и выгрузки portal.json */
+function hash(s){var h=5381;for(var i=0;i<s.length;i++)h=(Math.imul(h,33)^s.charCodeAt(i))>>>0;return h.toString(36)}
+function dirty(){return hash(JSON.stringify(pdata("../")))!=P.pub.hash}
+/* превью справа — та же страница гостя (guest.html) в iframe, данные уходят через postMessage */
+var pvReady=false;
+function sendPreview(){var f=$("#pvf");if(f&&pvReady)f.contentWindow.postMessage({type:"portal",data:pdata("")},"*")}
+addEventListener("message",function(e){if(e.data&&e.data.type=="portal-ready"){pvReady=true;sendPreview()}});
+/* превью и состояние строк — всегда по текущим настройкам */
+function render(){var bg=PCOL[P.pcolor]||PCOL["Кофейный"];
+  document.querySelector("#view .pv").style.background=bg;sendPreview();
+  document.querySelectorAll('.sel[data-sel="pcolor"] .dot').forEach(function(d){d.style.setProperty("--c",bg)});
+  var o=$("#pOnlineTx");if(o)o.textContent=pubSub();
   document.querySelectorAll("[data-tx]").forEach(function(s){s.textContent=getK(s.dataset.tx)});
   document.querySelectorAll("#pPanels [data-dep],#sPanels [data-dep]").forEach(function(r){var on=r.dataset.dep.split(" ").every(function(k){return k=="!24"?P.mode!="Круглосуточно":!!getK(k)});
     r.classList.toggle("off",!on);r.querySelectorAll("input,button").forEach(function(c){c.tabIndex=on?0:-1})});
   document.querySelectorAll("#pPanels [data-show]").forEach(function(r){var a=r.dataset.show.split("=");r.hidden=getK(a[0])!=a[1]});
-}
+  pubBtn()}
 /* выпадающий список: меню под кнопкой, по правому краю, позиции в целых пикселях */
 var menu=null;
 /* при zoom (iPhone) координаты из getBoundingClientRect и значения left/top могут жить в разных масштабах — меряем коэффициент один раз */
@@ -603,7 +662,7 @@ function place(){if(!menu)return;var el=menu.el,r=menu.btn.getBoundingClientRect
   el.style.left=snap(Math.max(8,r.right-mw))/zk()+"px";el.style.top=snap(top)/zk()+"px"}
 function closeMenu(){if(!menu)return;menu.btn.setAttribute("aria-expanded","false");menu.el.remove();menu=null}
 function openMenu(b){closeMenu();var k=b.dataset.sel,cur=getK(k),el=document.createElement("div");el.className="menu";el.setAttribute("role","listbox");
-  el.innerHTML=OPT[k].map(function(o){return '<button class="mi" role="option" aria-selected="'+(o==cur)+'" data-v="'+esc(o)+'">'+(k=="set.accent"?dot(o):'')+'<span>'+esc(o)+'</span>'+(o==cur?CHECK:'')+'</button>'}).join("");
+  el.innerHTML=OPT[k].map(function(o){return '<button class="mi" role="option" aria-selected="'+(o==cur)+'" data-v="'+esc(o)+'">'+(k=="set.accent"||k=="pcolor"?dot(o,k):'')+'<span>'+esc(o)+'</span>'+(o==cur?CHECK:'')+'</button>'}).join("");
   document.body.appendChild(el);el.style.minWidth=Math.max(Math.ceil(b.getBoundingClientRect().width),160)/zk()+"px";menu={el:el,btn:b,k:k};place();
   b.setAttribute("aria-expanded","true");
   var s=el.querySelector('[aria-selected="true"]');if(s){s.focus({preventScroll:true});if(s.offsetTop+s.offsetHeight>el.clientHeight)el.scrollTop=s.offsetTop-el.clientHeight/2}
@@ -617,12 +676,131 @@ $("#pPanels").addEventListener("input",function(e){var k=e.target.dataset.k;if(!
 $("#pPanels").addEventListener("click",function(e){var t=e.target.closest(".tgl");
   if(t){var on=t.getAttribute("aria-checked")!="true";t.setAttribute("aria-checked",on?"true":"false");setK(t.dataset.k,on);save();render();return}
   var s=e.target.closest(".sel");if(s){if(menu&&menu.btn==s)closeMenu();else openMenu(s);return}
-  var pk=e.target.closest("[data-pick]");if(pk){pickKey=pk.dataset.pick;file.accept="image/*";file.value="";file.click();return}
-  var pd=e.target.closest("[data-pdf]");if(pd){pickKey="pdf";file.accept="application/pdf";file.value="";file.click();return}
-  if(e.target.closest("#pCopy")){var cb=$("#pCopy");try{navigator.clipboard.writeText("https://"+P.url).catch(function(){})}catch(er){}cb.innerHTML=IC_CHECK;cb.title="Скопировано";setTimeout(function(){cb.innerHTML=IC_COPY;cb.title="Копировать ссылку"},1500)}});
-file.addEventListener("change",function(){var f=file.files&&file.files[0];if(!f||!pickKey)return;
-  if(pickKey=="pdf"){P.menu.file=f.name+" · "+(f.size/1048576).toFixed(1).replace(".",",")+" МБ";$("#pMenuFile").textContent=P.menu.file;save();return}
-  IMG[pickKey]=URL.createObjectURL(f);document.querySelectorAll('[data-img="'+pickKey+'"]').forEach(function(x){x.style.setProperty("--img","url("+IMG[pickKey]+")")});render()});
+  var pk=e.target.closest("[data-pick]");if(pk){pickImage(function(u){if(!u)return;P.logo=u;pk.style.setProperty("--img","url('"+u+"')");save();render()},{max:384});return}
+  var kb=e.target.closest("[data-cardkb]");if(kb){if(amenu&&amenu.btn==kb)closeAct();else openCardActions(kb);return}
+  kb=e.target.closest("[data-foodkb]");if(kb){if(amenu&&amenu.btn==kb)closeAct();else openFoodActions(kb);return}
+  if(e.target.closest("#pCardAdd")){openCardEdit(-1);return}
+  if(e.target.closest("#pFoodAdd")){openFoodEdit("");return}
+  if(e.target.closest("#pScan")){pickImage(openScan,{max:1600,any:true});return}
+  if(e.target.closest("#pOpen")){window.open("https://"+purl()+"/","_blank","noopener");return}
+  if(e.target.closest("#pCopy")){var cb=$("#pCopy");try{navigator.clipboard.writeText("https://"+purl()+"/").catch(function(){})}catch(er){}cb.innerHTML=IC_CHECK;cb.title="Скопировано";setTimeout(function(){cb.innerHTML=IC_COPY;cb.title="Копировать ссылку"},1500)}});
+/* выбор фото: сжимаем в браузере до нужного размера (JPEG), чтобы хранить и публиковать без сервера */
+var pickCb=null,pickOpt={};
+function pickImage(cb,o){pickCb=cb;pickOpt=o||{};file.accept=pickOpt.any?"image/*,application/pdf":"image/*";file.value="";file.click()}
+file.addEventListener("change",function(){var f=file.files&&file.files[0];if(!f||!pickCb)return;var cb=pickCb;pickCb=null;
+  if(!/^image\//.test(f.type)){cb("",f);return}
+  var img=new Image(),u=URL.createObjectURL(f);
+  img.onload=function(){var m=pickOpt.max||1110,k=Math.min(1,m/Math.max(img.naturalWidth,img.naturalHeight)),cv=document.createElement("canvas");
+    cv.width=Math.round(img.naturalWidth*k);cv.height=Math.round(img.naturalHeight*k);cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);URL.revokeObjectURL(u);cb(cv.toDataURL("image/jpeg",.82),f)};
+  img.onerror=function(){URL.revokeObjectURL(u);cb("",f)};img.src=u});
+/* окно: шапка · поля · футер «Отмена / действие» (как «Новая локация») */
+function openModal(o){closeAct();closeMenu();var old=$("#mdl");if(old)old.remove();var bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
+  bg.innerHTML='<div class="mdl" role="dialog" aria-modal="true" aria-labelledby="mdlT"><div class="mh"><h2 id="mdlT">'+o.title+'</h2><button class="x" data-x aria-label="Закрыть">'+XIC+'</button></div><div class="mb">'+o.body+'</div>'+
+    '<div class="mf">'+(o.cancel===false?'':'<button class="btn sec" data-x>Отмена</button>')+'<button class="btn pri" id="mOk">'+o.ok+'</button></div></div>';
+  document.body.appendChild(bg);var ok=$("#mOk"),last=document.activeElement,m={el:bg,ok:ok,close:close,upd:upd};
+  function upd(){if(o.valid)ok.disabled=!o.valid()}
+  function close(){bg.remove();if(o.onClose)o.onClose();if(last&&last.focus)last.focus({preventScroll:true})}
+  function submit(){if(ok.disabled)return;if(o.onOk(m)!==false)close()}
+  ok.addEventListener("click",submit);bg.addEventListener("input",upd);bg.addEventListener("change",upd);
+  bg.addEventListener("mousedown",function(e){if(e.target==bg)close()});
+  bg.addEventListener("click",function(e){if(e.target.closest("[data-x]")){close();return}var t=e.target.closest(".tgl");
+    if(t){t.setAttribute("aria-checked",t.getAttribute("aria-checked")=="true"?"false":"true");if(o.onToggle)o.onToggle(t);upd()}});
+  bg.addEventListener("keydown",function(e){if(e.key=="Escape"){e.preventDefault();close()}else if(e.key=="Enter"&&e.target.tagName=="INPUT"){e.preventDefault();submit()}});
+  if(o.onOpen)o.onOpen(m);upd();var f=bg.querySelector(".mb input,.mb select");if(f&&!o.noFocus)f.focus({preventScroll:true});return m}
+function fld(lbl,inner,attr){return '<label'+(attr||'')+'><span>'+lbl+'</span>'+inner+'</label>'}
+function fin(id,v,ph,extra){return '<input class="pin" id="'+id+'" value="'+esc(v==null?"":v)+'" placeholder="'+(ph||"")+'" spellcheck="false"'+(extra||'')+'>'}
+/* ===== Карточки: меню «⋮» и окно правки ===== */
+function openCardActions(b){var i=+b.dataset.cardkb,c=P.cards[i],n=P.cards.length;
+  actMenu(b,'<button class="mi" data-a="edit"><span>Изменить</span></button>'+(i>0?'<button class="mi" data-a="up"><span>Выше</span></button>':'')+(i<n-1?'<button class="mi" data-a="down"><span>Ниже</span></button>':'')+
+    '<button class="mi" data-a="vis"><span>'+(c.show?'Скрыть':'Показать')+'</span></button><button class="mi danger" data-a="del"><span>Удалить</span></button>',
+    function(a){if(a=="edit")openCardEdit(i);else if(a=="up"||a=="down"){var j=a=="up"?i-1:i+1;P.cards[i]=P.cards[j];P.cards[j]=c;saveCards()}
+      else if(a=="vis"){c.show=!c.show;saveCards()}else{P.cards.splice(i,1);saveCards();toast("Карточка удалена",5000,null,function(){P.cards.splice(i,0,c);saveCards()})}})}
+function openCardEdit(i){var isNew=i<0,c=isNew?{id:fid(),kind:"link",show:true,title:"",sub:"",img:"",sched:false,from:"",to:"",link:""}:JSON.parse(JSON.stringify(P.cards[i])),
+    kinds=["link"].concat(["menu","loyalty"].filter(function(k){return !P.cards.some(function(x){return x.kind==k})}));
+  var body=(isNew&&kinds.length>1?fld("Что открывает",'<span class="selw fullw"><select class="pin nat" id="ceKind">'+kinds.map(function(k){return '<option value="'+k+'">'+(k=="link"?"Ссылку на сайт":KIND[k]+" на портале")+'</option>'}).join("")+'</select></span>'):'')+
+    '<div class="fld"><span>Фото</span><div class="phr">'+photo("card",c.img,"big")+'<small>Рекомендуемый размер 1110 × 722 px</small></div></div>'+
+    fld("Заголовок",fin("ceTitle",c.title,"Например, «Попробуй осень»"))+fld("Подпись",fin("ceSub",c.sub,"Короткая подпись"))+
+    fld("Ссылка",fin("ceLink",c.link,"ranak.by/delivery",' inputmode="url" autocapitalize="off"'),' id="ceLinkF"')+
+    '<div class="fld" id="ceSchedF"><div class="frow"><span>По расписанию</span><button class="tgl" role="switch" id="ceSched" aria-checked="'+!!c.sched+'" aria-label="По расписанию"></button></div>'+
+      '<div class="frow2" id="ceDates">'+fin("ceFrom",c.from,"дд.мм.гггг",' inputmode="numeric"')+'<i class="dash">–</i>'+fin("ceTo",c.to,"дд.мм.гггг",' inputmode="numeric"')+'</div></div>';
+  function kind(){var k=$("#ceKind");return k?k.value:c.kind}
+  function sync(){var k=kind();$("#ceLinkF").hidden=k!="link";$("#ceSchedF").hidden=k!="menu";$("#ceDates").hidden=$("#ceSched").getAttribute("aria-checked")!="true"}
+  openModal({title:isNew?"Новая карточка":"Карточка",body:body,ok:isNew?"Добавить":"Сохранить",
+    valid:function(){return $("#ceTitle").value.trim()&&(kind()!="link"||$("#ceLink").value.trim())},
+    onOpen:function(m){sync();m.el.addEventListener("change",sync);
+      m.el.addEventListener("click",function(e){var p=e.target.closest("[data-pick]");if(!p)return;pickImage(function(u){if(!u)return;c.img=u;p.classList.remove("noimg");p.innerHTML="";p.style.setProperty("--img","url('"+u+"')")})})},
+    onToggle:sync,
+    onOk:function(){c.kind=kind();c.title=$("#ceTitle").value.trim();c.sub=$("#ceSub").value.trim();c.link=$("#ceLink").value.trim();c.sched=$("#ceSched").getAttribute("aria-checked")=="true";c.from=$("#ceFrom").value.trim();c.to=$("#ceTo").value.trim();
+      if(isNew)P.cards.push(c);else P.cards[i]=c;saveCards();if(isNew)toast("Карточка добавлена",2500)}})}
+/* ===== Меню: «⋮» у блюда и окно правки ===== */
+function openFoodActions(b){var id=b.dataset.foodkb,i=P.food.findIndex(function(f){return f.id==id}),f=P.food[i];
+  actMenu(b,'<button class="mi" data-a="edit"><span>Изменить</span></button><button class="mi" data-a="vis"><span>'+(f.show?'Скрыть':'Показать')+'</span></button><button class="mi danger" data-a="del"><span>Удалить</span></button>',
+    function(a){if(a=="edit")openFoodEdit(id);else if(a=="vis"){f.show=!f.show;saveFood()}else{P.food.splice(i,1);saveFood();toast("Блюдо удалено",5000,null,function(){P.food.splice(i,0,f);saveFood()})}})}
+function openFoodEdit(id){var isNew=!id,f=isNew?{id:fid(),cat:cats()[0]||"",name:"",desc:"",out:"",price:"",show:true}:JSON.parse(JSON.stringify(P.food.filter(function(x){return x.id==id})[0]));
+  var body=fld("Категория",fin("feCat",f.cat,"Например, Кофе",' list="feCats" autocomplete="off"')+'<datalist id="feCats">'+cats().map(function(c){return '<option value="'+esc(c)+'">'}).join("")+'</datalist>')+
+    fld("Название",fin("feName",f.name,"Например, Капучино"))+fld("Описание",fin("feDesc",f.desc,"Состав или подача"))+
+    '<div class="two">'+fld("Выход",fin("feOut",f.out,"250 мл"))+fld("Цена, BYN",fin("fePrice",f.price===""?"":String(f.price).replace(".",","),"0,00",' inputmode="decimal"'))+'</div>';
+  openModal({title:isNew?"Новое блюдо":"Блюдо",body:body,ok:isNew?"Добавить":"Сохранить",
+    valid:function(){return $("#feCat").value.trim()&&$("#feName").value.trim()},
+    onOk:function(){var p=parseFloat($("#fePrice").value.replace(",",".").replace(/[^\d.]/g,""));
+      f.cat=$("#feCat").value.trim();f.name=$("#feName").value.trim();f.desc=$("#feDesc").value.trim();f.out=$("#feOut").value.trim();f.price=isNaN(p)?"":Math.round(p*100)/100;
+      if(isNew){var last=-1;P.food.forEach(function(x,j){if(x.cat==f.cat)last=j});if(last<0)P.food.push(f);else P.food.splice(last+1,0,f)}
+      else P.food[P.food.findIndex(function(x){return x.id==id})]=f;saveFood()}})}
+/* ===== Распознавание меню по фото =====
+   Сейчас — демо: «распознанное» меню собрано заранее (SCAN). Дальше сюда подключается ИИ (фото → JSON с блюдами). */
+var SCAN=FOOD.map(function(r){return r.slice()}).concat([["Осеннее меню","Тыквенный латте","Пряная тыква, корица","350 мл",7],["Осеннее меню","Пряный раф","Апельсин, бадьян","300 мл",7.5],
+  ["Осеннее меню","Яблочный штрудель","С шариком пломбира","180 г",8.5],["Осеннее меню","Облепиховый чай","Мёд, розмарин","400 мл",6.5]]);
+SCAN.forEach(function(r){if(r[1]=="Капучино")r[4]=5.8;if(r[1]=="Чизкейк Нью-Йорк")r[4]=8.5});
+function scanDiff(){var add=[],chg=[];SCAN.forEach(function(r){var f=P.food.filter(function(x){return x.name.toLowerCase()==r[1].toLowerCase()})[0];
+    if(!f)add.push(r);else if(Number(f.price)!==r[4])chg.push([f,r])});return {add:add,chg:chg}}
+function openScan(src,f){var steps=["Читаем текст на фото","Находим блюда и цены","Раскладываем по категориям"],
+    m=openModal({title:"Распознавание меню",noFocus:true,ok:"Добавить в меню",
+      body:'<div class="scan">'+(src?'<div class="scimg" style="--img:url(\''+src+'\')"></div>':'<div class="scimg doc">'+IC_UPLOAD+'<small>'+esc(f?f.name:"Файл")+'</small></div>')+
+        '<ol class="steps" id="scSteps">'+steps.map(function(s){return '<li>'+s+'</li>'}).join("")+'</ol></div><div id="scRes"></div>',
+      onOk:function(){var d=scanDiff();d.chg.forEach(function(p){p[0].price=p[1][4]});d.add.forEach(function(r){var it=food([r])[0],last=-1;P.food.forEach(function(x,j){if(x.cat==it.cat)last=j});if(last<0)P.food.push(it);else P.food.splice(last+1,0,it)});
+        saveFood();toast("Меню обновлено: новых "+d.add.length+", цен "+d.chg.length,3000)}});
+  m.ok.disabled=true;var li=m.el.querySelectorAll("#scSteps li"),i=0;
+  (function step(){if(!document.body.contains(m.el))return;if(i>0)li[i-1].className="done";if(i<li.length){li[i].className="on";i++;setTimeout(step,900);return}
+    var d=scanDiff(),n=SCAN.length,cs=[];SCAN.forEach(function(r){if(cs.indexOf(r[0])<0)cs.push(r[0])});
+    $("#scRes").innerHTML='<p class="mt">Нашли '+n+' позиций в '+cs.length+' категориях. Новых — '+d.add.length+', цена изменилась у '+d.chg.length+'.</p>'+
+      (d.add.length+d.chg.length?'<div class="scl">'+d.add.map(function(r){return '<div><span>'+esc(r[1])+'<small>'+esc(r[0])+'</small></span><b>'+money(r[4])+'</b><i class="badge">Новое</i></div>'}).join("")+
+        d.chg.map(function(p){return '<div><span>'+esc(p[0].name)+'<small>'+esc(p[0].cat)+'</small></span><b><s>'+money(p[0].price)+'</s> '+money(p[1][4])+'</b><i class="badge">Цена</i></div>'}).join("")+'</div>':'');
+    if(!d.add.length&&!d.chg.length){m.ok.textContent="Готово"}m.ok.disabled=false})()}
+/* ===== Публикация на GitHub Pages: один коммит с папкой <адрес>/ (index.html + portal.json + фото) ===== */
+var TOKK="portal-gh-token",pubBusy=false;
+function tok(){try{return localStorage.getItem(TOKK)||""}catch(e){return ""}}
+function pubBtn(){var b=$("#addb");if(!b||document.body.dataset.page!="portal")return;b.disabled=pubBusy;$("#addTx").textContent=pubBusy?"Публикуем…":"Опубликовать";b.classList.toggle("dirty",P.online&&(!P.pub.at||dirty()))}
+function publish(){if(pubBusy)return;if(!tok())askToken();else doPublish()}
+function askToken(err){openModal({title:"Публикация на GitHub",ok:"Опубликовать",
+  body:'<p class="mt">Портал публикуется в репозиторий <em>'+REPO+'</em> и открывается по адресу <em>'+purl()+'</em>. Нужен токен GitHub с правом Contents: Read and write. Он хранится только в этом браузере.</p>'+
+    (err?'<p class="merr">'+err+'</p>':'')+fld("Токен",'<input class="pin" id="ghTok" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">')+
+    '<a class="mlink" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Создать токен на GitHub</a>',
+  valid:function(){return $("#ghTok").value.trim().length>=20},
+  onOk:function(){try{localStorage.setItem(TOKK,$("#ghTok").value.trim())}catch(e){}doPublish()}})}
+function b64u(s){var b=new TextEncoder().encode(s),r="";for(var i=0;i<b.length;i+=8192)r+=String.fromCharCode.apply(null,b.subarray(i,i+8192));return btoa(r)}
+async function gh(path,o){o=o||{};var r=await fetch("https://api.github.com/repos/"+REPO+path,{method:o.method||"GET",cache:"no-store",
+    headers:{"Authorization":"Bearer "+tok(),"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:o.body?JSON.stringify(o.body):undefined});
+  if(!r.ok){var e=new Error("GitHub "+r.status);e.status=r.status;throw e}return r.json()}
+async function ghCommit(files,msg){var ref=await gh("/git/ref/heads/main"),base=ref.object.sha,cm=await gh("/git/commits/"+base),tree=[];
+  for(var i=0;i<files.length;i++){var b=await gh("/git/blobs",{method:"POST",body:{content:files[i].b64,encoding:"base64"}});tree.push({path:files[i].path,mode:"100644",type:"blob",sha:b.sha})}
+  var t=await gh("/git/trees",{method:"POST",body:{base_tree:cm.tree.sha,tree:tree}}),c=await gh("/git/commits",{method:"POST",body:{message:msg,tree:t.sha,parents:[base]}});
+  await gh("/git/refs/heads/main",{method:"PATCH",body:{sha:c.sha}})}
+async function doPublish(){pubBusy=true;pubBtn();var slug=P.slug,files=[],h=hash(JSON.stringify(pdata("../"))),d=pdata("../");
+  function take(src,name){if(!/^data:/.test(src||""))return src;var b=src.split(",")[1],p="img/"+name+"-"+hash(b)+".jpg";if(!files.some(function(f){return f.path==slug+"/"+p}))files.push({path:slug+"/"+p,b64:b});return p}
+  try{d.logo=take(d.logo,"logo");d.cards.forEach(function(c,i){c.img=take(c.img,"card-"+(i+1))});
+    var html=await (await fetch("guest.html",{cache:"no-store"})).text();
+    files.push({path:slug+"/index.html",b64:b64u(html)},{path:slug+"/portal.json",b64:b64u(JSON.stringify(d,null,1))});
+    await ghCommit(files,"Портал "+slug+": публикация из кабинета");
+    P.pub={at:new Date().toISOString(),hash:h};save();render();toast("Опубликовано, страница обновится за минуту",6000,"https://"+purl()+"/")}
+  catch(e){if(e.status==401||e.status==403||e.status==404){try{localStorage.removeItem(TOKK)}catch(x){}askToken(e.status==401?"Токен не подошёл. Создайте новый.":"У токена нет доступа к "+REPO+" (Contents: Read and write).")}
+    else toast("Не удалось опубликовать. Проверьте интернет и попробуйте ещё раз",5000)}
+  pubBusy=false;pubBtn()}
+$("#addb").addEventListener("click",function(){if(document.body.dataset.page=="portal")publish()});
+/* уведомление снизу: текст + «Открыть» или «Вернуть» */
+function toast(m,ms,link,undo){var t=$("#toast");if(!t){t=document.createElement("div");t.id="toast";t.className="toast";t.setAttribute("role","status");document.body.appendChild(t)}
+  t.innerHTML='<span>'+esc(m)+'</span>'+(link?'<a href="'+link+'" target="_blank" rel="noopener">Открыть</a>':'')+(undo?'<button>Вернуть</button>':'');
+  var u=t.querySelector("button");if(u)u.onclick=function(){t.classList.remove("on");undo()};
+  t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("on")},ms||3000)}
 /* вкладки */
 document.querySelectorAll("#portal .psel").forEach(function(g){g.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;closeMenu();
   g.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-selected",x==b?"true":"false")});
@@ -661,9 +839,7 @@ P.set={name:"Ранак",kind:"Ресторан",tz:"Минск · GMT+3",
 P.nl={tz:"Минск · GMT+3"}; /* поля окна «Новая локация» */
 (function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-2")||"null");if(sv&&sv.set)for(var k in sv.set)if(k in P.set)P.set[k]=sv.set[k]}catch(e){}})();
 P.set.locs=P.set.locs.map(function(l){return typeof l=="string"?{name:"Ранак",addr:l,tz:P.set.tz}:l}); /* раньше локация была просто адресом */
-/* Локации — таблица как в Attio (Members): шапка 36, строки 44, колонки «Локация · Статус · ⋮» */
-var DOTSV='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.33" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12.67" r="1"/></svg>';
-var XIC='<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true"><path d="M12 4 4 12M4 4l8 8"/></svg>';
+/* Локации — таблица как в Linear (Members): колонки «Локация · Статус · ⋮» */
 function locTable(){return '<div class="th" role="row"><span role="columnheader">Локация</span><span role="columnheader">Статус</span><span></span></div>'+
   P.set.locs.map(function(l,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(l.name)+'</b><small>'+esc(l.addr)+'</small></span><span role="cell">'+(i==P.set.loc?'<i class="badge">Текущая</i>':'')+'</span><button class="kb" data-lockb="'+i+'" aria-label="Действия с локацией" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}
 function buildSettings(){$("#sPanels").innerHTML=
@@ -707,8 +883,8 @@ function buildSettings(){$("#sPanels").innerHTML=
       row("Открывать при входе","",sel("set.start","Открывать при входе"))])])+
   '</div>';
   var cur=document.querySelector(".settings .psel button[aria-selected=true]");if(cur)document.querySelectorAll("#sPanels .pcont").forEach(function(p){p.hidden=p.dataset.p!=cur.dataset.t})}
-function dot(name){return '<i class="dot" style="--c:'+ACC[name][0]+'"></i>'}
-function selDot(k,lbl){return '<span class="selw"><button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'">'+dot(getK(k))+'<span>'+esc(getK(k))+'</span>'+CHEV+'</button>'+nsel(k,lbl)+'</span>'}
+function dot(name,k){return '<i class="dot" style="--c:'+(k=="pcolor"?PCOL[name]:ACC[name][0])+'"></i>'}
+function selDot(k,lbl){return '<span class="selw"><button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'">'+dot(getK(k),k)+'<span>'+esc(getK(k))+'</span>'+CHEV+'</button>'+nsel(k,lbl)+'</span>'}
 /* акцент: перекрываем брендовые токены в обеих темах */
 var accEl=document.createElement("style");document.head.appendChild(accEl);
 function applySettings(){var a=ACC[P.set.accent]||ACC["Фиолетовый"],L="--brand-solid:"+a[0]+";--fg-brand-primary:"+a[0]+";--brand-solid-hover:"+a[1]+";--border-brand:"+a[3]+";--indigo-500:"+a[5],
@@ -731,6 +907,28 @@ function delLoc(i){if(P.set.locs.length<2)return;P.set.locs.splice(i,1);if(P.set
 function addLoc(l){P.set.locs.push(l);P.set.loc=P.set.locs.length-1;saveLocs()}
 /* меню «⋮» у строки: сделать текущей / удалить */
 var amenu=null;function closeAct(){if(amenu){amenu.remove();amenu=null}}
+function actMenu(b,html,onPick){closeAct();var el=document.createElement("div");el.className="menu";el.setAttribute("role","menu");el.innerHTML=html;el.btn=b;
+  el.style.minWidth=160/zk()+"px";document.body.appendChild(el);var r=b.getBoundingClientRect(),mb=el.getBoundingClientRect();
+  el.style.left=snap(r.right-mb.width)/zk()+"px";el.style.top=snap(r.bottom+4+mb.height>innerHeight-8?r.top-4-mb.height:r.bottom+4)/zk()+"px";amenu=el;
+  var f=el.querySelector(".mi");if(f)f.focus({preventScroll:true});
+  el.addEventListener("click",function(e){var it=e.target.closest(".mi");if(!it)return;closeAct();onPick(it.dataset.a)});
+  el.addEventListener("keydown",function(e){if(e.key=="Escape"){closeAct();b.focus()}})}
+/* меню «⋮» у соцсети: изменить ссылку / показать или скрыть */
+function openNetActions(b){var k=b.dataset.netkb,l=P.links[k];
+  actMenu(b,'<button class="mi" data-a="edit"><span>Изменить ссылку</span></button>'+(l.url?'<button class="mi" data-a="vis"><span>'+(l.show?'Скрыть':'Показать')+'</span></button>':''),
+    function(a){if(a=="edit")openNetEdit(k);else{l.show=!l.show;saveLinks()}})}
+function openNetEdit(k){closeAct();if($("#mdl"))return;var name=NETS.filter(function(n){return n[0]==k})[0][1],l=P.links[k],bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
+  bg.innerHTML='<div class="mdl" role="dialog" aria-modal="true" aria-labelledby="mdlT"><div class="mh"><h2 id="mdlT">'+name+'</h2><button class="x" data-x aria-label="Закрыть">'+XIC+'</button></div>'+
+    '<div class="mb"><label><span>Ссылка</span><input class="pin" id="neUrl" value="'+esc(l.url)+'" placeholder="'+esc(LINKPH["links."+k+".url"])+'" spellcheck="false" inputmode="url" autocapitalize="off"></label></div>'+
+    '<div class="mf"><button class="btn sec" data-x>Отмена</button><button class="btn pri" id="neOk">Сохранить</button></div></div>';
+  document.body.appendChild(bg);var u=$("#neUrl"),last=document.activeElement;
+  function close(){bg.remove();if(last&&last.focus)last.focus()}
+  function submit(){var v=u.value.trim();if(v&&!l.url)l.show=true;l.url=v;saveLinks();close()}
+  $("#neOk").addEventListener("click",submit);
+  bg.addEventListener("mousedown",function(e){if(e.target==bg)close()});
+  bg.addEventListener("click",function(e){if(e.target.closest("[data-x]"))close()});
+  bg.addEventListener("keydown",function(e){if(e.key=="Escape"){e.preventDefault();close()}else if(e.key=="Enter"){e.preventDefault();submit()}});
+  u.focus();u.select()}
 function openLocActions(b){closeAct();var i=+b.dataset.lockb,el=document.createElement("div");el.className="menu";el.setAttribute("role","menu");
   el.innerHTML=((i!=P.set.loc?'<button class="mi" data-a="pick"><span>Сделать текущей</span></button>':'')+(P.set.locs.length>1?'<button class="mi danger" data-a="del"><span>Удалить</span></button>':''))||'<div class="lbl">Единственная локация</div>';
   el.style.minWidth=160/zk()+"px";document.body.appendChild(el);var r=b.getBoundingClientRect(),mb=el.getBoundingClientRect();
@@ -738,7 +936,8 @@ function openLocActions(b){closeAct();var i=+b.dataset.lockb,el=document.createE
   var f=el.querySelector(".mi");if(f)f.focus({preventScroll:true});
   el.addEventListener("click",function(e){var it=e.target.closest(".mi");if(!it)return;closeAct();if(it.dataset.a=="pick")setLoc(i);else delLoc(i)});
   el.addEventListener("keydown",function(e){if(e.key=="Escape"){closeAct();b.focus()}})}
-document.addEventListener("mousedown",function(e){if(amenu&&!amenu.contains(e.target)&&!e.target.closest("[data-lockb]"))closeAct()});
+document.addEventListener("mousedown",function(e){if(amenu&&!amenu.contains(e.target)&&!e.target.closest("[data-lockb],[data-netkb],[data-cardkb],[data-foodkb]"))closeAct()});
+document.addEventListener("click",function(e){var b=e.target.closest("[data-netkb]");if(b){if(amenu&&amenu.btn==b)closeAct();else openNetActions(b)}});
 addEventListener("resize",closeAct);$("#body").addEventListener("scroll",closeAct,{passive:true});
 /* окно «Новая локация» (как Invite members в Attio): шапка · поля · футер с кнопками */
 function openNewLoc(){closeLoc();closeAct();if($("#mdl"))return;var bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
