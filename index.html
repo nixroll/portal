@@ -38,7 +38,8 @@
   --border-tertiary:#F5F5F5;      /* обводка аватара в превью */
   --brand-solid:#7F56D9; --brand-solid-hover:#6941C6; /* включённый тумблер */
   --border-brand:#9E77ED; --text-placeholder:#717680; --bg-primary-hover:#FAFAFA;
-  --fg-quaternary:#A4A7AE; --fg-brand-primary:#7F56D9; --bg-quaternary:#E9EAEB;
+  --fg-quaternary:#A4A7AE; --fg-brand-primary:#7F56D9; --bg-quaternary:#E9EAEB; --text-error:#D92D20;
+  --shadow-xl:0 20px 24px -4px rgba(10,13,18,.08),0 8px 8px -4px rgba(10,13,18,.03),0 3px 3px -1.5px rgba(10,13,18,.04);
   --shadow-lg:0 12px 16px -4px rgba(10,13,18,.08),0 4px 6px -2px rgba(10,13,18,.03),0 2px 2px -1px rgba(10,13,18,.04);
   --shadow-xs:0 1px 2px rgba(10,13,18,.05);
   --shadow-sm:0 1px 3px rgba(10,13,18,.1),0 1px 2px -1px rgba(10,13,18,.1);           /* иконка выбранного пункта (примитив, одинаков в обеих темах) */
@@ -50,13 +51,13 @@
     --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
     --border-primary:#373A41; --border-secondary-alt:#22262F;
     --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
-    --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --bg-quaternary:#373A41; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
+    --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --bg-quaternary:#373A41; --text-error:#F97066; --shadow-xl:0 0 0 transparent; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
 }
 :root[data-theme="dark"],.pv[data-theme="dark"]{
   --bg-secondary-alt:#0C0E12; --bg-primary-alt:#13161B; --bg-primary:#0C0E12; --bg-secondary-hover:#22262F;
   --border-primary:#373A41; --border-secondary-alt:#22262F;
   --text-primary:#F7F7F7; --text-secondary:#CECFD2; --text-tertiary:#94979C;
-  --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --bg-quaternary:#373A41; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
+  --fg-primary:#FFFFFF; --fg-secondary:#CECFD2; --fg-tertiary:#94979C; --bg-tertiary:#22262F; --border-secondary:#22262F; --border-tertiary:#22262F; --brand-solid-hover:#9E77ED; --border-brand:#B692F6; --text-placeholder:#85888E; --bg-primary-hover:#22262F; --fg-quaternary:#61656C; --fg-brand-primary:#9E77ED; --bg-quaternary:#373A41; --text-error:#F97066; --shadow-xl:0 0 0 transparent; --shadow-xs:0 0 0 transparent; --shadow-sm:0 0 0 transparent; --shadow-lg:0 0 0 transparent; color-scheme:dark}
 
 /* ---------- чёткий рендер ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -117,9 +118,9 @@ body.rzing{cursor:col-resize;user-select:none}
 /* ---------- Playground: рабочая панель, bg-primary_alt, рамка 0,5 border-secondary_alt внутри, скругление 10 ---------- */
 .pg{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg-primary-alt);
   border-radius:10px;overflow:hidden}
-.pg::after{content:"";position:absolute;inset:0;z-index:4;border-radius:10px;box-shadow:inset 0 0 0 var(--h) var(--border-secondary-alt);pointer-events:none} /* stroke 0,5 inside */
+.pg::after{content:"";position:absolute;inset:0;z-index:7;border-radius:10px;box-shadow:inset 0 0 0 var(--h) var(--border-secondary-alt);pointer-events:none} /* stroke 0,5 inside */
 /* Toolbar: 44 px, линия 0,5 снизу снаружи; Container 28 px, поля 0 8 0 16 */
-.tb{position:absolute;top:var(--h);left:var(--h);right:var(--h);z-index:3;height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+.tb{position:absolute;top:var(--h);left:var(--h);right:var(--h);z-index:6; /* выше закреплённых вкладок (z 5), иначе их фон перекрывает линию под тулбаром */ height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:0 8px 0 16px;background:var(--bg-primary-alt);box-shadow:0 var(--h) 0 var(--border-secondary-alt)} /* линия 0,5 снизу снаружи */
 .tl{flex:1;min-width:0;display:flex;align-items:center;gap:16px}
 /* Sidebar button: 20×20, иконка layout-left 14 (слева, по центру по высоте); Normal — fg-secondary, Hover — fg-primary. На десктопе скрыта */
@@ -180,6 +181,8 @@ body.rzing{cursor:col-resize;user-select:none}
 /* Selector: 28 px, капсула, поля 0 12, рамка 0,5 border-primary, тень shadow-xs, текст Text xs/Medium 12/18.
    Normal — bg-primary_alt, text-secondary; Hover и Selected — bg-secondary_hover, text-primary */
 .psel{display:flex;flex-wrap:wrap;gap:6px;padding:16px}
+/* вкладки закреплены: при прокрутке остаются сверху, контент уходит под них (фон — как у панели) */
+.portal .psel,.settings .psel{position:sticky;top:0;z-index:5;background:var(--bg-primary-alt)}
 .psel button{display:inline-flex;align-items:center;height:32px;padding:0 calc(12px + var(--h));border-radius:9999px;background:var(--bg-primary-alt);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);font-size:12px;line-height:18px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
 .psel button span{display:inline-block}
@@ -187,7 +190,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .psel.m{display:none}
 /* Карточка настройки: фон bg-tertiary, рамка и разделители 0,5 border-primary, поля и контролы на bg-primary_alt; скругление 10, поля внутри 16, отступ 10 */
 /* Содержимое вкладки: отступ 10 после вкладок, поля 16, между карточками 16 */
-.pcont{display:flex;flex-direction:column;gap:32px;margin-top:10px;padding:16px 16px 32px}
+.pcont{display:flex;flex-direction:column;gap:32px;padding:16px 16px 32px} /* между вкладками и контентом 0 — по макету */
 .pcont[hidden]{display:none}
 /* Карточка настроек: рамка 0,5 border-secondary внутри (в раскладке), скругление 10 */
 .pc{padding:var(--h);border-radius:10px;background:var(--bg-tertiary);box-shadow:inset 0 0 0 var(--h) var(--border-primary)}
@@ -195,8 +198,8 @@ body.rzing{cursor:col-resize;user-select:none}
 .pr{display:flex;align-items:center;gap:16px;padding:16px}
 .pr+.pr{padding-top:calc(16px + var(--h));box-shadow:inset 0 var(--h) 0 var(--border-primary)}
 .pr .tx{flex:1;min-width:0}
-.pr .tx b{display:block;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pr .tx small{display:block;font-size:12px;line-height:18px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr .tx b{display:block;font-weight:500;color:var(--text-primary);text-wrap:pretty}
+.pr .tx small{display:block;font-size:12px;line-height:18px;color:var(--text-secondary);text-wrap:pretty} /* как в Linear: не обрезаем, а переносим на следующую строку */
 .pr .tx small em{font-style:normal;color:var(--text-primary)}
 .pr .ct{flex:none;display:flex;align-items:center;gap:8px}
 /* Поле ввода портала: 32 px, скругление 8, bg-primary, рамка 0,5 border-primary, тень shadow-xs, текст Text sm/Regular; фокус — рамка border-brand */
@@ -240,6 +243,43 @@ body.rzing{cursor:col-resize;user-select:none}
 /* Select (sm): высота 32, поля 10,5 / 8, шеврон 16 fg-quaternary, ширина по содержимому */
 .sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 calc(10px + var(--h));border-radius:8px;background:var(--bg-primary-alt);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);color:var(--text-primary);white-space:nowrap}
+/* Таблица локаций (по образцу Attio): шапка 36 — xs/Medium text-tertiary, строки 44, разделители 0,5 border-primary, «⋮» 32 */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.sh h3{margin:0}
+.tbl .th,.tbl .tr{display:grid;grid-template-columns:minmax(0,1fr) 120px 140px 32px;align-items:center;gap:16px;padding:0 8px 0 16px}
+.tbl .th{height:36px;font-size:12px;line-height:18px;font-weight:500;color:var(--text-tertiary)}
+.tbl .tr{height:calc(44px + var(--h));padding-top:var(--h);box-shadow:inset 0 var(--h) 0 var(--border-primary)}
+.tbl .c1{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap}
+.tbl .c1 b{font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis}
+.tbl .c1 small{font-size:14px;line-height:20px;color:var(--text-tertiary);overflow:hidden;text-overflow:ellipsis}
+.tbl .ctz{color:var(--text-secondary)}
+.badge{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:9999px;font-style:normal;font-size:12px;line-height:18px;font-weight:500;
+  color:var(--fg-brand-primary);background:color-mix(in srgb,var(--brand-solid) 14%,transparent);box-shadow:inset 0 0 0 var(--h) color-mix(in srgb,var(--brand-solid) 35%,transparent)}
+.kb{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;color:var(--fg-quaternary)}
+.kb:hover{background:var(--bg-primary-hover);color:var(--fg-tertiary)}
+.mi.danger{color:var(--text-error)}
+/* Кнопки (Buttons / sm): высота 32, поля 12, скругление 8, Text sm/Semibold */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 12px;border-radius:8px;font-weight:600;white-space:nowrap}
+.btn.pri{background:var(--brand-solid);color:#fff;box-shadow:var(--shadow-xs)}
+.btn.pri:hover{background:var(--brand-solid-hover)}
+.btn.sec{background:var(--bg-primary-alt);color:var(--text-secondary);box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs)}
+.btn.sec:hover{background:var(--bg-primary-hover);color:var(--text-primary)}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn svg{flex:none}
+/* Окно: подложка 40 %, ширина 480, скругление 12, шапка 56 и футер с разделителями */
+.mdl-bg{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.4)}
+.mdl{width:480px;max-width:100%;border-radius:12px;background:var(--bg-primary-alt);box-shadow:inset 0 0 0 var(--h) var(--border-secondary-alt),var(--shadow-xl)}
+.mdl .mh{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 12px 0 20px;box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.mdl h2{margin:0;font-size:16px;line-height:24px;font-weight:600;color:var(--text-primary)}
+.mdl .x{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;color:var(--fg-quaternary)}
+.mdl .x:hover{background:var(--bg-primary-hover);color:var(--fg-tertiary)}
+.mdl .mb{display:flex;flex-direction:column;gap:16px;padding:20px}
+.mdl label,.mdl .fld{display:flex;flex-direction:column;gap:6px}
+.mdl label>span,.mdl .fld>span{font-weight:500;color:var(--text-secondary)}
+.mdl .pin{width:100%}
+.mdl .selw{display:flex}.mdl .sel{width:100%;justify-content:space-between}
+.mdl .mf{display:flex;justify-content:flex-end;gap:12px;padding:16px 20px;box-shadow:inset 0 var(--h) 0 var(--border-secondary)}
+@media (max-width:640px){.tbl .th,.tbl .tr{grid-template-columns:minmax(0,1fr) auto 32px}.tbl .ctz{display:none}.tbl .c1{flex-direction:column;gap:0;align-items:flex-start}.tbl .tr{height:auto;min-height:calc(56px + var(--h))}}
 /* нативный список на сенсорных экранах: прозрачный <select> поверх кнопки, шрифт 16 px — чтобы Safari не приближал страницу */
 .selw{position:relative;display:inline-flex}
 .nsel{display:none}
@@ -251,7 +291,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .sel:hover{background:var(--bg-primary-hover)}
 .sel[aria-expanded="true"]{box-shadow:inset 0 0 0 1px var(--border-brand),var(--shadow-xs)}
 /* Меню списка: поля 4, пункты 32, скругление 8 / 6, рамка 0,5 border-secondary_alt, shadow-lg */
-.menu{position:fixed;z-index:50;display:flex;flex-direction:column;max-height:288px;overflow-y:auto;padding:4px;border-radius:8px;background:var(--bg-primary);
+.menu{position:fixed;z-index:70;display:flex;flex-direction:column;max-height:288px;overflow-y:auto;padding:4px;border-radius:8px;background:var(--bg-primary);
   box-shadow:inset 0 0 0 var(--h) var(--border-secondary-alt),var(--shadow-lg)}
 .mi{display:flex;align-items:center;gap:8px;flex:none;height:32px;padding:0 8px;border-radius:6px;font-weight:500;color:var(--text-secondary);white-space:nowrap;outline:none}
 .mi span{flex:1;text-align:left}
@@ -276,9 +316,10 @@ body.nobadge .nav a .c{display:none}
 
 /* Телефон: строки настроек не сжимаем — длинные поля уходят под подпись на всю ширину, вкладки листаются вбок (как в Linear) */
 @media (max-width:640px){
-  .settings .psel{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .settings .psel::-webkit-scrollbar{display:none}
-  .settings .psel button{flex:none}
+  .portal .psel,.settings .psel{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .portal .psel::-webkit-scrollbar,.settings .psel::-webkit-scrollbar{display:none}
+  .portal .psel button,.settings .psel button{flex:none}
+  .portal .psel::after,.settings .psel::after{content:"";flex:none;width:10px} /* Safari не учитывает правый отступ у прокручиваемого ряда — добиваем до 16 */
   .pr{flex-wrap:wrap;row-gap:12px}
   .pr .tx{flex:1 1 160px}
   .pr .ct:has(.pin,.lt){flex:1 1 100%}
@@ -319,9 +360,8 @@ body[data-page="portal"] .empty{display:none}
   body[data-page="portal"] .view::-webkit-scrollbar{display:none}
 }
 @media (max-width:1023px){
-  /* на планшете и телефоне — только вкладки «Профиль · Меню · Ссылки», как в макете */
-  .psel.d,.portal .pcont{display:none}
-  .psel.m{display:flex}
+  /* планшет и телефон: те же вкладки и настройки портала, что на компьютере; превью гостя справа — только на широком экране */
+  .psel.m{display:none}
 }
 </style>
 </head>
@@ -603,18 +643,23 @@ Object.assign(OPT,{"set.kind":["Ресторан","Кафе","Бар","Клин�
 P.set={name:"Ранак",kind:"Ресторан",tz:"Минск · GMT+3",
   online:true,confirm:"Автоматически",step:"30 минут",dur:"2 часа",ahead:"30 дней",late:"1 час",party:"До 8 гостей",wait:true,
   gconfirm:true,remind:"За 2 часа",review:true,channel:"SMS",tnew:true,tchat:true,tcancel:true,digest:"В 9:00",sound:false,
-  theme:"Как в системе",accent:"Фиолетовый",badge:true,start:"Главная",locs:["пл. Свободы 4","пр. Победителей 9","ул. Зыбицкая 6"],loc:0};
+  theme:"Как в системе",accent:"Фиолетовый",badge:true,start:"Главная",locs:[{name:"Ранак на Свободы",addr:"пл. Свободы 4",tz:"Минск · GMT+3"},{name:"Ранак на Победителей",addr:"пр. Победителей 9",tz:"Минск · GMT+3"},{name:"Ранак на Зыбицкой",addr:"ул. Зыбицкая 6",tz:"Минск · GMT+3"}],loc:0};
+P.nl={tz:"Минск · GMT+3"}; /* поля окна «Новая локация» */
 (function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-2")||"null");if(sv&&sv.set)for(var k in sv.set)if(k in P.set)P.set[k]=sv.set[k]}catch(e){}})();
-function locRows(){var L=P.set.locs;return L.map(function(a,i){return row(esc(a),i==P.set.loc?"Текущая — её брони и чаты сейчас в кабинете":"Переключиться можно внизу бокового меню",
-  (i==P.set.loc?"":'<button class="chip" data-locpick="'+i+'"><span>Выбрать</span></button>')+(L.length>1?'<button class="chip" data-locdel="'+i+'"><span>Удалить</span></button>':''))}).concat(
-  row("Новая локация","Адрес, как его увидят сотрудники",'<input class="pin w224" id="sLocNew" placeholder="Улица и дом" spellcheck="false"><button class="chip" id="sLocAdd"><span>Добавить</span></button>'))}
+P.set.locs=P.set.locs.map(function(l){return typeof l=="string"?{name:"Ранак",addr:l,tz:P.set.tz}:l}); /* раньше локация была просто адресом */
+OPT["nl.tz"]=OPT["set.tz"];
+/* Локации — таблица как в Attio (Members): шапка 36, строки 44, колонки «Локация · Статус · Часовой пояс · ⋮» */
+var DOTSV='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.33" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12.67" r="1"/></svg>';
+var XIC='<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true"><path d="M12 4 4 12M4 4l8 8"/></svg>';
+function locTable(){return '<div class="th" role="row"><span role="columnheader">Локация</span><span role="columnheader">Статус</span><span role="columnheader" class="ctz">Часовой пояс</span><span></span></div>'+
+  P.set.locs.map(function(l,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(l.name)+'</b><small>'+esc(l.addr)+'</small></span><span role="cell">'+(i==P.set.loc?'<i class="badge">Текущая</i>':'')+'</span><span role="cell" class="ctz">'+esc(l.tz)+'</span><button class="kb" data-lockb="'+i+'" aria-label="Действия с локацией" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}
 function buildSettings(){$("#sPanels").innerHTML=
   '<div class="pcont" data-p="general">'+
     sec("Компания",[card([
       row("Название","Видят сотрудники и гости в SMS",inp("set.name","","Название компании")),
       row("Сфера","Подстроим разделы и шаблоны под бизнес",sel("set.kind","Сфера")),
       row("Часовой пояс","Для броней, напоминаний и отчётов",sel("set.tz","Часовой пояс"))])])+
-    sec("Локации",['<div class="pc" id="sLocs">'+locRows().join("")+'</div>'])+
+    '<section class="psec"><div class="sh"><h3>Локации</h3><button class="btn pri" id="sLocAdd">'+ico("plus",14)+'<span>Добавить</span></button></div><div class="pc tbl" id="sLocs" role="table">'+locTable()+'</div></section>'+
   '</div>'+
   '<div class="pcont" data-p="booking" hidden>'+
     sec("Онлайн-запись",[card([
@@ -659,20 +704,47 @@ function applySettings(){var a=ACC[P.set.accent]||ACC["Фиолетовый"],L=
   accEl.textContent=':root,.pv[data-theme="light"]{'+L+'}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){'+D+'}}:root[data-theme="dark"],.pv[data-theme="dark"]{'+D+'}';
   var r=document.documentElement;if(P.set.theme=="Светлая")r.dataset.theme="light";else if(P.set.theme=="Тёмная")r.dataset.theme="dark";else if(th!="dark"&&th!="light")delete r.dataset.theme;else r.dataset.theme=th;
   document.body.classList.toggle("nobadge",!P.set.badge);setThemeColor();
-  var l=$("#loc");l.querySelector("span").textContent=P.set.locs[P.set.loc]||"";l.title=P.set.locs[P.set.loc]||"";
+  var cur=P.set.locs[P.set.loc]||{},l=$("#loc");l.querySelector("span").textContent=cur.addr||"";l.title=cur.name?cur.name+" · "+cur.addr:"";
   document.querySelectorAll('.sel[data-sel="set.accent"] .dot').forEach(function(d){d.style.setProperty("--c",a[0])})}
 /* общие обработчики полей и тумблеров для настроек */
 $("#sPanels").addEventListener("input",function(e){var k=e.target.dataset.k;if(!k)return;setK(k,e.target.value);save()});
 $("#sPanels").addEventListener("click",function(e){var t=e.target.closest(".tgl");
   if(t){var on=t.getAttribute("aria-checked")!="true";t.setAttribute("aria-checked",on?"true":"false");setK(t.dataset.k,on);save();render();applySettings();return}
   var s=e.target.closest(".sel");if(s){if(menu&&menu.btn==s)closeMenu();else openMenu(s);return}
-  var p=e.target.closest("[data-locpick]");if(p){setLoc(+p.dataset.locpick);return}
-  var d=e.target.closest("[data-locdel]");if(d){var i=+d.dataset.locdel;P.set.locs.splice(i,1);if(P.set.loc>=i&&P.set.loc>0)P.set.loc--;saveLocs();return}
-  if(e.target.closest("#sLocAdd"))addLoc($("#sLocNew").value)});
-$("#sPanels").addEventListener("keydown",function(e){if(e.key=="Enter"&&e.target.id=="sLocNew")addLoc(e.target.value)});
-function saveLocs(){save();applySettings();$("#sLocs").innerHTML=locRows().join("");snapText()}
+  var kb=e.target.closest("[data-lockb]");if(kb){openLocActions(kb);return}
+  if(e.target.closest("#sLocAdd"))openNewLoc()});
+function saveLocs(){save();applySettings();$("#sLocs").innerHTML=locTable();snapText()}
 function setLoc(i){P.set.loc=i;saveLocs()}
-function addLoc(v){v=(v||"").trim();if(!v)return;P.set.locs.push(v);P.set.loc=P.set.locs.length-1;saveLocs()}
+function delLoc(i){if(P.set.locs.length<2)return;P.set.locs.splice(i,1);if(P.set.loc>i||P.set.loc>=P.set.locs.length)P.set.loc=Math.max(0,P.set.loc-1);saveLocs()}
+function addLoc(l){P.set.locs.push(l);P.set.loc=P.set.locs.length-1;saveLocs()}
+/* меню «⋮» у строки: сделать текущей / удалить */
+var amenu=null;function closeAct(){if(amenu){amenu.remove();amenu=null}}
+function openLocActions(b){closeAct();var i=+b.dataset.lockb,el=document.createElement("div");el.className="menu";el.setAttribute("role","menu");
+  el.innerHTML=((i!=P.set.loc?'<button class="mi" data-a="pick"><span>Сделать текущей</span></button>':'')+(P.set.locs.length>1?'<button class="mi danger" data-a="del"><span>Удалить</span></button>':''))||'<div class="lbl">Единственная локация</div>';
+  el.style.minWidth=160/zk()+"px";document.body.appendChild(el);var r=b.getBoundingClientRect(),mb=el.getBoundingClientRect();
+  el.style.left=snap(r.right-mb.width)/zk()+"px";el.style.top=snap(r.bottom+4+mb.height>innerHeight-8?r.top-4-mb.height:r.bottom+4)/zk()+"px";amenu=el;
+  var f=el.querySelector(".mi");if(f)f.focus({preventScroll:true});
+  el.addEventListener("click",function(e){var it=e.target.closest(".mi");if(!it)return;closeAct();if(it.dataset.a=="pick")setLoc(i);else delLoc(i)});
+  el.addEventListener("keydown",function(e){if(e.key=="Escape"){closeAct();b.focus()}})}
+document.addEventListener("mousedown",function(e){if(amenu&&!amenu.contains(e.target)&&!e.target.closest("[data-lockb]"))closeAct()});
+addEventListener("resize",closeAct);$("#body").addEventListener("scroll",closeAct,{passive:true});
+/* окно «Новая локация» (как Invite members в Attio): шапка · поля · футер с кнопками */
+function openNewLoc(){closeLoc();closeAct();if($("#mdl"))return;P.nl.tz=P.set.tz;var bg=document.createElement("div");bg.className="mdl-bg";bg.id="mdl";
+  bg.innerHTML='<div class="mdl" role="dialog" aria-modal="true" aria-labelledby="mdlT"><div class="mh"><h2 id="mdlT">Новая локация</h2><button class="x" data-x aria-label="Закрыть">'+XIC+'</button></div>'+
+    '<div class="mb"><label><span>Название</span><input class="pin" id="nlName" placeholder="Например, Ранак на Немиге" spellcheck="false"></label>'+
+    '<label><span>Адрес</span><input class="pin" id="nlAddr" placeholder="Улица и дом" spellcheck="false"></label>'+
+    '<div class="fld"><span>Часовой пояс</span>'+sel("nl.tz","Часовой пояс")+'</div></div>'+
+    '<div class="mf"><button class="btn sec" data-x>Отмена</button><button class="btn pri" id="nlOk" disabled>Добавить</button></div></div>';
+  document.body.appendChild(bg);var a=$("#nlAddr"),n=$("#nlName"),ok=$("#nlOk"),last=document.activeElement;
+  function upd(){ok.disabled=!a.value.trim()}a.addEventListener("input",upd);
+  function close(){bg.remove();closeMenu();if(last&&last.focus)last.focus()}
+  function submit(){if(ok.disabled)return;var ad=a.value.trim();addLoc({name:n.value.trim()||"Ранак · "+ad,addr:ad,tz:P.nl.tz});close()}
+  ok.addEventListener("click",submit);
+  bg.addEventListener("mousedown",function(e){if(e.target==bg)close()});
+  bg.addEventListener("click",function(e){if(e.target.closest("[data-x]")){close();return}var s=e.target.closest(".sel");if(s){if(menu&&menu.btn==s)closeMenu();else openMenu(s)}});
+  bg.addEventListener("change",onNative);
+  bg.addEventListener("keydown",function(e){if(e.key=="Escape"&&!menu){e.preventDefault();close()}else if(e.key=="Enter"&&e.target.tagName=="INPUT"){e.preventDefault();submit()}});
+  n.focus()}
 document.querySelector(".settings .psel").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;closeMenu();
   this.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-selected",x==b?"true":"false")});
   document.querySelectorAll("#sPanels .pcont").forEach(function(p){p.hidden=p.dataset.p!=b.dataset.t});snapText()});
@@ -680,7 +752,7 @@ document.querySelector(".settings .psel").addEventListener("click",function(e){v
 var lmenu=null;
 function closeLoc(){if(!lmenu)return;lmenu.remove();lmenu=null;$("#loc").setAttribute("aria-expanded","false")}
 function openLoc(form){closeLoc();var b=$("#loc"),el=document.createElement("div");el.className="menu lm";el.setAttribute("role","menu");
-  el.innerHTML='<div class="lbl">Локации</div>'+P.set.locs.map(function(a,i){return '<button class="mi" role="menuitemradio" aria-checked="'+(i==P.set.loc)+'" data-i="'+i+'"><span>'+esc(a)+'</span>'+(i==P.set.loc?CHECK:'')+'</button>'}).join("")+
+  el.innerHTML='<div class="lbl">Локации</div>'+P.set.locs.map(function(a,i){return '<button class="mi" role="menuitemradio" aria-checked="'+(i==P.set.loc)+'" data-i="'+i+'"><span>'+esc(a.addr)+'</span>'+(i==P.set.loc?CHECK:'')+'</button>'}).join("")+
     '<hr>'+(form?'<div class="lf"><input class="pin" id="lmNew" placeholder="Адрес новой локации" spellcheck="false"></div>':'<button class="mi" data-a="add"><span>Добавить локацию</span></button>')+
     '<button class="mi" data-a="set"><span>Настройки локаций</span><kbd>G затем S</kbd></button>';
   document.body.appendChild(el);var side=$("#side")||b.closest("aside"),r=b.getBoundingClientRect(),sr=b.parentElement.getBoundingClientRect();
@@ -690,7 +762,7 @@ function openLoc(form){closeLoc();var b=$("#loc"),el=document.createElement("div
   else{var c=el.querySelector('[aria-checked="true"]')||el.querySelector(".mi");c.focus({preventScroll:true})}
   el.addEventListener("click",function(e){var it=e.target.closest(".mi");if(!it)return;
     if(it.dataset.i!=null){setLoc(+it.dataset.i);closeLoc();return}
-    if(it.dataset.a=="add"){openLoc(true);return}
+    if(it.dataset.a=="add"){openNewLoc();return}
     if(it.dataset.a=="set"){closeLoc();goLocs()}});
   el.addEventListener("keydown",function(e){var its=[].slice.call(el.querySelectorAll(".mi")),k=its.indexOf(document.activeElement);
     if(e.key=="ArrowDown"){e.preventDefault();(its[k+1]||its[0]).focus()}else if(e.key=="ArrowUp"){e.preventDefault();(its[k-1]||its[its.length-1]).focus()}
