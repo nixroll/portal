@@ -196,7 +196,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .pc{padding:var(--h);border-radius:10px;background:var(--bg-tertiary);box-shadow:inset 0 0 0 var(--h) var(--border-primary)}
 /* Строка: поля 16, отступ 16; со второй строки — линия 0,5 сверху (в раскладке) */
 .pr{display:flex;align-items:center;gap:16px;padding:16px}
-.pr+.pr{padding-top:calc(16px + var(--h));box-shadow:inset 0 var(--h) 0 var(--border-primary)}
+.pr+.pr{padding-top:calc(16px + var(--h));background:linear-gradient(var(--border-primary),var(--border-primary)) 16px 0/calc(100% - 32px) var(--h) no-repeat} /* как в Linear: линия с отступами от краёв карточки */
 .pr .tx{flex:1;min-width:0}
 .pr .tx b{display:block;font-weight:500;color:var(--text-primary);text-wrap:pretty}
 .pr .tx small{display:block;font-size:12px;line-height:18px;color:var(--text-secondary);text-wrap:pretty} /* как в Linear: не обрезаем, а переносим на следующую строку */
@@ -279,12 +279,19 @@ body.rzing{cursor:col-resize;user-select:none}
 .mdl .selw{display:flex}.mdl .sel{width:100%;justify-content:space-between}
 .mdl .mf{display:flex;justify-content:flex-end;gap:12px;padding:16px 20px;box-shadow:inset 0 var(--h) 0 var(--border-secondary)}
 @media (max-width:640px){.tbl .th,.tbl .tr{grid-template-columns:minmax(0,1fr) auto 32px}.tbl .c1{flex-direction:column;gap:0;align-items:flex-start}.tbl .tr{height:auto;min-height:calc(56px + var(--h))}}
+/* Кнопка-иконка (Icon button): 32 × 32, круглая, как Selector — bg-primary_alt, рамка 0,5 border-primary, иконка 16 fg-tertiary */
+.ibtn{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:9999px;background:var(--bg-primary-alt);color:var(--fg-tertiary);
+  box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs)}
+.ibtn:hover{background:var(--bg-secondary-hover);color:var(--fg-secondary)}
+.ibtn.ghost{background:none;box-shadow:none;border-radius:8px}
+.ibtn.ghost:hover{background:var(--bg-primary-hover)}
+button.thumb{padding:0;border:0;cursor:pointer}
+button.thumb:hover{opacity:.85}
 /* нативный список на сенсорных экранах: прозрачный <select> поверх кнопки, шрифт 16 px — чтобы Safari не приближал страницу */
 .selw{position:relative;display:inline-flex}
 .nsel{display:none}
-@media (hover:none) and (pointer:coarse){
-  .selw .nsel{display:block;position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;font-size:16px;-webkit-appearance:none;appearance:none;cursor:pointer}
-}
+/* везде системный список, как у Linear: на Mac — меню macOS, на iPhone — меню iOS */
+.selw .nsel{display:block;position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;font-size:16px;-webkit-appearance:none;appearance:none;cursor:pointer}
 .sel span{display:inline-block}
 .sel svg{flex:none;width:16px;height:16px;color:var(--fg-quaternary)}
 .sel:hover{background:var(--bg-primary-hover)}
@@ -502,63 +509,71 @@ function url(k,cls){return '<label class="lt'+(cls?" "+cls:"")+'"><span>https://
 /* на телефоне поверх кнопки лежит прозрачный нативный <select> — iOS и Android показывают системный список, как у Linear */
 function nsel(k,lbl){var v=getK(k);return '<select class="nsel" data-nsel="'+k+'" aria-label="'+lbl+'" tabindex="-1">'+OPT[k].map(function(o){return '<option'+(o==v?' selected':'')+'>'+esc(o)+'</option>'}).join("")+'</select>'}
 function sel(k,lbl){return '<span class="selw"><button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'"><span>'+esc(getK(k))+'</span>'+CHEV+'</button>'+nsel(k,lbl)+'</span>'}
-function photo(k,cls){return '<span class="thumb'+(cls?" "+cls:"")+'" data-img="'+k+'" style="--img:url('+IMG[k]+')"></span><button class="chip" data-pick="'+k+'"><span>Заменить</span></button>'}
+/* как в Linear: без кнопки «Заменить» — сама картинка кликабельна */
+function photo(k,cls){return '<button class="thumb'+(cls?" "+cls:"")+'" data-pick="'+k+'" data-img="'+k+'" style="--img:url('+IMG[k]+')" aria-label="Заменить изображение" title="Заменить"></button>'}
+/* иконки из библиотеки Figma (Untitled UI, 24 → 16 px) */
+function svg24(d){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+d+'"/></svg>'}
+var IC_COPY=svg24("M5 15C4.06812 15 3.60218 15 3.23463 14.8478C2.74458 14.6448 2.35523 14.2554 2.15224 13.7654C2 13.3978 2 12.9319 2 12V5.2C2 4.0799 2 3.51984 2.21799 3.09202C2.40973 2.71569 2.71569 2.40973 3.09202 2.21799C3.51984 2 4.0799 2 5.2 2H12C12.9319 2 13.3978 2 13.7654 2.15224C14.2554 2.35523 14.6448 2.74458 14.8478 3.23463C15 3.60218 15 4.06812 15 5M12.2 22H18.8C19.9201 22 20.4802 22 20.908 21.782C21.2843 21.5903 21.5903 21.2843 21.782 20.908C22 20.4802 22 19.9201 22 18.8V12.2C22 11.0799 22 10.5198 21.782 10.092C21.5903 9.71569 21.2843 9.40973 20.908 9.21799C20.4802 9 19.9201 9 18.8 9H12.2C11.0799 9 10.5198 9 10.092 9.21799C9.71569 9.40973 9.40973 9.71569 9.21799 10.092C9 10.5198 9 11.0799 9 12.2V18.8C9 19.9201 9 20.4802 9.21799 20.908C9.40973 21.2843 9.71569 21.5903 10.092 21.782C10.5198 22 11.0799 22 12.2 22Z"),
+  IC_UPLOAD=svg24("M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M7 8L12 3L17 8M12 3V15"),
+  IC_PLUS=svg24("M12 5V19M5 12H19"),IC_CHECK=svg24("M20 6L9 17L4 12");
+/* круглая кнопка-иконка 32 (как «изменить» у Linear); ghost — без подложки, для заголовков разделов */
+function ibtn(id,label,icon,attrs,cls){return '<button class="ibtn'+(cls?" "+cls:"")+'"'+(id?' id="'+id+'"':'')+' aria-label="'+label+'" title="'+label+'" '+(attrs||'')+'>'+icon+'</button>'}
 function chip(id,t){return '<button class="chip" id="'+id+'"><span>'+t+'</span></button>'}
-function onlineSub(){return P.online?'Открыт для всех по ссылке <em>'+esc(P.url)+'</em>':'Портал выключен — гости увидят заглушку'}
+function onlineSub(){return P.online?'Открыт по ссылке <em>'+esc(P.url)+'</em>':'Скрыт от гостей'}
 function cardTab(k,actions,extra){var c=P[k];return [
   sec("Карточка",[
-    card([row("Показывать на портале",'Карточка «<span data-tx="'+k+'.title">'+esc(c.title)+'</span>» в ленте портала',tgl(k+".show","Показывать на портале"))]),
-    card([row("Фото","Горизонтальное, от 1110 × 722 px",photo(k),{dep:k+".show"}),
-          row("Заголовок","Крупная строка на фото",inp(k+".title","","Например, «Попробуй осень»"),{dep:k+".show"}),
-          row("Подпись","Строка под заголовком",inp(k+".sub","","Короткая подпись"),{dep:k+".show"})])]),
+    card([row("Показывать на портале","",tgl(k+".show","Показывать на портале"))]),
+    card([row("Фото","От 1110 × 722 px",photo(k),{dep:k+".show"}),
+          row("Заголовок","",inp(k+".title","","Например, «Попробуй осень»"),{dep:k+".show"}),
+          row("Подпись","",inp(k+".sub","","Короткая подпись"),{dep:k+".show"})])]),
   sec("По нажатию",[card(actions)])].concat(extra||[]).join("")}
 $("#pPanels").innerHTML=
   '<div class="pcont" data-p="general">'+
     sec("Доступ",[card([
       row("Доступен онлайн",onlineSub(),tgl("online","Доступен онлайн"),{sid:"pOnlineTx"}),
-      row("Адрес портала","По этой ссылке гости откроют портал",inp("url","w184","",true)+chip("pCopy","Копировать")),
-      row("Показывать в поисковиках","Google и Яндекс смогут находить портал",tgl("seo","Показывать в поисковиках")),
-      row("Язык портала","Для подписей и времени работы",sel("lang","Язык портала"))])])+
+      row("Адрес портала","",inp("url","w184","",true)+ibtn("pCopy","Копировать ссылку",IC_COPY)),
+      row("Показывать в поисковиках","Google и Яндекс",tgl("seo","Показывать в поисковиках")),
+      row("Язык портала","",sel("lang","Язык портала"))])])+
     sec("Заведение",[
-      card([row("Логотип","Квадратный, от 256 px — показываем кругом",photo("logo","logo")),
-            row("Название","Крупно под логотипом",inp("name","","Название заведения"))]),
-      card([row("Адрес","Для гостей, которые ищут, как добраться",inp("addr","","Улица и дом")),
-            row("Телефон","Для брони и вопросов",inp("phone","","+375 ..."))])])+
+      card([row("Логотип","",photo("logo","logo")),
+            row("Название","",inp("name","","Название заведения"))]),
+      card([row("Адрес","",inp("addr","","Улица и дом")),
+            row("Телефон","",inp("phone","","+375 ..."))])])+
     sec("Время работы",[card([
-      row("Режим","Строка под названием на портале",sel("mode","Режим")),
-      row("Открытие","Время первого гостя",sel("open","Открытие"),{dep:"!24"}),
-      row("Закрытие","Время последнего гостя",sel("close","Закрытие"),{dep:"!24"})])])+
+      row("Режим","",sel("mode","Режим")),
+      row("Открытие","",sel("open","Открытие"),{dep:"!24"}),
+      row("Закрытие","",sel("close","Закрытие"),{dep:"!24"})])])+
     sec("Оформление",[card([
-      row("Тема портала","Светлая, тёмная или как в настройках телефона гостя",sel("ptheme","Тема портала"))])])+
+      row("Тема портала","Как увидят гости",sel("ptheme","Тема портала"))])])+
   '</div>'+
   '<div class="pcont" data-p="menu" hidden>'+cardTab("menu",[
-      row("Открывать","Что увидит гость после нажатия на карточку",sel("menu.action","Открывать"),{dep:"menu.show"}),
-      row("Файл меню",'<span id="pMenuFile">'+esc(P.menu.file)+'</span>','<button class="chip" data-pdf="menu"><span>Заменить</span></button>',{dep:"menu.show",show:"menu.action=Меню в PDF"}),
-      row("Ссылка","Страница меню на вашем сайте",url("menu.link","w280"),{dep:"menu.show",show:"menu.action=Ссылка на сайт"})],
+      row("Открывать","",sel("menu.action","Открывать"),{dep:"menu.show"}),
+      row("Файл меню",'<span id="pMenuFile">'+esc(P.menu.file)+'</span>',ibtn("","Загрузить другой файл",IC_UPLOAD,'data-pdf="menu"'),{dep:"menu.show",show:"menu.action=Меню в PDF"}),
+      row("Ссылка","",url("menu.link","w280"),{dep:"menu.show",show:"menu.action=Ссылка на сайт"})],
     [sec("Показ",[card([
-      row("По расписанию","Показывать карточку только в эти даты",tgl("menu.sched","По расписанию"),{dep:"menu.show"}),
-      row("Период","Включительно, по времени заведения",inp("menu.from","w120","дд.мм.гггг")+'<i class="dash">–</i>'+inp("menu.to","w120","дд.мм.гггг"),{dep:"menu.show menu.sched"})])])])+
+      row("По расписанию","Только в выбранные даты",tgl("menu.sched","По расписанию"),{dep:"menu.show"}),
+      row("Период","",inp("menu.from","w120","дд.мм.гггг")+'<i class="dash">–</i>'+inp("menu.to","w120","дд.мм.гггг"),{dep:"menu.show menu.sched"})])])])+
   '</div>'+
   '<div class="pcont" data-p="loyalty" hidden>'+cardTab("loyalty",[
-      row("Открывать","Что увидит гость после нажатия на карточку",sel("loyalty.action","Открывать"),{dep:"loyalty.show"}),
-      row("Ссылка","Страница программы на вашем сайте",url("loyalty.link","w280"),{dep:"loyalty.show",show:"loyalty.action=Ссылка на сайт"})],
+      row("Открывать","",sel("loyalty.action","Открывать"),{dep:"loyalty.show"}),
+      row("Ссылка","",url("loyalty.link","w280"),{dep:"loyalty.show",show:"loyalty.action=Ссылка на сайт"})],
     [sec("Программа",[card([
-      row("Тип","Чем заведение благодарит гостя",sel("loyalty.kind","Тип")),
+      row("Тип","",sel("loyalty.kind","Тип")),
       row("Размер","От суммы заказа",sel("loyalty.size","Размер")),
-      row("Действует на","Какие заказы участвуют",sel("loyalty.scope","Действует на")),
-      row("Вместе с другими акциями","Суммировать с сезонными предложениями",tgl("loyalty.stack","Вместе с другими акциями"))])]),
+      row("Действует на","",sel("loyalty.scope","Действует на")),
+      row("Вместе с другими акциями","",tgl("loyalty.stack","Вместе с другими акциями"))])]),
      sec("Участие",[card([
-      row("Вход по номеру телефона","Гость получает карту по коду из SMS",tgl("loyalty.phone","Вход по номеру телефона")),
-      row("Приветственный бонус","Начисляем после первого заказа",sel("loyalty.welcome","Приветственный бонус"),{dep:"loyalty.phone"})])])])+
+      row("Вход по номеру телефона","Карта по коду из SMS",tgl("loyalty.phone","Вход по номеру телефона")),
+      row("Приветственный бонус","После первого заказа",sel("loyalty.welcome","Приветственный бонус"),{dep:"loyalty.phone"})])])])+
   '</div>'+
   '<div class="pcont" data-p="links" hidden>'+
     sec("Социальные сети",[card([
-      row("Google","Карточка в Google Картах",url("links.google.url")+tgl("links.google.show","Показывать Google")),
-      row("LinkedIn","Страница компании",url("links.linkedin.url")+tgl("links.linkedin.show","Показывать LinkedIn")),
-      row("Telegram","Канал или чат с гостями",url("links.telegram.url")+tgl("links.telegram.show","Показывать Telegram"))])])+
+      row("Google","",url("links.google.url")+tgl("links.google.show","Показывать Google")),
+      row("LinkedIn","",url("links.linkedin.url")+tgl("links.linkedin.show","Показывать LinkedIn")),
+      row("Telegram","",url("links.telegram.url")+tgl("links.telegram.show","Показывать Telegram"))])])+
     sec("Переходы",[card([
-      row("Открывать в новой вкладке","Портал останется открытым у гостя",tgl("links.newtab","Открывать в новой вкладке")),
-      row("UTM-метки",'Добавлять <em>utm_source=portal</em>, чтобы видеть переходы в аналитике',tgl("links.utm","UTM-метки"))])])+
+      row("Открывать в новой вкладке","",tgl("links.newtab","Открывать в новой вкладке")),
+      row("UTM-метки",'Добавляем <em>utm_source=portal</em> к ссылкам',tgl("links.utm","UTM-метки"))])])+
   '</div>';
 var file=document.createElement("input");file.type="file";file.hidden=true;document.body.appendChild(file);var pickKey=null;
 function href(u){u=/^https?:\/\//.test(u)?u:"https://"+u;return P.links.utm?u+(u.indexOf("?")<0?"?":"&")+"utm_source=portal":u}
@@ -604,7 +619,7 @@ $("#pPanels").addEventListener("click",function(e){var t=e.target.closest(".tgl"
   var s=e.target.closest(".sel");if(s){if(menu&&menu.btn==s)closeMenu();else openMenu(s);return}
   var pk=e.target.closest("[data-pick]");if(pk){pickKey=pk.dataset.pick;file.accept="image/*";file.value="";file.click();return}
   var pd=e.target.closest("[data-pdf]");if(pd){pickKey="pdf";file.accept="application/pdf";file.value="";file.click();return}
-  if(e.target.closest("#pCopy")){var b=$("#pCopy span");try{navigator.clipboard.writeText("https://"+P.url)}catch(er){}b.textContent="Скопировано";snapText();setTimeout(function(){b.textContent="Копировать";snapText()},1500)}});
+  if(e.target.closest("#pCopy")){var cb=$("#pCopy");try{navigator.clipboard.writeText("https://"+P.url).catch(function(){})}catch(er){}cb.innerHTML=IC_CHECK;cb.title="Скопировано";setTimeout(function(){cb.innerHTML=IC_COPY;cb.title="Копировать ссылку"},1500)}});
 file.addEventListener("change",function(){var f=file.files&&file.files[0];if(!f||!pickKey)return;
   if(pickKey=="pdf"){P.menu.file=f.name+" · "+(f.size/1048576).toFixed(1).replace(".",",")+" МБ";$("#pMenuFile").textContent=P.menu.file;save();return}
   IMG[pickKey]=URL.createObjectURL(f);document.querySelectorAll('[data-img="'+pickKey+'"]').forEach(function(x){x.style.setProperty("--img","url("+IMG[pickKey]+")")});render()});
@@ -654,42 +669,42 @@ function locTable(){return '<div class="th" role="row"><span role="columnheader"
 function buildSettings(){$("#sPanels").innerHTML=
   '<div class="pcont" data-p="general">'+
     sec("Компания",[card([
-      row("Название","Видят сотрудники и гости в SMS",inp("set.name","","Название компании")),
-      row("Сфера","Подстроим разделы и шаблоны под бизнес",sel("set.kind","Сфера"))])])+
-    '<section class="psec"><div class="sh"><h3>Локации</h3><button class="btn pri" id="sLocAdd">'+ico("plus",14)+'<span>Добавить</span></button></div><div class="pc tbl" id="sLocs" role="table">'+locTable()+'</div></section>'+
+      row("Название","",inp("set.name","","Название компании")),
+      row("Сфера","",sel("set.kind","Сфера"))])])+
+    '<section class="psec"><div class="sh"><h3>Локации</h3>'+ibtn("sLocAdd","Добавить локацию",IC_PLUS,"","ghost")+'</div><div class="pc tbl" id="sLocs" role="table">'+locTable()+'</div></section>'+
   '</div>'+
   '<div class="pcont" data-p="booking" hidden>'+
     sec("Онлайн-запись",[card([
       row("Принимать брони онлайн","Через портал, Google и соцсети",tgl("set.online","Принимать брони онлайн")),
-      row("Подтверждение","Кто подтверждает новую бронь",sel("set.confirm","Подтверждение"),{dep:"set.online"}),
-      row("Шаг времени","Через сколько доступны слоты",sel("set.step","Шаг времени"),{dep:"set.online"}),
-      row("Длительность визита","Сколько держим стол или место",sel("set.dur","Длительность визита"),{dep:"set.online"})])])+
+      row("Подтверждение","",sel("set.confirm","Подтверждение"),{dep:"set.online"}),
+      row("Шаг времени","Интервал между слотами",sel("set.step","Шаг времени"),{dep:"set.online"}),
+      row("Длительность визита","",sel("set.dur","Длительность визита"),{dep:"set.online"})])])+
     sec("Ограничения",[card([
-      row("Запись заранее","Насколько вперёд открыт календарь",sel("set.ahead","Запись заранее"),{dep:"set.online"}),
-      row("Не позже чем за","Сколько времени нужно на подготовку",sel("set.late","Не позже чем за"),{dep:"set.online"}),
-      row("Гостей в одной брони","Большие компании — через звонок",sel("set.party","Гостей в одной брони"),{dep:"set.online"}),
-      row("Лист ожидания","Если мест нет, гость встанет в очередь",tgl("set.wait","Лист ожидания"),{dep:"set.online"})])])+
+      row("Запись заранее","",sel("set.ahead","Запись заранее"),{dep:"set.online"}),
+      row("Не позже чем за","До начала визита",sel("set.late","Не позже чем за"),{dep:"set.online"}),
+      row("Гостей в одной брони","Больше только по звонку",sel("set.party","Гостей в одной брони"),{dep:"set.online"}),
+      row("Лист ожидания","Когда нет свободных мест",tgl("set.wait","Лист ожидания"),{dep:"set.online"})])])+
   '</div>'+
   '<div class="pcont" data-p="notify" hidden>'+
     sec("Гостям",[card([
       row("Подтверждение брони","Сразу после записи",tgl("set.gconfirm","Подтверждение брони")),
-      row("Напоминание","Снижает число неявок",sel("set.remind","Напоминание")),
+      row("Напоминание","",sel("set.remind","Напоминание")),
       row("Просьба об отзыве","Через час после визита",tgl("set.review","Просьба об отзыве")),
-      row("Канал","Куда отправляем сообщения",sel("set.channel","Канал"))])])+
+      row("Канал","",sel("set.channel","Канал"))])])+
     sec("Команде",[card([
-      row("Новая бронь","Уведомление в кабинете и на телефоне",tgl("set.tnew","Новая бронь")),
-      row("Сообщения в Мультичате","Новые диалоги и ответы гостей",tgl("set.tchat","Сообщения в Мультичате")),
-      row("Отмены и переносы","Чтобы вовремя освободить место",tgl("set.tcancel","Отмены и переносы")),
-      row("Сводка за день","Брони, отмены и отзывы одним письмом",sel("set.digest","Сводка за день")),
-      row("Звук","Короткий сигнал при новом событии",tgl("set.sound","Звук"))])])+
+      row("Новая бронь","",tgl("set.tnew","Новая бронь")),
+      row("Сообщения в Мультичате","",tgl("set.tchat","Сообщения в Мультичате")),
+      row("Отмены и переносы","",tgl("set.tcancel","Отмены и переносы")),
+      row("Сводка за день","Письмо с бронями и отзывами",sel("set.digest","Сводка за день")),
+      row("Звук","",tgl("set.sound","Звук"))])])+
   '</div>'+
   '<div class="pcont" data-p="look" hidden>'+
     sec("Оформление",[card([
-      row("Тема","Светлая, тёмная или как в системе",sel("set.theme","Тема")),
-      row("Акцентный цвет","Кнопки, тумблеры, выделение и фокус",selDot("set.accent","Акцентный цвет"))])])+
+      row("Тема","",sel("set.theme","Тема")),
+      row("Акцентный цвет","Кнопки, переключатели и выделение",selDot("set.accent","Акцентный цвет"))])])+
     sec("Боковое меню",[card([
-      row("Счётчики","Число непрочитанных рядом с разделом",tgl("set.badge","Счётчики")),
-      row("Открывать при входе","Раздел, с которого начинается работа",sel("set.start","Открывать при входе"))])])+
+      row("Счётчики","Непрочитанные в боковом меню",tgl("set.badge","Счётчики")),
+      row("Открывать при входе","",sel("set.start","Открывать при входе"))])])+
   '</div>';
   var cur=document.querySelector(".settings .psel button[aria-selected=true]");if(cur)document.querySelectorAll("#sPanels .pcont").forEach(function(p){p.hidden=p.dataset.p!=cur.dataset.t})}
 function dot(name){return '<i class="dot" style="--c:'+ACC[name][0]+'"></i>'}
