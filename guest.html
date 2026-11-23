@@ -83,6 +83,28 @@ p,h1,h2{margin:0}
 .price{padding:5px 12px;border-radius:9999px;background:rgba(var(--c),.03);font-size:12px;line-height:18px;font-weight:500;white-space:nowrap}
 .empty{padding:40px 0;text-align:center;color:rgba(var(--c),.6)}
 /* карта гостя — тот же каркас, что у меню */
+/* ===== Карта гостя: карточка как банковская (85,6 × 54 мм), QR по центру, свечение бежит по рамке ===== */
+@property --ga{syntax:"<angle>";inherits:false;initial-value:0deg}
+.gwrap{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.gcard{position:relative;isolation:isolate;display:grid;grid-template-rows:auto 1fr auto;aspect-ratio:85.6/54;padding:20px;border-radius:24px;overflow:hidden;
+  background:radial-gradient(120% 90% at 0% 0%,rgba(var(--c),.07),rgba(var(--c),0) 60%),rgba(var(--c),.03);box-shadow:inset 0 0 0 1px rgba(var(--c),.1)}
+/* два мягких блика напротив друг друга медленно идут по кругу */
+.gcard::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--ga),transparent 0deg,rgba(var(--c),.55) 35deg,transparent 75deg,transparent 180deg,rgba(var(--c),.55) 215deg,transparent 255deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:gspin 9s linear infinite}
+@keyframes gspin{to{--ga:360deg}}
+@media (prefers-reduced-motion:reduce){.gcard::before{animation:none}}
+.gtop,.gbot{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
+.gme{display:flex;align-items:center;gap:10px;min-width:0}
+.gme i{flex:none;width:28px;height:28px;border-radius:9999px;background:var(--img) center/cover;box-shadow:inset 0 0 0 1.5px rgba(var(--c),.2)}
+.gme b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.glbl{flex:none;font-size:12px;line-height:18px;font-weight:500;color:rgba(var(--c),.6)}
+.gqr{display:grid;place-items:center;min-height:0}
+.gqr svg{display:block;height:100%;max-height:116px;width:auto;aspect-ratio:1;padding:8px;border-radius:14px;background:rgba(var(--c),.06);box-shadow:inset 0 0 0 1px rgba(var(--c),.08);color:rgba(var(--c),.92)}
+.gpct{font-size:32px;line-height:40px;font-weight:600;letter-spacing:-.01em}
+.gsub{min-width:0;font-size:13px;line-height:18px;color:rgba(var(--c),.6);text-align:right}
+.gnum{display:block;font-variant-numeric:tabular-nums;letter-spacing:.08em;color:rgba(var(--c),.8)}
+.ghint{text-align:center;font-size:13px;line-height:18px;color:rgba(var(--c),.5)}
 .terms{display:flex;flex-direction:column}
 .terms div{display:flex;justify-content:space-between;gap:16px;padding:14px 0;box-shadow:inset 0 calc(-1 * var(--h7)) 0 rgba(var(--c),.1)}
 .terms div:last-child{box-shadow:none}
@@ -109,11 +131,11 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
 (function(){
 var embed=/[?&]embed=1/.test(location.search),D=null,view="home",cat=0,$=function(s){return document.querySelector(s)};
 if(embed)document.body.classList.add("embed");
-var T={ru:{feed:"Лента",menu:"Меню",about:"О нас",card:"Карта гостя",book:"Забронировать",all:"Для вас",back:"Назад",share:"Поделиться",closed:"Портал временно недоступен",empty:"Меню скоро появится",
+var T={ru:{feed:"Лента",menu:"Меню",about:"О нас",card:"Карта гостя",book:"Забронировать",all:"Для вас",back:"Назад",share:"Поделиться",show:"Покажите QR-код на кассе",closed:"Портал временно недоступен",empty:"Меню скоро появится",
     addr:"Адрес",hours:"Время работы",phone:"Телефон",kind:"Тип",size:"Размер",scope:"Действует на",stack:"Вместе с другими акциями",login:"Вход по номеру телефона",welcome:"Приветственный бонус",yes:"Да",no:"Нет",cur:"руб"},
-  be:{feed:"Стужка",menu:"Меню",about:"Пра нас",card:"Карта госця",book:"Забраніраваць",all:"Для вас",back:"Назад",share:"Падзяліцца",closed:"Партал часова недаступны",empty:"Меню хутка з’явіцца",
+  be:{feed:"Стужка",menu:"Меню",about:"Пра нас",card:"Карта госця",book:"Забраніраваць",all:"Для вас",back:"Назад",share:"Падзяліцца",show:"Пакажыце QR-код на касе",closed:"Партал часова недаступны",empty:"Меню хутка з’явіцца",
     addr:"Адрас",hours:"Час працы",phone:"Тэлефон",kind:"Тып",size:"Памер",scope:"Дзейнічае на",stack:"Разам з іншымі акцыямі",login:"Уваход па нумары тэлефона",welcome:"Вітальны бонус",yes:"Так",no:"Не",cur:"руб"},
-  en:{feed:"Feed",menu:"Menu",about:"About",card:"Guest card",book:"Book a table",all:"For you",back:"Back",share:"Share",closed:"This page is temporarily unavailable",empty:"Menu is coming soon",
+  en:{feed:"Feed",menu:"Menu",about:"About",card:"Guest card",book:"Book a table",all:"For you",back:"Back",share:"Share",show:"Show the QR code at the counter",closed:"This page is temporarily unavailable",empty:"Menu is coming soon",
     addr:"Address",hours:"Hours",phone:"Phone",kind:"Type",size:"Amount",scope:"Applies to",stack:"Combines with other offers",login:"Sign in with phone",welcome:"Welcome bonus",yes:"Yes",no:"No",cur:"BYN"}};
 function t(k){return (T[D&&D.lang]||T.ru)[k]}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
@@ -156,9 +178,20 @@ function itemHTML(i){return '<div class="it"><div class="pic'+(i.img?'':' no')+'
 /* подборка товаров (мерч и т. п.): та же сетка, что в меню, без категорий */
 function shopHTML(id){var c=(D.cards||[]).filter(function(x){return x.id==id})[0];if(!c)return homeHTML("feed");var items=c.items||[];
   return topHTML(esc(c.title))+'<main class="menu" style="padding-top:104px"><div class="wrap">'+(items.length?'<div class="grid">'+items.map(itemHTML).join("")+'</div>':'<p class="empty">'+t("empty")+'</p>')+'</div></main>'+dock("")}
-function cardHTML(){var L=D.loyalty||{};
-  return topHTML(t("card"))+'<main class="menu" style="padding-top:104px"><div class="wrap terms">'+[[t("kind"),L.kind],[t("size"),L.size],[t("scope"),L.scope],[t("stack"),L.stack?t("yes"):t("no")]].concat(L.phone?[[t("login"),t("yes")],[t("welcome"),L.welcome]]:[])
-    .map(function(r){return '<div><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+'</div></main>'+dock("")}
+/* «красивый» QR: не настоящий код, но с узорами-ориентирами как у настоящего; рисунок одинаковый для одного заведения */
+function qrSVG(seed){var n=25,h=0,i,x,y,s="";for(i=0;i<seed.length;i++)h=(h*31+seed.charCodeAt(i))>>>0;function rnd(){h^=h<<13;h>>>=0;h^=h>>17;h^=h<<5;h>>>=0;return h/4294967296}
+  function finder(x0,y0){return '<rect x="'+(x0+.5)+'" y="'+(y0+.5)+'" width="6" height="6" rx="1.6" fill="none" stroke="currentColor"/><rect x="'+(x0+2)+'" y="'+(y0+2)+'" width="3" height="3" rx=".8"/>'}
+  function inF(x,y){return (x<8&&y<8)||(x>n-9&&y<8)||(x<8&&y>n-9)}
+  for(y=0;y<n;y++)for(x=0;x<n;x++){if(inF(x,y))continue;if((x>15&&x<21&&y>15&&y<21)&&!(x==18&&y==18)&&!(x==16||x==20||y==16||y==20))continue;if(rnd()<.47)s+='<rect x="'+(x+.08)+'" y="'+(y+.08)+'" width=".84" height=".84" rx=".28"/>'}
+  s+='<rect x="16.5" y="16.5" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width=".9"/><rect x="18" y="18" width="1" height="1" rx=".3"/>';
+  return '<svg viewBox="0 0 '+n+' '+n+'" fill="currentColor" aria-hidden="true">'+finder(0,0)+finder(n-7,0)+finder(0,n-7)+s+'</svg>'}
+function cardHTML(){var L=D.loyalty||{},num=String(1000+(qrSVG.length*37+(D.name||"").length*613)%9000);
+  var gc='<div class="gwrap"><div class="gcard" role="img" aria-label="'+t("card")+' '+esc(L.size||"")+'"><div class="gtop"><div class="gme"><i'+img(D.logo)+'></i><b>'+esc(D.name)+'</b></div><span class="glbl">'+t("card")+'</span></div>'+
+    '<div class="gqr">'+qrSVG((D.name||"")+(L.size||""))+'</div>'+
+    '<div class="gbot"><span class="gpct">'+esc(L.size||"")+'</span><span class="gsub">'+esc([L.kind,(L.scope||"").toLowerCase()].filter(Boolean).join(" на "))+'<span class="gnum">•••• '+num+'</span></span></div></div>'+
+    '<p class="ghint">'+t("show")+'</p></div>';
+  return topHTML(t("card"))+'<main class="menu" style="padding-top:104px"><div class="wrap">'+gc+'<div class="terms">'+[[t("kind"),L.kind],[t("size"),L.size],[t("scope"),L.scope],[t("stack"),L.stack?t("yes"):t("no")]].concat(L.phone?[[t("login"),t("yes")],[t("welcome"),L.welcome]]:[])
+    .map(function(r){return '<div><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+'</div></div></main>'+dock("")}
 function render(){colors(D.color||"#23151F");document.documentElement.lang=D.lang||"ru";tgt=D.newtab&&!embed?' target="_blank" rel="noopener"':'';
   if(!embed){document.title=D.name||"Портал";if(!D.seo&&!document.querySelector('meta[name="robots"]')){var m=document.createElement("meta");m.name="robots";m.content="noindex";document.head.appendChild(m)}}
   if(!D.online){$("#app").innerHTML='<div class="closed">'+t("closed")+'</div>';return}
