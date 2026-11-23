@@ -353,6 +353,9 @@ body[data-page="portal"] .addb svg:not(.pub){display:none}
 .thumb.sm{flex:none;width:40px;height:40px;border-radius:8px}
 .mdl .its{display:flex;flex-direction:column;gap:8px}
 .mdl .itr{display:flex;align-items:center;gap:8px}
+.mdl .jbr{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;box-shadow:inset 0 0 0 var(--h) var(--border-secondary)}
+.mdl .jbr .pin[data-f=name]{flex:1 1 auto;min-width:0}
+.mdl .jbr .ta{min-height:72px}
 .mdl .itr .pin[data-f=name]{flex:1 1 auto;min-width:0}
 .mdl .itr .pin[data-f=price]{flex:none;width:88px}
 .mdl .addit{align-self:flex-start;gap:6px}
@@ -398,14 +401,14 @@ body.tb-on .toast{bottom:calc(72px + env(safe-area-inset-bottom))}
 body[data-page="portal"] .portal{display:block}
 body[data-page="portal"] .empty{display:none}
 @media (min-width:1024px){
-  /* на десктопе раздел «Портал» делится на две колонки: настройки (с тулбаром) и превью 402 px */
-  body[data-page="portal"] .tb{top:1px;left:1px;right:calc(var(--pvw,402px) + 1px)}
-  body[data-page="portal"] .body{margin:calc(44px + var(--h)) calc(var(--pvw,402px) + var(--h)) var(--h) var(--h)}
-  body[data-page="portal"] .view{display:block;position:absolute;padding:16px;top:var(--h);right:var(--h);bottom:var(--h);width:var(--pvw,402px);overflow-y:auto;scrollbar-width:none;
+  /* на десктопе раздел «Портал» делится на две колонки: настройки (с тулбаром) и превью 452 px (портал 420 px) */
+  body[data-page="portal"] .tb{top:1px;left:1px;right:calc(var(--pvw,452px) + 1px)}
+  body[data-page="portal"] .body{margin:calc(44px + var(--h)) calc(var(--pvw,452px) + var(--h)) var(--h) var(--h)}
+  body[data-page="portal"] .view{display:block;position:absolute;padding:16px;top:var(--h);right:var(--h);bottom:var(--h);width:var(--pvw,452px);overflow-y:auto;scrollbar-width:none;
     box-shadow:inset var(--h) 0 0 var(--border-secondary-alt)}
   body[data-page="portal"] .view::-webkit-scrollbar{display:none}
   /* ширину превью тянем за левый край, как сайдбар: так видно портал на узком и широком экране */
-  body[data-page="portal"] .rzv{display:block;position:absolute;top:var(--h);bottom:var(--h);right:calc(var(--pvw,402px) - 4px);width:8px;cursor:col-resize;touch-action:none;z-index:8}
+  body[data-page="portal"] .rzv{display:block;position:absolute;top:var(--h);bottom:var(--h);right:calc(var(--pvw,452px) - 4px);width:8px;cursor:col-resize;touch-action:none;z-index:8}
   body.rzing .view iframe{pointer-events:none}
   .pvb{position:absolute;left:0;right:0;top:28px;z-index:3;width:max-content;margin:0 auto;padding:4px 10px;border-radius:9999px;background:var(--text-primary);color:var(--bg-primary);
     font-size:12px;line-height:18px;font-weight:500;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .15s;pointer-events:none}
@@ -542,12 +545,14 @@ function food(a){return a.map(function(r){return {id:fid(),cat:r[0],name:r[1],de
 var FOOD_FIGMA=[["Кофе","Фильтр-кофе","","",12,"img/menu-filter.jpg"],["Круассаны","Пряная ватрушка","","",21,"img/menu-vatrushka.jpg"],["Десерты","Творожный креп","","",21,"img/menu-krep.jpg"],
   ["Круассаны","Маковый рулет","","",15,"img/menu-mak.jpg"],["Круассаны","Яблочный штрудель","","",17,"img/menu-shtrudel.jpg"],["Десерты","Творожник","","",9,""],
   ["Мерч","Майка","","",99,"img/merch-tee.jpg"],["Мерч","Шоппер","","",200,"img/merch-shopper.jpg"]]; /* мерч — последняя вкладка меню */
+function JOBS(){return [{id:"barista",name:"Бариста",meta:"Смены 2/2 · Опыт не обязателен",desc:"Готовите эспрессо и фильтр на спешелти-зерне, помогаете гостю выбрать напиток и держите стойку в порядке. Если опыта нет, научим с нуля."},
+  {id:"hall",name:"Менеджер зала",meta:"Полный день · Опыт от года",desc:"Встречаете гостей, ведёте брони и смену, следите, чтобы в зале было уютно и всё шло вовремя. Нужен опыт в кафе или ресторане."}]}
 var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак",about:"Кофейня в скандинавском стиле в историческом центре Минска. Варим спешелти-кофе из зёрен разных обжарщиков, а выпечку каждое утро печём из французской муки.",addr:"пл. Свободы 4",phone:"+375 29 123-45-67",
-  mode:"Ежедневно",open:"08:00",close:"20:00",pcolor:"Бордовый",logo:"img/portal-avatar.jpg",
+  mode:"Ежедневно",open:"08:00",close:"20:00",booking:{days:3,min:1,max:3},pcolor:"Бордовый",logo:"img/portal-avatar.jpg",
   cards:[{id:"menu",kind:"menu",show:true,title:"Попробуй осень",sub:"Сезонное меню",img:"img/portal-card-autumn.jpg",sched:false,from:"01.09.2026",to:"30.11.2026",link:""},
          {id:"loyalty",kind:"loyalty",show:true,title:"Скидка на каждый заказ",sub:"Карта гостя",img:"img/portal-card-takeaway.jpg",sched:false,from:"",to:"",link:""},
          {id:"merch",kind:"menu",cat:"Мерч",show:true,title:"Байка и шоппер",sub:"Фирменный мерч",img:"img/portal-card-merch.jpg",sched:false,from:"",to:"",link:""},
-         {id:"team",kind:"link",show:true,title:"Ищем в команду",sub:"2 вакансии",img:"img/portal-card-team.jpg",sched:false,from:"",to:"",link:"t.me/ranak"}],
+         {id:"team",kind:"jobs",show:true,title:"Ищем в команду",sub:"2 вакансии",img:"img/portal-card-team.jpg",sched:false,from:"",to:"",link:"t.me/ranak",jobs:JOBS()}],
   food:food(FOOD_FIGMA),
   loyalty:{kind:"Скидка",size:"5%",scope:"Все заказы",stack:false,phone:true,welcome:"Без бонуса"},
   links:{google:{show:true,url:"g.page/ranak"},instagram:{show:true,url:"instagram.com/ranak.by"},telegram:{show:true,url:"t.me/ranak"},newtab:true,utm:false},
@@ -557,7 +562,7 @@ var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак"
   function deep(a,b){for(var k in b){if(!(k in a))continue;if(Array.isArray(a[k])){if(Array.isArray(b[k]))a[k]=b[k]}else if(b[k]&&typeof b[k]=="object"&&a[k]&&typeof a[k]=="object")deep(a[k],b[k]);else a[k]=b[k]}}deep(P,sv)}catch(e){}})();
 P.cards.forEach(function(c){if(c.id=="merch"&&(c.kind=="link"||c.kind=="shop")){var its=c.kind=="shop"&&c.items&&c.items.length?c.items:merch();
     if(!P.food.some(function(f){return f.cat=="Мерч"}))its.forEach(function(t){P.food.push({id:fid(),cat:"Мерч",name:t.name,desc:"",out:"",price:t.price,img:t.img||"",show:true})});
-    c.kind="menu";c.cat="Мерч";c.link="";delete c.items}if(c.kind=="shop"&&!Array.isArray(c.items))c.items=[]}); /* мерч переехал в меню последней вкладкой */
+    c.kind="menu";c.cat="Мерч";c.link="";delete c.items}if(c.kind=="shop"&&!Array.isArray(c.items))c.items=[];if(c.id=="team"&&c.kind=="link"&&!c.jobs){c.kind="jobs";c.jobs=JOBS()}if(c.kind=="jobs"&&!Array.isArray(c.jobs))c.jobs=[]}); /* мерч переехал в меню последней вкладкой */
 function save(){try{localStorage.setItem("portal-settings-3",JSON.stringify(P))}catch(e){toast("Не хватает места в браузере для фото",4000)}}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function getK(k){return k.split(".").reduce(function(o,x){return o[x]},P)}
@@ -589,7 +594,7 @@ var IC_COPY=svg24("M5 15C4.06812 15 3.60218 15 3.23463 14.8478C2.74458 14.6448 2
 /* круглая кнопка-иконка 32 (как «изменить» у Linear); ghost — без подложки, для заголовков разделов */
 function ibtn(id,label,icon,attrs,cls){return '<button class="ibtn'+(cls?" "+cls:"")+'"'+(id?' id="'+id+'"':'')+' aria-label="'+label+'" title="'+label+'" '+(attrs||'')+'>'+icon+'</button>'}
 function chip(id,t){return '<button class="chip" id="'+id+'"><span>'+t+'</span></button>'}
-var KIND={menu:"Меню",loyalty:"Лояльность",link:"Ссылка",shop:"Товары"};
+var KIND={menu:"Меню",loyalty:"Лояльность",link:"Ссылка",shop:"Товары",jobs:"Вакансии"};
 var HOURS={"Русский":{},"Беларуская":{"Ежедневно":"Штодня","Круглосуточно":"Кругласутачна"},"English":{"Ежедневно":"Daily","Пн–Пт":"Mon–Fri","Пн–Сб":"Mon–Sat","Круглосуточно":"Open 24/7"}};
 function purl(){return SITE+P.slug}
 function when(iso){var d=new Date(iso);return d.toLocaleDateString("ru-RU",{day:"numeric",month:"long"})+", "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
@@ -645,8 +650,8 @@ function linkTable(){return thead("Сеть","Статус")+
   NETS.map(function(n){var l=P.links[n[0]];return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+n[1]+'</b><small>'+(l.url?esc(l.url):'Нет ссылки')+'</small></span><span role="cell">'+(l.show&&l.url?'<i class="badge">Показана</i>':'<span class="muted">Скрыта</span>')+'</span><button class="kb" data-netkb="'+n[0]+'" aria-label="Действия со ссылкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}
 function saveLinks(){save();render();$("#pLinks").innerHTML=linkTable();snapText()}
 /* Карточки портала: меню и лояльность открывают экран на портале, ссылка ведёт на сайт */
-function cardState(c){return !c.show?'<span class="muted">Скрыта</span>':c.kind=="menu"&&!inRange(c)?'<span class="muted">Не по расписанию</span>':c.kind=="link"&&!c.link?'<span class="muted">Нет ссылки</span>':c.kind=="shop"&&!(c.items||[]).length?'<span class="muted">Нет товаров</span>':'<i class="badge">Показана</i>'}
-function cardTable(){return thead("Карточка","Статус")+(P.cards.length?P.cards.map(function(c,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(c.title||"Без заголовка")+'</b><small>'+esc(c.kind=="link"?(c.link||"Ссылка"):c.kind=="shop"?"Товары · "+(c.items||[]).length:c.kind=="menu"&&c.cat?"Меню · "+c.cat:KIND[c.kind]+" на портале")+'</small></span><span role="cell">'+cardState(c)+'</span><button class="kb" data-cardkb="'+i+'" aria-label="Действия с карточкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join(""):'<div class="te">Карточек пока нет</div>')}
+function cardState(c){return !c.show?'<span class="muted">Скрыта</span>':c.kind=="menu"&&!inRange(c)?'<span class="muted">Не по расписанию</span>':c.kind=="link"&&!c.link?'<span class="muted">Нет ссылки</span>':c.kind=="shop"&&!(c.items||[]).length?'<span class="muted">Нет товаров</span>':c.kind=="jobs"&&!(c.jobs||[]).length?'<span class="muted">Нет вакансий</span>':'<i class="badge">Показана</i>'}
+function cardTable(){return thead("Карточка","Статус")+(P.cards.length?P.cards.map(function(c,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(c.title||"Без заголовка")+'</b><small>'+esc(c.kind=="link"?(c.link||"Ссылка"):c.kind=="shop"?"Товары · "+(c.items||[]).length:c.kind=="jobs"?"Вакансии · "+(c.jobs||[]).length:c.kind=="menu"&&c.cat?"Меню · "+c.cat:KIND[c.kind]+" на портале")+'</small></span><span role="cell">'+cardState(c)+'</span><button class="kb" data-cardkb="'+i+'" aria-label="Действия с карточкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join(""):'<div class="te">Карточек пока нет</div>')}
 function saveCards(){save();render();$("#pCards").innerHTML=cardTable()}
 /* Меню: одна таблица, блюда сгруппированы по категориям (как группы в таблицах Linear) */
 function money(v){if(v===""||v==null||isNaN(v))return "—";v=Number(v);return (v%1?v.toFixed(2).replace(".",","):String(v))+" руб"}
@@ -663,8 +668,9 @@ function inRange(c){if(!c.sched)return true;function d(s){var a=/^(\d\d)\.(\d\d)
 /* данные для страницы гостя: rel — путь от страницы к общим картинкам ("" в превью, "../" в опубликованной папке) */
 function pdata(rel){var r=function(s){return !s||/^(data:|https?:|blob:)/.test(s)?s:rel+s};
   return {name:P.name,hours:hours(),lang:{"Русский":"ru","Беларуская":"be","English":"en"}[P.lang]||"ru",color:PCOL[P.pcolor]||PCOL["Бордовый"],online:P.online,seo:P.seo,newtab:P.links.newtab,cur:"руб",logo:r(P.logo),about:P.about,addr:P.addr,phone:P.phone,
-    cards:P.cards.filter(function(c){return c.show&&(c.kind!="link"||c.link)}).map(function(c){var o={id:c.id,kind:c.kind,title:c.title,sub:c.sub,img:r(c.img)};if(c.kind=="link")o.href=href(c.link);if(c.kind=="shop")o.items=(c.items||[]).map(function(t){return {name:t.name,price:t.price,img:r(t.img||"")}});if(c.kind=="menu"&&c.cat)o.cat=c.cat;if(c.kind=="menu"&&c.sched){o.from=c.from;o.to=c.to}return o}),
+    cards:P.cards.filter(function(c){return c.show&&(c.kind!="link"||c.link)}).map(function(c){var o={id:c.id,kind:c.kind,title:c.title,sub:c.sub,img:r(c.img)};if(c.kind=="link")o.href=href(c.link);if(c.kind=="shop")o.items=(c.items||[]).map(function(t){return {name:t.name,price:t.price,img:r(t.img||"")}});if(c.kind=="menu"&&c.cat)o.cat=c.cat;if(c.kind=="jobs"){o.jobs=(c.jobs||[]).map(function(j){return {name:j.name,meta:j.meta,desc:j.desc}});if(c.link)o.href=href(c.link)}if(c.kind=="menu"&&c.sched){o.from=c.from;o.to=c.to}return o}),
     menu:P.food.filter(function(f){return f.show}).map(function(f){return {cat:f.cat,name:f.name,desc:f.desc,out:f.out,price:f.price,img:r(f.img||"")}}),
+    booking:{days:P.booking.days,min:P.booking.min,max:P.booking.max,open:P.mode=="Круглосуточно"?"00:00":P.open,close:P.mode=="Круглосуточно"?"24:00":P.close},
     loyalty:{kind:P.loyalty.kind,size:P.loyalty.size,scope:P.loyalty.scope,stack:P.loyalty.stack,phone:P.loyalty.phone,welcome:P.loyalty.welcome},
     links:NETS.filter(function(n){var l=P.links[n[0]];return l.show&&l.url}).map(function(n){return {id:n[0],name:n[1],href:href(P.links[n[0]].url)}})}}
 window.portalData=pdata; /* для проверки и выгрузки portal.json */
@@ -746,13 +752,14 @@ function openCardActions(b){var i=+b.dataset.cardkb,c=P.cards[i],n=P.cards.lengt
     function(a){if(a=="edit")openCardEdit(i);else if(a=="up"||a=="down"){var j=a=="up"?i-1:i+1;P.cards[i]=P.cards[j];P.cards[j]=c;saveCards()}
       else if(a=="vis"){c.show=!c.show;saveCards()}else{P.cards.splice(i,1);saveCards();toast("Карточка удалена",5000,null,function(){P.cards.splice(i,0,c);saveCards()})}})}
 function openCardEdit(i){var isNew=i<0,c=isNew?{id:fid(),kind:"link",show:true,title:"",sub:"",img:"",sched:false,from:"",to:"",link:""}:JSON.parse(JSON.stringify(P.cards[i])),
-    kinds=["link","menu","shop"].concat(["loyalty"].filter(function(k){return !P.cards.some(function(x){return x.kind==k})}));
-  if(c.kind=="shop"&&!c.items)c.items=[];if(!c.items)c.items=[];
+    kinds=["link","menu","shop","jobs"].concat(["loyalty"].filter(function(k){return !P.cards.some(function(x){return x.kind==k})}));
+  if(c.kind=="shop"&&!c.items)c.items=[];if(!c.items)c.items=[];if(!c.jobs)c.jobs=[];
   var body=(isNew&&kinds.length>1?fld("Что открывает",'<span class="selw fullw"><select class="pin nat" id="ceKind">'+kinds.map(function(k){return '<option value="'+k+'">'+(k=="link"?"Ссылку на сайт":k=="shop"?"Подборку товаров":KIND[k]+" на портале")+'</option>'}).join("")+'</select></span>'):'')+
     '<div class="fld"><span>Фото</span><div class="phr">'+photo("card",c.img,"big")+'<small>Рекомендуемый размер 1110 × 722 px</small></div></div>'+
     fld("Заголовок",fin("ceTitle",c.title,"Например, «Попробуй осень»"))+fld("Подпись",fin("ceSub",c.sub,"Короткая подпись"))+
     fld("Ссылка",fin("ceLink",c.link,"ranak.by/delivery",' inputmode="url" autocapitalize="off"'),' id="ceLinkF"')+
     '<div class="fld" id="ceItemsF"><span>Товары</span><div class="its" id="ceItems"></div><button class="btn sec addit" id="ceItemAdd" type="button">'+IC_PLUS+'<span>Добавить товар</span></button></div>'+
+    '<div class="fld" id="ceJobsF"><span>Вакансии</span><div class="its" id="ceJobs"></div><button class="btn sec addit" id="ceJobAdd" type="button">'+IC_PLUS+'<span>Добавить вакансию</span></button></div>'+
     fld("Раздел меню",'<span class="selw fullw"><select class="pin nat" id="ceCat"><option value="">Всё меню</option>'+cats().map(function(x){return '<option'+(x==c.cat?' selected':'')+'>'+esc(x)+'</option>'}).join("")+'</select></span>',' id="ceCatF"')+
     '<div class="fld" id="ceSchedF"><div class="frow"><span>По расписанию</span><button class="tgl" role="switch" id="ceSched" aria-checked="'+!!c.sched+'" aria-label="По расписанию"></button></div>'+
       '<div class="frow2" id="ceDates">'+fin("ceFrom",c.from,"дд.мм.гггг",' inputmode="numeric"')+'<i class="dash">–</i>'+fin("ceTo",c.to,"дд.мм.гггг",' inputmode="numeric"')+'</div></div>';
@@ -761,19 +768,25 @@ function openCardEdit(i){var isNew=i<0,c=isNew?{id:fid(),kind:"link",show:true,t
   function itemsHTML(){return c.items.map(function(t,j){return '<div class="itr" data-j="'+j+'">'+photo("item",t.img||"","sm")+fin("ceIn"+j,t.name,"Название",' data-f="name"')+fin("ceIp"+j,t.price===""?"":String(t.price).replace(".",","),"Цена",' data-f="price" inputmode="decimal"')+
     '<button class="ibtn ghost" type="button" data-del aria-label="Удалить товар" title="Удалить">'+XIC+'</button></div>'}).join("")}
   function drawItems(){$("#ceItems").innerHTML=itemsHTML()}
-  function sync(){var k=kind();$("#ceLinkF").hidden=k!="link";$("#ceSchedF").hidden=k!="menu";$("#ceCatF").hidden=k!="menu";$("#ceItemsF").hidden=k!="shop";$("#ceDates").hidden=$("#ceSched").getAttribute("aria-checked")!="true"}
+  /* вакансии: название · условия коротко · описание */
+  function jobsHTML(){return c.jobs.map(function(j,k){return '<div class="jbr" data-k="'+k+'"><div class="itr">'+fin("ceJn"+k,j.name,"Должность",' data-f="name"')+'<button class="ibtn ghost" type="button" data-jdel aria-label="Удалить вакансию" title="Удалить">'+XIC+'</button></div>'+
+    fin("ceJm"+k,j.meta,"Условия коротко, например «Смены 2/2»",' data-f="meta"')+'<textarea class="pin ta" data-f="desc" rows="3" placeholder="Чем заниматься и кого ищем" spellcheck="false">'+esc(j.desc||"")+'</textarea></div>'}).join("")}
+  function drawJobs(){$("#ceJobs").innerHTML=jobsHTML()}
+  function sync(){var k=kind();$("#ceLinkF").hidden=k!="link";$("#ceSchedF").hidden=k!="menu";$("#ceCatF").hidden=k!="menu";$("#ceItemsF").hidden=k!="shop";$("#ceJobsF").hidden=k!="jobs";$("#ceLinkF").hidden=k!="link"&&k!="jobs";$("#ceLinkF").firstElementChild.textContent=k=="jobs"?"Ссылка для отклика":"Ссылка";$("#ceDates").hidden=$("#ceSched").getAttribute("aria-checked")!="true"}
   openModal({title:isNew?"Новая карточка":"Карточка",body:body,ok:isNew?"Добавить":"Сохранить",
     valid:function(){return $("#ceTitle").value.trim()&&(kind()!="link"||$("#ceLink").value.trim())},
-    onOpen:function(m){drawItems();sync();m.el.addEventListener("change",sync);
-      m.el.addEventListener("input",function(e){var r=e.target.closest(".itr");if(!r)return;var t=c.items[+r.dataset.j];if(e.target.dataset.f=="name")t.name=e.target.value;else{var v=parseFloat(e.target.value.replace(",",".").replace(/[^\d.]/g,""));t.price=isNaN(v)?"":Math.round(v*100)/100}});
+    onOpen:function(m){drawItems();drawJobs();sync();m.el.addEventListener("change",sync);
+      m.el.addEventListener("input",function(e){var jr=e.target.closest(".jbr");if(jr){if(e.target.dataset.f)c.jobs[+jr.dataset.k][e.target.dataset.f]=e.target.value;return}var r=e.target.closest(".itr");if(!r)return;var t=c.items[+r.dataset.j];if(e.target.dataset.f=="name")t.name=e.target.value;else{var v=parseFloat(e.target.value.replace(",",".").replace(/[^\d.]/g,""));t.price=isNaN(v)?"":Math.round(v*100)/100}});
       m.el.addEventListener("click",function(e){
         if(e.target.closest("#ceItemAdd")){c.items.push({id:fid(),name:"",price:"",img:""});drawItems();var ins=m.el.querySelectorAll(".itr input[data-f=name]");ins[ins.length-1].focus();return}
+        if(e.target.closest("#ceJobAdd")){c.jobs.push({id:fid(),name:"",meta:"",desc:""});drawJobs();var js=m.el.querySelectorAll(".jbr input[data-f=name]");js[js.length-1].focus();return}
+        var jd=e.target.closest("[data-jdel]");if(jd){c.jobs.splice(+jd.closest(".jbr").dataset.k,1);drawJobs();return}
         var d=e.target.closest("[data-del]");if(d){c.items.splice(+d.closest(".itr").dataset.j,1);drawItems();return}
         var p=e.target.closest("[data-pick]");if(!p)return;var row=p.closest(".itr");
         pickImage(function(u){if(!u)return;if(row)c.items[+row.dataset.j].img=u;else c.img=u;p.classList.remove("noimg");p.innerHTML="";p.style.setProperty("--img","url('"+u+"')")},{max:row?800:1110})})},
     onToggle:sync,
     onOk:function(){c.kind=kind();c.title=$("#ceTitle").value.trim();c.sub=$("#ceSub").value.trim();c.link=$("#ceLink").value.trim();c.sched=$("#ceSched").getAttribute("aria-checked")=="true";c.from=$("#ceFrom").value.trim();c.to=$("#ceTo").value.trim();if(c.kind=="menu")c.cat=$("#ceCat").value;else delete c.cat;
-      c.items=c.kind=="shop"?c.items.filter(function(t){return (t.name||"").trim()}):c.items;if(c.kind!="shop"&&!c.items.length)delete c.items;
+      c.items=c.kind=="shop"?c.items.filter(function(t){return (t.name||"").trim()}):c.items;if(c.kind!="shop"&&!c.items.length)delete c.items;c.jobs=c.kind=="jobs"?c.jobs.filter(function(j){return (j.name||"").trim()}):c.jobs;if(c.kind!="jobs")delete c.jobs;
       if(isNew)P.cards.push(c);else P.cards[i]=c;saveCards();if(isNew)toast("Карточка добавлена",2500)}})}
 /* ===== Меню: «⋮» у блюда и окно правки ===== */
 function openFoodActions(b){var id=b.dataset.foodkb,i=P.food.findIndex(function(f){return f.id==id}),f=P.food[i];
@@ -883,18 +896,18 @@ rz.addEventListener("pointerdown",function(e){e.preventDefault();rz.setPointerCa
     document.body.classList.remove("rzing");try{localStorage.setItem("portal-v3-side",w)}catch(e){}}
   rz.addEventListener("pointermove",mv);rz.addEventListener("pointerup",up);rz.addEventListener("pointercancel",up)});
 rz.addEventListener("dblclick",function(){setW(MIN);layout();try{localStorage.removeItem("portal-v3-side")}catch(e){}});
-/* ширина превью портала: страница гостя от 320 до 600 px (+32 поля), настройкам остаётся не меньше 480 px; двойной клик — 402 */
-var rzv=$("#rzv"),PVD=402;
+/* ширина превью портала: страница гостя от 320 до 600 px (+32 поля), настройкам остаётся не меньше 480 px; двойной клик — по умолчанию 452 (портал 420 px) */
+var rzv=$("#rzv"),PVD=452;
 function setPV(w){var side=$("#side").getBoundingClientRect().width,mx=Math.max(352,Math.min(632,innerWidth-side-16-480));w=Math.round(Math.min(mx,Math.max(352,w)));
   root.style.setProperty("--pvw",w+"px");$("#pvb").textContent=(w-32)+" px";return w}
-try{var pv0=+localStorage.getItem("portal-v3-view");if(pv0)setPV(pv0)}catch(e){}
+try{var pv0=+localStorage.getItem("portal-v3-view2");if(pv0)setPV(pv0)}catch(e){}
 rzv.addEventListener("pointerdown",function(e){e.preventDefault();rzv.setPointerCapture(e.pointerId);document.body.classList.add("rzing","rzv-on");
   var x0=e.clientX,w0=$("#view").getBoundingClientRect().width,w=setPV(w0);
   function mv(ev){w=setPV(w0-(ev.clientX-x0))}
   function up(){rzv.removeEventListener("pointermove",mv);rzv.removeEventListener("pointerup",up);rzv.removeEventListener("pointercancel",up);
-    document.body.classList.remove("rzing","rzv-on");try{localStorage.setItem("portal-v3-view",w)}catch(e){}}
+    document.body.classList.remove("rzing","rzv-on");try{localStorage.setItem("portal-v3-view2",w)}catch(e){}}
   rzv.addEventListener("pointermove",mv);rzv.addEventListener("pointerup",up);rzv.addEventListener("pointercancel",up)});
-rzv.addEventListener("dblclick",function(){setPV(PVD);root.style.removeProperty("--pvw");try{localStorage.removeItem("portal-v3-view")}catch(e){}});
+rzv.addEventListener("dblclick",function(){setPV(PVD);root.style.removeProperty("--pvw");try{localStorage.removeItem("portal-v3-view2")}catch(e){}});
 
 new ResizeObserver(layout).observe(document.body);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
