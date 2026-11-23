@@ -1,13 +1,15 @@
 {
  "name": "Ранак",
- "hours": "Ежедневно · 11:00 - 23:00",
+ "hours": "Ежедневно · 8:00-20:00",
  "lang": "ru",
- "color": "#624F40",
+ "color": "#23151F",
  "online": true,
  "seo": true,
  "newtab": true,
- "cur": "BYN",
+ "cur": "руб",
  "logo": "../img/portal-avatar.jpg",
+ "addr": "пл. Свободы 4",
+ "phone": "+375 29 123-45-67",
  "cards": [
   {
    "kind": "menu",
@@ -17,143 +19,79 @@
   },
   {
    "kind": "loyalty",
-   "title": "5% на вынос",
-   "sub": "Лояльность",
+   "title": "Скидка на каждый заказ",
+   "sub": "Карта гостя",
    "img": "../img/portal-card-takeaway.jpg"
+  },
+  {
+   "kind": "link",
+   "title": "Байка и шоппер",
+   "sub": "Фирменный мерч",
+   "img": "../img/portal-card-merch.jpg",
+   "href": "https://t.me/ranak"
+  },
+  {
+   "kind": "link",
+   "title": "Ищем в команду",
+   "sub": "2 вакансии",
+   "img": "../img/portal-card-team.jpg",
+   "href": "https://t.me/ranak"
   }
  ],
  "menu": [
   {
    "cat": "Кофе",
-   "name": "Эспрессо",
+   "name": "Фильтр-кофе",
    "desc": "",
-   "out": "30 мл",
-   "price": 3.5
+   "out": "",
+   "price": 12,
+   "img": "../img/menu-filter.jpg"
   },
   {
-   "cat": "Кофе",
-   "name": "Американо",
+   "cat": "Круассаны",
+   "name": "Пряная ватрушка",
    "desc": "",
-   "out": "200 мл",
-   "price": 4
-  },
-  {
-   "cat": "Кофе",
-   "name": "Капучино",
-   "desc": "",
-   "out": "250 мл",
-   "price": 5.5
-  },
-  {
-   "cat": "Кофе",
-   "name": "Флэт уайт",
-   "desc": "Двойной эспрессо и молоко",
-   "out": "200 мл",
-   "price": 6
-  },
-  {
-   "cat": "Кофе",
-   "name": "Раф ванильный",
-   "desc": "",
-   "out": "300 мл",
-   "price": 6.5
-  },
-  {
-   "cat": "Кофе",
-   "name": "Латте",
-   "desc": "",
-   "out": "350 мл",
-   "price": 6
-  },
-  {
-   "cat": "Альтернатива",
-   "name": "Воронка V60",
-   "desc": "Зерно недели",
-   "out": "300 мл",
-   "price": 8
-  },
-  {
-   "cat": "Альтернатива",
-   "name": "Аэропресс",
-   "desc": "",
-   "out": "200 мл",
-   "price": 7.5
-  },
-  {
-   "cat": "Альтернатива",
-   "name": "Колд брю",
-   "desc": "Холодное заваривание 18 часов",
-   "out": "300 мл",
-   "price": 6.5
-  },
-  {
-   "cat": "Завтраки",
-   "name": "Сырники",
-   "desc": "Со сметаной и ягодным соусом",
-   "out": "220 г",
-   "price": 9.5
-  },
-  {
-   "cat": "Завтраки",
-   "name": "Омлет с ветчиной",
-   "desc": "",
-   "out": "250 г",
-   "price": 10
-  },
-  {
-   "cat": "Завтраки",
-   "name": "Гранола",
-   "desc": "С йогуртом и сезонными ягодами",
-   "out": "200 г",
-   "price": 8.5
-  },
-  {
-   "cat": "Завтраки",
-   "name": "Тост с авокадо",
-   "desc": "Яйцо пашот, микрозелень",
-   "out": "230 г",
-   "price": 12
+   "out": "",
+   "price": 21,
+   "img": "../img/menu-vatrushka.jpg"
   },
   {
    "cat": "Десерты",
-   "name": "Чизкейк Нью-Йорк",
+   "name": "Творожный креп",
    "desc": "",
-   "out": "120 г",
-   "price": 8
+   "out": "",
+   "price": 21,
+   "img": "../img/menu-krep.jpg"
+  },
+  {
+   "cat": "Круассаны",
+   "name": "Маковый рулет",
+   "desc": "",
+   "out": "",
+   "price": 15,
+   "img": "../img/menu-mak.jpg"
+  },
+  {
+   "cat": "Круассаны",
+   "name": "Яблочный штрудель",
+   "desc": "",
+   "out": "",
+   "price": 17,
+   "img": "../img/menu-shtrudel.jpg"
   },
   {
    "cat": "Десерты",
-   "name": "Морковный торт",
+   "name": "Творожник",
    "desc": "",
-   "out": "130 г",
-   "price": 7.5
-  },
-  {
-   "cat": "Десерты",
-   "name": "Круассан",
-   "desc": "Сливочное масло",
-   "out": "70 г",
-   "price": 4.5
-  },
-  {
-   "cat": "Чай",
-   "name": "Чёрный чай",
-   "desc": "Ассам",
-   "out": "400 мл",
-   "price": 5
-  },
-  {
-   "cat": "Чай",
-   "name": "Пряный чай",
-   "desc": "Имбирь, корица, апельсин",
-   "out": "400 мл",
-   "price": 6
+   "out": "",
+   "price": 9,
+   "img": ""
   }
  ],
  "loyalty": {
   "kind": "Скидка",
   "size": "5%",
-  "scope": "Заказы на вынос",
+  "scope": "Все заказы",
   "stack": false,
   "phone": true,
   "welcome": "Без бонуса"
@@ -165,9 +103,9 @@
    "href": "https://g.page/ranak"
   },
   {
-   "id": "linkedin",
-   "name": "LinkedIn",
-   "href": "https://linkedin.com/company/ranak"
+   "id": "instagram",
+   "name": "Instagram",
+   "href": "https://instagram.com/ranak.by"
   },
   {
    "id": "telegram",

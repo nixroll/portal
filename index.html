@@ -331,7 +331,7 @@ body.nobadge .nav a .c{display:none}
 .view{display:none}
 /* Портал гостя — отдельный контейнер со своей темой: скругление 10 и рамка 0,5 как у карточек настроек, поля 16 вокруг */
 /* превью — страница гостя (guest.html) в iframe: скругление 10 и рамка 0,5 поверх */
-.pv{position:relative;height:100%;border-radius:10px;overflow:hidden;background:#624F40}
+.pv{position:relative;height:100%;border-radius:10px;overflow:hidden;background:#23151F}
 .pv::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 var(--h) var(--border-secondary);pointer-events:none}
 .pv iframe{display:block;width:100%;height:100%;border:0}
 /* ===== Портал: публикация, карточки, меню ===== */
@@ -348,6 +348,7 @@ body[data-page="portal"] .addb svg:not(.pub){display:none}
 .tbl .te{padding:calc(16px + var(--h)) 16px 16px;color:var(--text-tertiary);background:linear-gradient(var(--border-primary),var(--border-primary)) 16px 0/calc(100% - 32px) var(--h) no-repeat}
 .thumb.noimg{display:grid;place-items:center;background:var(--bg-quaternary);color:var(--fg-quaternary)}
 .thumb.big{width:112px;height:80px;border-radius:8px}
+.thumb.big.sq{width:80px}
 .mdl .mb{max-height:calc(100dvh - 180px);overflow-y:auto}
 .mdl .phr{display:flex;align-items:center;gap:12px}
 .mdl .phr small,.mdl .mt{margin:0;color:var(--text-tertiary)}
@@ -505,7 +506,7 @@ window.addEventListener("hashchange",route);
    Каждая настройка сразу отражается в превью справа. */
 function times(a,b){var r=[];for(var h=a;h<=b;h++)for(var m=0;m<60;m+=30){if(h==b&&m)break;r.push(String(h%24).padStart(2,"0")+":"+(m?"30":"00"))}return r}
 /* Цвет портала гостя: один на всех, без светлой и тёмной темы; текст подбирается по яркости фона */
-var PCOL={"Кофейный":"#624F40","Графит":"#202327","Хвойный":"#2E4636","Морской":"#1E3A56","Бордовый":"#5A2A2F","Песочный":"#EDE5D8","Белый":"#FFFFFF"};
+var PCOL={"Кофейный":"#624F40","Графит":"#202327","Хвойный":"#2E4636","Морской":"#1E3A56","Бордовый":"#23151F","Песочный":"#EDE5D8","Белый":"#FFFFFF"};
 var OPT={pcolor:Object.keys(PCOL),lang:["Русский","Беларуская","English"],mode:["Ежедневно","Пн–Пт","Пн–Сб","Круглосуточно"],open:times(6,13),close:times(18,26),
   "loyalty.kind":["Скидка","Кэшбэк баллами","Подарок"],"loyalty.size":["3%","5%","7%","10%","15%"],
   "loyalty.scope":["Заказы на вынос","Все заказы","Доставка"],"loyalty.welcome":["Без бонуса","100 баллов","Кофе в подарок"]};
@@ -518,19 +519,24 @@ var FOOD=[["Кофе","Эспрессо","","30 мл",3.5],["Кофе","Амер
   ["Завтраки","Сырники","Со сметаной и ягодным соусом","220 г",9.5],["Завтраки","Омлет с ветчиной","","250 г",10],["Завтраки","Гранола","С йогуртом и сезонными ягодами","200 г",8.5],["Завтраки","Тост с авокадо","Яйцо пашот, микрозелень","230 г",12],
   ["Десерты","Чизкейк Нью-Йорк","","120 г",8],["Десерты","Морковный торт","","130 г",7.5],["Десерты","Круассан","Сливочное масло","70 г",4.5],
   ["Чай","Чёрный чай","Ассам","400 мл",5],["Чай","Пряный чай","Имбирь, корица, апельсин","400 мл",6]];
-function food(a){return a.map(function(r){return {id:fid(),cat:r[0],name:r[1],desc:r[2],out:r[3],price:r[4],show:true}})}
+function food(a){return a.map(function(r){return {id:fid(),cat:r[0],name:r[1],desc:r[2],out:r[3],price:r[4],img:r[5]||"",show:true}})}
+/* меню из макета Figma «Портал / Меню»: порядок как во вкладке «Для вас» */
+var FOOD_FIGMA=[["Кофе","Фильтр-кофе","","",12,"img/menu-filter.jpg"],["Круассаны","Пряная ватрушка","","",21,"img/menu-vatrushka.jpg"],["Десерты","Творожный креп","","",21,"img/menu-krep.jpg"],
+  ["Круассаны","Маковый рулет","","",15,"img/menu-mak.jpg"],["Круассаны","Яблочный штрудель","","",17,"img/menu-shtrudel.jpg"],["Десерты","Творожник","","",9,""]];
 var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак",addr:"пл. Свободы 4",phone:"+375 29 123-45-67",
-  mode:"Ежедневно",open:"11:00",close:"23:00",pcolor:"Кофейный",logo:"img/portal-avatar.jpg",
+  mode:"Ежедневно",open:"08:00",close:"20:00",pcolor:"Бордовый",logo:"img/portal-avatar.jpg",
   cards:[{id:"menu",kind:"menu",show:true,title:"Попробуй осень",sub:"Сезонное меню",img:"img/portal-card-autumn.jpg",sched:false,from:"01.09.2026",to:"30.11.2026",link:""},
-         {id:"loyalty",kind:"loyalty",show:true,title:"5% на вынос",sub:"Лояльность",img:"img/portal-card-takeaway.jpg",sched:false,from:"",to:"",link:""}],
-  food:food(FOOD),
-  loyalty:{kind:"Скидка",size:"5%",scope:"Заказы на вынос",stack:false,phone:true,welcome:"Без бонуса"},
-  links:{google:{show:true,url:"g.page/ranak"},linkedin:{show:true,url:"linkedin.com/company/ranak"},telegram:{show:true,url:"t.me/ranak"},newtab:true,utm:false},
+         {id:"loyalty",kind:"loyalty",show:true,title:"Скидка на каждый заказ",sub:"Карта гостя",img:"img/portal-card-takeaway.jpg",sched:false,from:"",to:"",link:""},
+         {id:"merch",kind:"link",show:true,title:"Байка и шоппер",sub:"Фирменный мерч",img:"img/portal-card-merch.jpg",sched:false,from:"",to:"",link:"t.me/ranak"},
+         {id:"team",kind:"link",show:true,title:"Ищем в команду",sub:"2 вакансии",img:"img/portal-card-team.jpg",sched:false,from:"",to:"",link:"t.me/ranak"}],
+  food:food(FOOD_FIGMA),
+  loyalty:{kind:"Скидка",size:"5%",scope:"Все заказы",stack:false,phone:true,welcome:"Без бонуса"},
+  links:{google:{show:true,url:"g.page/ranak"},instagram:{show:true,url:"instagram.com/ranak.by"},telegram:{show:true,url:"t.me/ranak"},newtab:true,utm:false},
   pub:{at:"",hash:""}};
 /* сохранённое в браузере: объекты сливаем по ключам, списки (карточки, меню) берём целиком */
-(function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-2")||"null");if(!sv)return;
+(function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-3")||"null");if(!sv)return;
   function deep(a,b){for(var k in b){if(!(k in a))continue;if(Array.isArray(a[k])){if(Array.isArray(b[k]))a[k]=b[k]}else if(b[k]&&typeof b[k]=="object"&&a[k]&&typeof a[k]=="object")deep(a[k],b[k]);else a[k]=b[k]}}deep(P,sv)}catch(e){}})();
-function save(){try{localStorage.setItem("portal-settings-2",JSON.stringify(P))}catch(e){toast("Не хватает места в браузере для фото",4000)}}
+function save(){try{localStorage.setItem("portal-settings-3",JSON.stringify(P))}catch(e){toast("Не хватает места в браузере для фото",4000)}}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function getK(k){return k.split(".").reduce(function(o,x){return o[x]},P)}
 function setK(k,v){var a=k.split("."),o=P;for(var i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v}
@@ -544,8 +550,8 @@ function tgl(k,lbl){return '<button class="tgl" role="switch" data-k="'+k+'" ari
 function inp(k,cls,ph,ro){return '<input class="pin'+(cls?" "+cls:"")+'" data-k="'+k+'" value="'+esc(getK(k))+'"'+(ph?' placeholder="'+ph+'"':'')+(ro?' readonly':'')+' spellcheck="false">'}
 var DOTSV='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.33" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12.67" r="1"/></svg>';
 var XIC='<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true"><path d="M12 4 4 12M4 4l8 8"/></svg>';
-var NETS=[["google","Google"],["linkedin","LinkedIn"],["telegram","Telegram"]];
-var LINKPH={"links.google.url":"g.page/ranak","links.linkedin.url":"linkedin.com/company/ranak","links.telegram.url":"t.me/ranak"};
+var NETS=[["google","Google"],["instagram","Instagram"],["telegram","Telegram"]];
+var LINKPH={"links.google.url":"g.page/ranak","links.instagram.url":"instagram.com/ranak.by","links.telegram.url":"t.me/ranak"};
 /* на телефоне поверх кнопки лежит прозрачный нативный <select> — iOS и Android показывают системный список, как у Linear */
 function nsel(k,lbl){var v=getK(k);return '<select class="nsel" data-nsel="'+k+'" aria-label="'+lbl+'" tabindex="-1">'+OPT[k].map(function(o){return '<option'+(o==v?' selected':'')+'>'+esc(o)+'</option>'}).join("")+'</select>'}
 function sel(k,lbl){return '<span class="selw"><button class="sel" data-sel="'+k+'" aria-haspopup="listbox" aria-label="'+lbl+'"><span>'+esc(getK(k))+'</span>'+CHEV+'</button>'+nsel(k,lbl)+'</span>'}
@@ -620,21 +626,22 @@ function cardState(c){return !c.show?'<span class="muted">Скрыта</span>':c
 function cardTable(){return thead("Карточка","Статус")+(P.cards.length?P.cards.map(function(c,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(c.title||"Без заголовка")+'</b><small>'+esc(c.kind=="link"?(c.link||"Ссылка"):KIND[c.kind]+" на портале")+'</small></span><span role="cell">'+cardState(c)+'</span><button class="kb" data-cardkb="'+i+'" aria-label="Действия с карточкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join(""):'<div class="te">Карточек пока нет</div>')}
 function saveCards(){save();render();$("#pCards").innerHTML=cardTable()}
 /* Меню: одна таблица, блюда сгруппированы по категориям (как группы в таблицах Linear) */
-function money(v){return v===""||v==null||isNaN(v)?"—":Number(v).toFixed(2).replace(".",",")+" BYN"}
+function money(v){if(v===""||v==null||isNaN(v))return "—";v=Number(v);return (v%1?v.toFixed(2).replace(".",","):String(v))+" руб"}
 function cats(){var r=[];P.food.forEach(function(f){if(r.indexOf(f.cat)<0)r.push(f.cat)});return r}
 function foodTable(){var cs=cats();return thead("Блюдо","Цена")+(cs.length?cs.map(function(c){var it=P.food.filter(function(f){return f.cat==c});
   return '<div class="tg" role="row"><span>'+esc(c)+'</span><i>'+it.length+'</i></div>'+it.map(function(f){var sub=f.show?[f.desc,f.out].filter(Boolean).join(" · "):"Скрыто";
     return '<div class="tr'+(f.show?'':' hid')+'" role="row"><span class="c1" role="cell"><b>'+esc(f.name)+'</b>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</span><span role="cell" class="num">'+money(f.price)+'</span><button class="kb" data-foodkb="'+f.id+'" aria-label="Действия с блюдом" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}).join(""):'<div class="te">Загрузите фото меню или добавьте блюдо</div>')}
 function saveFood(){save();render();$("#pFood").innerHTML=foodTable()}
 function href(u){u=/^https?:\/\//.test(u)?u:"https://"+u;return P.links.utm?u+(u.indexOf("?")<0?"?":"&")+"utm_source=portal":u}
-function hours(){var m=HOURS[P.lang][P.mode]||P.mode;return P.mode=="Круглосуточно"?m:m+" · "+P.open+" - "+P.close}
+/* как в макете: «Ежедневно · 8:00-20:00» */
+function hours(){var m=HOURS[P.lang][P.mode]||P.mode,z=function(t){return t.replace(/^0(\d)/,"$1")};return P.mode=="Круглосуточно"?m:m+" · "+z(P.open)+"-"+z(P.close)}
 function inRange(c){if(!c.sched)return true;function d(s){var a=/^(\d\d)\.(\d\d)\.(\d{4})$/.exec(s);return a?new Date(+a[3],a[2]-1,+a[1]):null}
   var f=d(c.from),t=d(c.to),n=new Date();n.setHours(0,0,0,0);return (!f||n>=f)&&(!t||n<=t)}
 /* данные для страницы гостя: rel — путь от страницы к общим картинкам ("" в превью, "../" в опубликованной папке) */
 function pdata(rel){var r=function(s){return !s||/^(data:|https?:|blob:)/.test(s)?s:rel+s};
-  return {name:P.name,hours:hours(),lang:{"Русский":"ru","Беларуская":"be","English":"en"}[P.lang]||"ru",color:PCOL[P.pcolor]||PCOL["Кофейный"],online:P.online,seo:P.seo,newtab:P.links.newtab,cur:"BYN",logo:r(P.logo),
+  return {name:P.name,hours:hours(),lang:{"Русский":"ru","Беларуская":"be","English":"en"}[P.lang]||"ru",color:PCOL[P.pcolor]||PCOL["Бордовый"],online:P.online,seo:P.seo,newtab:P.links.newtab,cur:"руб",logo:r(P.logo),addr:P.addr,phone:P.phone,
     cards:P.cards.filter(function(c){return c.show&&(c.kind!="link"||c.link)}).map(function(c){var o={kind:c.kind,title:c.title,sub:c.sub,img:r(c.img)};if(c.kind=="link")o.href=href(c.link);if(c.kind=="menu"&&c.sched){o.from=c.from;o.to=c.to}return o}),
-    menu:P.food.filter(function(f){return f.show}).map(function(f){return {cat:f.cat,name:f.name,desc:f.desc,out:f.out,price:f.price}}),
+    menu:P.food.filter(function(f){return f.show}).map(function(f){return {cat:f.cat,name:f.name,desc:f.desc,out:f.out,price:f.price,img:r(f.img||"")}}),
     loyalty:{kind:P.loyalty.kind,size:P.loyalty.size,scope:P.loyalty.scope,stack:P.loyalty.stack,phone:P.loyalty.phone,welcome:P.loyalty.welcome},
     links:NETS.filter(function(n){var l=P.links[n[0]];return l.show&&l.url}).map(function(n){return {id:n[0],name:n[1],href:href(P.links[n[0]].url)}})}}
 window.portalData=pdata; /* для проверки и выгрузки portal.json */
@@ -737,11 +744,14 @@ function openFoodActions(b){var id=b.dataset.foodkb,i=P.food.findIndex(function(
   actMenu(b,'<button class="mi" data-a="edit"><span>Изменить</span></button><button class="mi" data-a="vis"><span>'+(f.show?'Скрыть':'Показать')+'</span></button><button class="mi danger" data-a="del"><span>Удалить</span></button>',
     function(a){if(a=="edit")openFoodEdit(id);else if(a=="vis"){f.show=!f.show;saveFood()}else{P.food.splice(i,1);saveFood();toast("Блюдо удалено",5000,null,function(){P.food.splice(i,0,f);saveFood()})}})}
 function openFoodEdit(id){var isNew=!id,f=isNew?{id:fid(),cat:cats()[0]||"",name:"",desc:"",out:"",price:"",show:true}:JSON.parse(JSON.stringify(P.food.filter(function(x){return x.id==id})[0]));
-  var body=fld("Категория",fin("feCat",f.cat,"Например, Кофе",' list="feCats" autocomplete="off"')+'<datalist id="feCats">'+cats().map(function(c){return '<option value="'+esc(c)+'">'}).join("")+'</datalist>')+
+  if(f.img==null)f.img="";
+  var body='<div class="fld"><span>Фото</span><div class="phr">'+photo("dish",f.img,"big sq")+'<small>Квадрат, от 600 × 600 px</small></div></div>'+
+    fld("Категория",fin("feCat",f.cat,"Например, Кофе",' list="feCats" autocomplete="off"')+'<datalist id="feCats">'+cats().map(function(c){return '<option value="'+esc(c)+'">'}).join("")+'</datalist>')+
     fld("Название",fin("feName",f.name,"Например, Капучино"))+fld("Описание",fin("feDesc",f.desc,"Состав или подача"))+
-    '<div class="two">'+fld("Выход",fin("feOut",f.out,"250 мл"))+fld("Цена, BYN",fin("fePrice",f.price===""?"":String(f.price).replace(".",","),"0,00",' inputmode="decimal"'))+'</div>';
+    '<div class="two">'+fld("Выход",fin("feOut",f.out,"250 мл"))+fld("Цена, руб",fin("fePrice",f.price===""?"":String(f.price).replace(".",","),"0,00",' inputmode="decimal"'))+'</div>';
   openModal({title:isNew?"Новое блюдо":"Блюдо",body:body,ok:isNew?"Добавить":"Сохранить",
     valid:function(){return $("#feCat").value.trim()&&$("#feName").value.trim()},
+    onOpen:function(m){m.el.addEventListener("click",function(e){var p=e.target.closest("[data-pick]");if(!p)return;pickImage(function(u){if(!u)return;f.img=u;p.classList.remove("noimg");p.innerHTML="";p.style.setProperty("--img","url('"+u+"')")},{max:800})})},
     onOk:function(){var p=parseFloat($("#fePrice").value.replace(",",".").replace(/[^\d.]/g,""));
       f.cat=$("#feCat").value.trim();f.name=$("#feName").value.trim();f.desc=$("#feDesc").value.trim();f.out=$("#feOut").value.trim();f.price=isNaN(p)?"":Math.round(p*100)/100;
       if(isNew){var last=-1;P.food.forEach(function(x,j){if(x.cat==f.cat)last=j});if(last<0)P.food.push(f);else P.food.splice(last+1,0,f)}
@@ -787,7 +797,7 @@ async function ghCommit(files,msg){var ref=await gh("/git/ref/heads/main"),base=
   await gh("/git/refs/heads/main",{method:"PATCH",body:{sha:c.sha}})}
 async function doPublish(){pubBusy=true;pubBtn();var slug=P.slug,files=[],h=hash(JSON.stringify(pdata("../"))),d=pdata("../");
   function take(src,name){if(!/^data:/.test(src||""))return src;var b=src.split(",")[1],p="img/"+name+"-"+hash(b)+".jpg";if(!files.some(function(f){return f.path==slug+"/"+p}))files.push({path:slug+"/"+p,b64:b});return p}
-  try{d.logo=take(d.logo,"logo");d.cards.forEach(function(c,i){c.img=take(c.img,"card-"+(i+1))});
+  try{d.logo=take(d.logo,"logo");d.cards.forEach(function(c,i){c.img=take(c.img,"card-"+(i+1))});d.menu.forEach(function(m,i){m.img=take(m.img,"dish-"+(i+1))});
     var html=await (await fetch("guest.html",{cache:"no-store"})).text();
     files.push({path:slug+"/index.html",b64:b64u(html)},{path:slug+"/portal.json",b64:b64u(JSON.stringify(d,null,1))});
     await ghCommit(files,"Портал "+slug+": публикация из кабинета");
@@ -837,7 +847,7 @@ P.set={name:"Ранак",kind:"Ресторан",tz:"Минск · GMT+3",
   gconfirm:true,remind:"За 2 часа",review:true,channel:"SMS",tnew:true,tchat:true,tcancel:true,digest:"В 9:00",sound:false,
   theme:"Как в системе",accent:"Фиолетовый",badge:true,start:"Главная",locs:[{name:"Ранак на Свободы",addr:"пл. Свободы 4",tz:"Минск · GMT+3"},{name:"Ранак на Победителей",addr:"пр. Победителей 9",tz:"Минск · GMT+3"},{name:"Ранак на Зыбицкой",addr:"ул. Зыбицкая 6",tz:"Минск · GMT+3"}],loc:0};
 P.nl={tz:"Минск · GMT+3"}; /* поля окна «Новая локация» */
-(function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-2")||"null");if(sv&&sv.set)for(var k in sv.set)if(k in P.set)P.set[k]=sv.set[k]}catch(e){}})();
+(function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-3")||"null");if(sv&&sv.set)for(var k in sv.set)if(k in P.set)P.set[k]=sv.set[k]}catch(e){}})();
 P.set.locs=P.set.locs.map(function(l){return typeof l=="string"?{name:"Ранак",addr:l,tz:P.set.tz}:l}); /* раньше локация была просто адресом */
 /* Локации — таблица как в Linear (Members): колонки «Локация · Статус · ⋮» */
 function locTable(){return '<div class="th" role="row"><span role="columnheader">Локация</span><span role="columnheader">Статус</span><span></span></div>'+
