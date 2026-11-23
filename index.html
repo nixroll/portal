@@ -79,7 +79,27 @@ svg{display:block;flex:none}
 
 /* ---------- Sidebar: 240–360 px, без фона, три зоны: Top 64 / навигация по центру / Bottom 64 ---------- */
 .side{position:relative;flex:none;width:var(--side-w);display:grid;grid-template-rows:64px minmax(0,1fr) 64px;row-gap:16px;min-height:0}
-.s-top{padding:5px 4px;overflow:hidden}
+.s-top{position:relative;display:flex;align-items:flex-start;padding:5px 4px;overflow:hidden}
+/* кнопка «свернуть/развернуть меню» (Untitled UI layout-left): справа от названия заведения */
+.sdt{position:absolute;top:8px;right:4px;z-index:2;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;color:var(--fg-quaternary);transition:background .15s,color .15s,opacity .15s}
+.sdt svg{width:16px;height:16px}
+.sdt:hover{background:var(--bg-secondary-hover);color:var(--fg-secondary)}
+.acct{margin-right:36px}
+/* свёрнутый сайдбар: только иконки; на месте логотипа при наведении — кнопка «развернуть» */
+.side{transition:width .2s ease}
+body.side-min{--side-w:52px}
+body.side-min .rz{display:none}
+body.side-min .acct{margin:0;padding:4px;width:44px;justify-content:center}
+body.side-min .acct span:last-child,body.side-min .nav a .t,body.side-min .nav a .c,body.side-min .loc span{display:none!important}
+body.side-min .sdt{left:4px;right:auto;top:5px;width:44px;height:34px;opacity:0;pointer-events:none}
+body.side-min .s-top:hover .sdt,body.side-min .sdt:focus-visible{opacity:1;pointer-events:auto;background:var(--bg-secondary-hover);color:var(--fg-secondary)}
+body.side-min .s-top:hover .acct{opacity:0}
+body.side-min .nav a{justify-content:center;padding:0;width:44px;position:relative}
+body.side-min .nav a .nd{display:block}
+body.nobadge .nav a .nd{display:none!important}
+.nav a .nd{display:none;position:absolute;top:7px;right:8px;width:6px;height:6px;border-radius:9999px;background:var(--brand-solid);box-shadow:0 0 0 2px var(--bg-secondary-alt)}
+body.side-min .loc{width:44px;margin-left:4px;justify-content:center;padding:0}
+@media (max-width:1023px){.sdt{display:none}.acct{margin-right:0}}
 .s-mid{min-height:0;overflow-y:auto;scrollbar-width:none}
 .s-mid::-webkit-scrollbar{display:none}
 .s-bot{display:flex;flex-direction:column;justify-content:flex-end;padding:6px 0;overflow:hidden}
@@ -787,6 +807,7 @@ body.tb-on .pvsw{bottom:calc(56px + 12px + env(safe-area-inset-bottom))}
 <div class="app">
   <aside class="side" id="side" aria-label="Меню кабинета">
     <div class="s-top">
+      <button class="sdt" id="scl" aria-label="Свернуть меню" title="Свернуть меню  [" aria-pressed="false"><svg id="sclIc"></svg></button>
       <button class="acct" id="acct" title="Ранак"><span class="ava"><img src="img/venue-ranak.png" alt="" width="26" height="26"></span><span>Ранак</span></button>
     </div>
     <div class="s-mid" id="sMid"><nav class="nav" id="nav"></nav></div>
@@ -858,8 +879,8 @@ function ico(n,s){s=s||16;return '<svg width="'+s+'" height="'+s+'" viewBox="0 0
 /* разделы по макету; у «Мультичата» счётчик */
 var NAV=[["home","Главная","home-smile"],["chat","Мультичат","inbox-01",9],["calendar","Календарь","calendar"],["clients","Клиенты","user-03"],
   ["portal","Портал","globe-01"],["promo","Продвижение","send-01"],["settings","Настройки","settings-02"]];
-$("#nav").innerHTML=NAV.map(function(n){return '<a href="#'+n[0]+'" data-id="'+n[0]+'">'+ico(n[2])+'<span class="t">'+n[1]+'</span>'+(n[3]!=null?'<span class="c">'+n[3]+'</span>':'')+'</a>'}).join("");
-$("#locIc").outerHTML=ico("marker-pin-02");$("#plusIc").outerHTML=ico("plus",14);$("#addb").insertAdjacentHTML("beforeend",'<svg class="chv" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5"/></svg>');$("#addb").insertAdjacentHTML("afterbegin",'<svg class="pub" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15V16.2C21 17.88 21 18.72 20.67 19.36C20.39 19.93 19.93 20.39 19.36 20.67C18.72 21 17.88 21 16.2 21H7.8C6.12 21 5.28 21 4.64 20.67C4.07 20.39 3.61 19.93 3.33 19.36C3 18.72 3 17.88 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"/></svg>');$("#sbbIc").outerHTML=ico("layout-left",14);
+$("#nav").innerHTML=NAV.map(function(n){return '<a href="#'+n[0]+'" data-id="'+n[0]+'" title="'+n[1]+'">'+ico(n[2])+'<span class="t">'+n[1]+'</span>'+(n[3]!=null?'<span class="c">'+n[3]+'</span><i class="nd"></i>':'')+'</a>'}).join("");
+$("#locIc").outerHTML=ico("marker-pin-02");$("#sclIc").outerHTML=ico("layout-left",14);$("#plusIc").outerHTML=ico("plus",14);$("#addb").insertAdjacentHTML("beforeend",'<svg class="chv" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5"/></svg>');$("#addb").insertAdjacentHTML("afterbegin",'<svg class="pub" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15V16.2C21 17.88 21 18.72 20.67 19.36C20.39 19.93 19.93 20.39 19.36 20.67C18.72 21 17.88 21 16.2 21H7.8C6.12 21 5.28 21 4.64 20.67C4.07 20.39 3.61 19.93 3.33 19.36C3 18.72 3 17.88 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"/></svg>');$("#sbbIc").outerHTML=ico("layout-left",14);
 /* меню на планшете и телефоне: открывается кнопкой в тулбаре, закрывается выбором раздела, нажатием мимо или Esc */
 function navOpen(o){document.body.classList.toggle("nav-open",o);$("#sbb").setAttribute("aria-expanded",o?"true":"false");if(o)requestAnimationFrame(layout)}
 $("#sbb").addEventListener("click",function(e){e.stopPropagation();navOpen(!document.body.classList.contains("nav-open"))});
@@ -1547,6 +1568,12 @@ render();
 
 /* ширина сайдбара: 240–360 px, запоминается в браузере, двойной клик — 240 */
 var MIN=240,MAX=360,root=document.documentElement,rz=$("#rz");
+/* свернуть / развернуть сайдбар: кнопка у названия заведения или клавиша [ */
+function sideMin(on){document.body.classList.toggle("side-min",on);var b=$("#scl");b.setAttribute("aria-pressed",String(on));var t=on?"Развернуть меню":"Свернуть меню";b.setAttribute("aria-label",t);b.title=t+"  [";
+  try{localStorage.setItem("portal-v3-side-min",on?"1":"")}catch(e){}setTimeout(function(){layout();if(window.place)place()},220)}
+$("#scl").addEventListener("click",function(){sideMin(!document.body.classList.contains("side-min"))});
+document.addEventListener("keydown",function(e){if(e.key=="["&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)&&!document.activeElement.isContentEditable&&innerWidth>=1024){e.preventDefault();sideMin(!document.body.classList.contains("side-min"))}});
+try{if(localStorage.getItem("portal-v3-side-min"))document.body.classList.add("side-min")}catch(e){}
 function setW(w){w=Math.round(Math.min(MAX,Math.max(MIN,w)));root.style.setProperty("--side-drag",w+"px");return w}
 try{var sv=+localStorage.getItem("portal-v3-side");if(sv)setW(sv)}catch(e){}
 rz.addEventListener("pointerdown",function(e){e.preventDefault();rz.setPointerCapture(e.pointerId);document.body.classList.add("rzing");
