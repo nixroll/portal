@@ -13,25 +13,29 @@
  "phone": "+375 29 123-45-67",
  "cards": [
   {
+   "id": "menu",
    "kind": "menu",
    "title": "Попробуй осень",
    "sub": "Сезонное меню",
    "img": "../img/portal-card-autumn.jpg"
   },
   {
+   "id": "loyalty",
    "kind": "loyalty",
    "title": "Скидка на каждый заказ",
    "sub": "Карта гостя",
    "img": "../img/portal-card-takeaway.jpg"
   },
   {
-   "kind": "link",
+   "id": "merch",
+   "kind": "menu",
    "title": "Байка и шоппер",
    "sub": "Фирменный мерч",
    "img": "../img/portal-card-merch.jpg",
-   "href": "https://t.me/ranak"
+   "cat": "Мерч"
   },
   {
+   "id": "team",
    "kind": "link",
    "title": "Ищем в команду",
    "sub": "2 вакансии",
@@ -87,6 +91,22 @@
    "out": "",
    "price": 9,
    "img": ""
+  },
+  {
+   "cat": "Мерч",
+   "name": "Майка",
+   "desc": "",
+   "out": "",
+   "price": 99,
+   "img": "../img/merch-tee.jpg"
+  },
+  {
+   "cat": "Мерч",
+   "name": "Шоппер",
+   "desc": "",
+   "out": "",
+   "price": 200,
+   "img": "../img/merch-shopper.jpg"
   }
  ],
  "loyalty": {

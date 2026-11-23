@@ -350,6 +350,12 @@ body[data-page="portal"] .addb svg:not(.pub){display:none}
 .thumb.noimg{display:grid;place-items:center;background:var(--bg-quaternary);color:var(--fg-quaternary)}
 .thumb.big{width:112px;height:80px;border-radius:8px}
 .thumb.big.sq{width:80px}
+.thumb.sm{flex:none;width:40px;height:40px;border-radius:8px}
+.mdl .its{display:flex;flex-direction:column;gap:8px}
+.mdl .itr{display:flex;align-items:center;gap:8px}
+.mdl .itr .pin[data-f=name]{flex:1 1 auto;min-width:0}
+.mdl .itr .pin[data-f=price]{flex:none;width:88px}
+.mdl .addit{align-self:flex-start;gap:6px}
 .mdl .mb{max-height:calc(100dvh - 180px);overflow-y:auto}
 .mdl .phr{display:flex;align-items:center;gap:12px}
 .mdl .phr small,.mdl .mt{margin:0;color:var(--text-tertiary)}
@@ -529,15 +535,18 @@ var FOOD=[["Кофе","Эспрессо","","30 мл",3.5],["Кофе","Амер
   ["Завтраки","Сырники","Со сметаной и ягодным соусом","220 г",9.5],["Завтраки","Омлет с ветчиной","","250 г",10],["Завтраки","Гранола","С йогуртом и сезонными ягодами","200 г",8.5],["Завтраки","Тост с авокадо","Яйцо пашот, микрозелень","230 г",12],
   ["Десерты","Чизкейк Нью-Йорк","","120 г",8],["Десерты","Морковный торт","","130 г",7.5],["Десерты","Круассан","Сливочное масло","70 г",4.5],
   ["Чай","Чёрный чай","Ассам","400 мл",5],["Чай","Пряный чай","Имбирь, корица, апельсин","400 мл",6]];
+/* мерч из карточки «Байка и шоппер»: открывается на портале сеткой, как меню */
+function merch(){return [{id:fid(),name:"Майка",price:99,img:"img/merch-tee.jpg"},{id:fid(),name:"Шоппер",price:200,img:"img/merch-shopper.jpg"}]}
 function food(a){return a.map(function(r){return {id:fid(),cat:r[0],name:r[1],desc:r[2],out:r[3],price:r[4],img:r[5]||"",show:true}})}
 /* меню из макета Figma «Портал / Меню»: порядок как во вкладке «Для вас» */
 var FOOD_FIGMA=[["Кофе","Фильтр-кофе","","",12,"img/menu-filter.jpg"],["Круассаны","Пряная ватрушка","","",21,"img/menu-vatrushka.jpg"],["Десерты","Творожный креп","","",21,"img/menu-krep.jpg"],
-  ["Круассаны","Маковый рулет","","",15,"img/menu-mak.jpg"],["Круассаны","Яблочный штрудель","","",17,"img/menu-shtrudel.jpg"],["Десерты","Творожник","","",9,""]];
+  ["Круассаны","Маковый рулет","","",15,"img/menu-mak.jpg"],["Круассаны","Яблочный штрудель","","",17,"img/menu-shtrudel.jpg"],["Десерты","Творожник","","",9,""],
+  ["Мерч","Майка","","",99,"img/merch-tee.jpg"],["Мерч","Шоппер","","",200,"img/merch-shopper.jpg"]]; /* мерч — последняя вкладка меню */
 var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак",about:"Кофейня в скандинавском стиле в историческом центре Минска. Варим спешелти-кофе из зёрен разных обжарщиков, а выпечку каждое утро печём из французской муки.",addr:"пл. Свободы 4",phone:"+375 29 123-45-67",
   mode:"Ежедневно",open:"08:00",close:"20:00",pcolor:"Бордовый",logo:"img/portal-avatar.jpg",
   cards:[{id:"menu",kind:"menu",show:true,title:"Попробуй осень",sub:"Сезонное меню",img:"img/portal-card-autumn.jpg",sched:false,from:"01.09.2026",to:"30.11.2026",link:""},
          {id:"loyalty",kind:"loyalty",show:true,title:"Скидка на каждый заказ",sub:"Карта гостя",img:"img/portal-card-takeaway.jpg",sched:false,from:"",to:"",link:""},
-         {id:"merch",kind:"link",show:true,title:"Байка и шоппер",sub:"Фирменный мерч",img:"img/portal-card-merch.jpg",sched:false,from:"",to:"",link:"t.me/ranak"},
+         {id:"merch",kind:"menu",cat:"Мерч",show:true,title:"Байка и шоппер",sub:"Фирменный мерч",img:"img/portal-card-merch.jpg",sched:false,from:"",to:"",link:""},
          {id:"team",kind:"link",show:true,title:"Ищем в команду",sub:"2 вакансии",img:"img/portal-card-team.jpg",sched:false,from:"",to:"",link:"t.me/ranak"}],
   food:food(FOOD_FIGMA),
   loyalty:{kind:"Скидка",size:"5%",scope:"Все заказы",stack:false,phone:true,welcome:"Без бонуса"},
@@ -546,6 +555,9 @@ var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак"
 /* сохранённое в браузере: объекты сливаем по ключам, списки (карточки, меню) берём целиком */
 (function(){try{var sv=JSON.parse(localStorage.getItem("portal-settings-3")||"null");if(!sv)return;
   function deep(a,b){for(var k in b){if(!(k in a))continue;if(Array.isArray(a[k])){if(Array.isArray(b[k]))a[k]=b[k]}else if(b[k]&&typeof b[k]=="object"&&a[k]&&typeof a[k]=="object")deep(a[k],b[k]);else a[k]=b[k]}}deep(P,sv)}catch(e){}})();
+P.cards.forEach(function(c){if(c.id=="merch"&&(c.kind=="link"||c.kind=="shop")){var its=c.kind=="shop"&&c.items&&c.items.length?c.items:merch();
+    if(!P.food.some(function(f){return f.cat=="Мерч"}))its.forEach(function(t){P.food.push({id:fid(),cat:"Мерч",name:t.name,desc:"",out:"",price:t.price,img:t.img||"",show:true})});
+    c.kind="menu";c.cat="Мерч";c.link="";delete c.items}if(c.kind=="shop"&&!Array.isArray(c.items))c.items=[]}); /* мерч переехал в меню последней вкладкой */
 function save(){try{localStorage.setItem("portal-settings-3",JSON.stringify(P))}catch(e){toast("Не хватает места в браузере для фото",4000)}}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function getK(k){return k.split(".").reduce(function(o,x){return o[x]},P)}
@@ -577,7 +589,7 @@ var IC_COPY=svg24("M5 15C4.06812 15 3.60218 15 3.23463 14.8478C2.74458 14.6448 2
 /* круглая кнопка-иконка 32 (как «изменить» у Linear); ghost — без подложки, для заголовков разделов */
 function ibtn(id,label,icon,attrs,cls){return '<button class="ibtn'+(cls?" "+cls:"")+'"'+(id?' id="'+id+'"':'')+' aria-label="'+label+'" title="'+label+'" '+(attrs||'')+'>'+icon+'</button>'}
 function chip(id,t){return '<button class="chip" id="'+id+'"><span>'+t+'</span></button>'}
-var KIND={menu:"Меню",loyalty:"Лояльность",link:"Ссылка"};
+var KIND={menu:"Меню",loyalty:"Лояльность",link:"Ссылка",shop:"Товары"};
 var HOURS={"Русский":{},"Беларуская":{"Ежедневно":"Штодня","Круглосуточно":"Кругласутачна"},"English":{"Ежедневно":"Daily","Пн–Пт":"Mon–Fri","Пн–Сб":"Mon–Sat","Круглосуточно":"Open 24/7"}};
 function purl(){return SITE+P.slug}
 function when(iso){var d=new Date(iso);return d.toLocaleDateString("ru-RU",{day:"numeric",month:"long"})+", "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
@@ -633,8 +645,8 @@ function linkTable(){return thead("Сеть","Статус")+
   NETS.map(function(n){var l=P.links[n[0]];return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+n[1]+'</b><small>'+(l.url?esc(l.url):'Нет ссылки')+'</small></span><span role="cell">'+(l.show&&l.url?'<i class="badge">Показана</i>':'<span class="muted">Скрыта</span>')+'</span><button class="kb" data-netkb="'+n[0]+'" aria-label="Действия со ссылкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join("")}
 function saveLinks(){save();render();$("#pLinks").innerHTML=linkTable();snapText()}
 /* Карточки портала: меню и лояльность открывают экран на портале, ссылка ведёт на сайт */
-function cardState(c){return !c.show?'<span class="muted">Скрыта</span>':c.kind=="menu"&&!inRange(c)?'<span class="muted">Не по расписанию</span>':c.kind=="link"&&!c.link?'<span class="muted">Нет ссылки</span>':'<i class="badge">Показана</i>'}
-function cardTable(){return thead("Карточка","Статус")+(P.cards.length?P.cards.map(function(c,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(c.title||"Без заголовка")+'</b><small>'+esc(c.kind=="link"?(c.link||"Ссылка"):KIND[c.kind]+" на портале")+'</small></span><span role="cell">'+cardState(c)+'</span><button class="kb" data-cardkb="'+i+'" aria-label="Действия с карточкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join(""):'<div class="te">Карточек пока нет</div>')}
+function cardState(c){return !c.show?'<span class="muted">Скрыта</span>':c.kind=="menu"&&!inRange(c)?'<span class="muted">Не по расписанию</span>':c.kind=="link"&&!c.link?'<span class="muted">Нет ссылки</span>':c.kind=="shop"&&!(c.items||[]).length?'<span class="muted">Нет товаров</span>':'<i class="badge">Показана</i>'}
+function cardTable(){return thead("Карточка","Статус")+(P.cards.length?P.cards.map(function(c,i){return '<div class="tr" role="row"><span class="c1" role="cell"><b>'+esc(c.title||"Без заголовка")+'</b><small>'+esc(c.kind=="link"?(c.link||"Ссылка"):c.kind=="shop"?"Товары · "+(c.items||[]).length:c.kind=="menu"&&c.cat?"Меню · "+c.cat:KIND[c.kind]+" на портале")+'</small></span><span role="cell">'+cardState(c)+'</span><button class="kb" data-cardkb="'+i+'" aria-label="Действия с карточкой" aria-haspopup="menu">'+DOTSV+'</button></div>'}).join(""):'<div class="te">Карточек пока нет</div>')}
 function saveCards(){save();render();$("#pCards").innerHTML=cardTable()}
 /* Меню: одна таблица, блюда сгруппированы по категориям (как группы в таблицах Linear) */
 function money(v){if(v===""||v==null||isNaN(v))return "—";v=Number(v);return (v%1?v.toFixed(2).replace(".",","):String(v))+" руб"}
@@ -651,7 +663,7 @@ function inRange(c){if(!c.sched)return true;function d(s){var a=/^(\d\d)\.(\d\d)
 /* данные для страницы гостя: rel — путь от страницы к общим картинкам ("" в превью, "../" в опубликованной папке) */
 function pdata(rel){var r=function(s){return !s||/^(data:|https?:|blob:)/.test(s)?s:rel+s};
   return {name:P.name,hours:hours(),lang:{"Русский":"ru","Беларуская":"be","English":"en"}[P.lang]||"ru",color:PCOL[P.pcolor]||PCOL["Бордовый"],online:P.online,seo:P.seo,newtab:P.links.newtab,cur:"руб",logo:r(P.logo),about:P.about,addr:P.addr,phone:P.phone,
-    cards:P.cards.filter(function(c){return c.show&&(c.kind!="link"||c.link)}).map(function(c){var o={kind:c.kind,title:c.title,sub:c.sub,img:r(c.img)};if(c.kind=="link")o.href=href(c.link);if(c.kind=="menu"&&c.sched){o.from=c.from;o.to=c.to}return o}),
+    cards:P.cards.filter(function(c){return c.show&&(c.kind!="link"||c.link)}).map(function(c){var o={id:c.id,kind:c.kind,title:c.title,sub:c.sub,img:r(c.img)};if(c.kind=="link")o.href=href(c.link);if(c.kind=="shop")o.items=(c.items||[]).map(function(t){return {name:t.name,price:t.price,img:r(t.img||"")}});if(c.kind=="menu"&&c.cat)o.cat=c.cat;if(c.kind=="menu"&&c.sched){o.from=c.from;o.to=c.to}return o}),
     menu:P.food.filter(function(f){return f.show}).map(function(f){return {cat:f.cat,name:f.name,desc:f.desc,out:f.out,price:f.price,img:r(f.img||"")}}),
     loyalty:{kind:P.loyalty.kind,size:P.loyalty.size,scope:P.loyalty.scope,stack:P.loyalty.stack,phone:P.loyalty.phone,welcome:P.loyalty.welcome},
     links:NETS.filter(function(n){var l=P.links[n[0]];return l.show&&l.url}).map(function(n){return {id:n[0],name:n[1],href:href(P.links[n[0]].url)}})}}
@@ -734,21 +746,34 @@ function openCardActions(b){var i=+b.dataset.cardkb,c=P.cards[i],n=P.cards.lengt
     function(a){if(a=="edit")openCardEdit(i);else if(a=="up"||a=="down"){var j=a=="up"?i-1:i+1;P.cards[i]=P.cards[j];P.cards[j]=c;saveCards()}
       else if(a=="vis"){c.show=!c.show;saveCards()}else{P.cards.splice(i,1);saveCards();toast("Карточка удалена",5000,null,function(){P.cards.splice(i,0,c);saveCards()})}})}
 function openCardEdit(i){var isNew=i<0,c=isNew?{id:fid(),kind:"link",show:true,title:"",sub:"",img:"",sched:false,from:"",to:"",link:""}:JSON.parse(JSON.stringify(P.cards[i])),
-    kinds=["link"].concat(["menu","loyalty"].filter(function(k){return !P.cards.some(function(x){return x.kind==k})}));
-  var body=(isNew&&kinds.length>1?fld("Что открывает",'<span class="selw fullw"><select class="pin nat" id="ceKind">'+kinds.map(function(k){return '<option value="'+k+'">'+(k=="link"?"Ссылку на сайт":KIND[k]+" на портале")+'</option>'}).join("")+'</select></span>'):'')+
+    kinds=["link","menu","shop"].concat(["loyalty"].filter(function(k){return !P.cards.some(function(x){return x.kind==k})}));
+  if(c.kind=="shop"&&!c.items)c.items=[];if(!c.items)c.items=[];
+  var body=(isNew&&kinds.length>1?fld("Что открывает",'<span class="selw fullw"><select class="pin nat" id="ceKind">'+kinds.map(function(k){return '<option value="'+k+'">'+(k=="link"?"Ссылку на сайт":k=="shop"?"Подборку товаров":KIND[k]+" на портале")+'</option>'}).join("")+'</select></span>'):'')+
     '<div class="fld"><span>Фото</span><div class="phr">'+photo("card",c.img,"big")+'<small>Рекомендуемый размер 1110 × 722 px</small></div></div>'+
     fld("Заголовок",fin("ceTitle",c.title,"Например, «Попробуй осень»"))+fld("Подпись",fin("ceSub",c.sub,"Короткая подпись"))+
     fld("Ссылка",fin("ceLink",c.link,"ranak.by/delivery",' inputmode="url" autocapitalize="off"'),' id="ceLinkF"')+
+    '<div class="fld" id="ceItemsF"><span>Товары</span><div class="its" id="ceItems"></div><button class="btn sec addit" id="ceItemAdd" type="button">'+IC_PLUS+'<span>Добавить товар</span></button></div>'+
+    fld("Раздел меню",'<span class="selw fullw"><select class="pin nat" id="ceCat"><option value="">Всё меню</option>'+cats().map(function(x){return '<option'+(x==c.cat?' selected':'')+'>'+esc(x)+'</option>'}).join("")+'</select></span>',' id="ceCatF"')+
     '<div class="fld" id="ceSchedF"><div class="frow"><span>По расписанию</span><button class="tgl" role="switch" id="ceSched" aria-checked="'+!!c.sched+'" aria-label="По расписанию"></button></div>'+
       '<div class="frow2" id="ceDates">'+fin("ceFrom",c.from,"дд.мм.гггг",' inputmode="numeric"')+'<i class="dash">–</i>'+fin("ceTo",c.to,"дд.мм.гггг",' inputmode="numeric"')+'</div></div>';
   function kind(){var k=$("#ceKind");return k?k.value:c.kind}
-  function sync(){var k=kind();$("#ceLinkF").hidden=k!="link";$("#ceSchedF").hidden=k!="menu";$("#ceDates").hidden=$("#ceSched").getAttribute("aria-checked")!="true"}
+  /* товары подборки: фото · название · цена · удалить */
+  function itemsHTML(){return c.items.map(function(t,j){return '<div class="itr" data-j="'+j+'">'+photo("item",t.img||"","sm")+fin("ceIn"+j,t.name,"Название",' data-f="name"')+fin("ceIp"+j,t.price===""?"":String(t.price).replace(".",","),"Цена",' data-f="price" inputmode="decimal"')+
+    '<button class="ibtn ghost" type="button" data-del aria-label="Удалить товар" title="Удалить">'+XIC+'</button></div>'}).join("")}
+  function drawItems(){$("#ceItems").innerHTML=itemsHTML()}
+  function sync(){var k=kind();$("#ceLinkF").hidden=k!="link";$("#ceSchedF").hidden=k!="menu";$("#ceCatF").hidden=k!="menu";$("#ceItemsF").hidden=k!="shop";$("#ceDates").hidden=$("#ceSched").getAttribute("aria-checked")!="true"}
   openModal({title:isNew?"Новая карточка":"Карточка",body:body,ok:isNew?"Добавить":"Сохранить",
     valid:function(){return $("#ceTitle").value.trim()&&(kind()!="link"||$("#ceLink").value.trim())},
-    onOpen:function(m){sync();m.el.addEventListener("change",sync);
-      m.el.addEventListener("click",function(e){var p=e.target.closest("[data-pick]");if(!p)return;pickImage(function(u){if(!u)return;c.img=u;p.classList.remove("noimg");p.innerHTML="";p.style.setProperty("--img","url('"+u+"')")})})},
+    onOpen:function(m){drawItems();sync();m.el.addEventListener("change",sync);
+      m.el.addEventListener("input",function(e){var r=e.target.closest(".itr");if(!r)return;var t=c.items[+r.dataset.j];if(e.target.dataset.f=="name")t.name=e.target.value;else{var v=parseFloat(e.target.value.replace(",",".").replace(/[^\d.]/g,""));t.price=isNaN(v)?"":Math.round(v*100)/100}});
+      m.el.addEventListener("click",function(e){
+        if(e.target.closest("#ceItemAdd")){c.items.push({id:fid(),name:"",price:"",img:""});drawItems();var ins=m.el.querySelectorAll(".itr input[data-f=name]");ins[ins.length-1].focus();return}
+        var d=e.target.closest("[data-del]");if(d){c.items.splice(+d.closest(".itr").dataset.j,1);drawItems();return}
+        var p=e.target.closest("[data-pick]");if(!p)return;var row=p.closest(".itr");
+        pickImage(function(u){if(!u)return;if(row)c.items[+row.dataset.j].img=u;else c.img=u;p.classList.remove("noimg");p.innerHTML="";p.style.setProperty("--img","url('"+u+"')")},{max:row?800:1110})})},
     onToggle:sync,
-    onOk:function(){c.kind=kind();c.title=$("#ceTitle").value.trim();c.sub=$("#ceSub").value.trim();c.link=$("#ceLink").value.trim();c.sched=$("#ceSched").getAttribute("aria-checked")=="true";c.from=$("#ceFrom").value.trim();c.to=$("#ceTo").value.trim();
+    onOk:function(){c.kind=kind();c.title=$("#ceTitle").value.trim();c.sub=$("#ceSub").value.trim();c.link=$("#ceLink").value.trim();c.sched=$("#ceSched").getAttribute("aria-checked")=="true";c.from=$("#ceFrom").value.trim();c.to=$("#ceTo").value.trim();if(c.kind=="menu")c.cat=$("#ceCat").value;else delete c.cat;
+      c.items=c.kind=="shop"?c.items.filter(function(t){return (t.name||"").trim()}):c.items;if(c.kind!="shop"&&!c.items.length)delete c.items;
       if(isNew)P.cards.push(c);else P.cards[i]=c;saveCards();if(isNew)toast("Карточка добавлена",2500)}})}
 /* ===== Меню: «⋮» у блюда и окно правки ===== */
 function openFoodActions(b){var id=b.dataset.foodkb,i=P.food.findIndex(function(f){return f.id==id}),f=P.food[i];
@@ -825,7 +850,7 @@ async function ghCommit(files,msg){var ref=await gh("/git/ref/heads/main"),base=
   await gh("/git/refs/heads/main",{method:"PATCH",body:{sha:c.sha}})}
 async function doPublish(){pubBusy=true;pubBtn();var slug=P.slug,files=[],h=hash(JSON.stringify(pdata("../"))),d=pdata("../");
   function take(src,name){if(!/^data:/.test(src||""))return src;var b=src.split(",")[1],p="img/"+name+"-"+hash(b)+".jpg";if(!files.some(function(f){return f.path==slug+"/"+p}))files.push({path:slug+"/"+p,b64:b});return p}
-  try{d.logo=take(d.logo,"logo");d.cards.forEach(function(c,i){c.img=take(c.img,"card-"+(i+1))});d.menu.forEach(function(m,i){m.img=take(m.img,"dish-"+(i+1))});
+  try{d.logo=take(d.logo,"logo");d.cards.forEach(function(c,i){c.img=take(c.img,"card-"+(i+1))});d.menu.forEach(function(m,i){m.img=take(m.img,"dish-"+(i+1))});d.cards.forEach(function(c,i){(c.items||[]).forEach(function(t,j){t.img=take(t.img,"item-"+(i+1)+"-"+(j+1))})});
     var html=await (await fetch("guest.html",{cache:"no-store"})).text();
     files.push({path:slug+"/index.html",b64:b64u(html)},{path:slug+"/portal.json",b64:b64u(JSON.stringify(d,null,1))});
     await ghCommit(files,"Портал "+slug+": публикация из кабинета");
