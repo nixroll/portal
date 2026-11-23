@@ -307,6 +307,63 @@ button.thumb:hover{opacity:.85}
 body[data-page="settings"] .settings{display:block}
 body[data-page="settings"] .empty{display:none}
 body[data-page="settings"] .addb,body[data-page="chat"] .addb{visibility:hidden}
+/* ================= Календарь: брони по дням — строки столов, время по горизонтали ================= */
+.cal{display:none}
+body[data-page="calendar"] .cal{display:flex;flex-direction:column;position:absolute;inset:0}
+body[data-page="calendar"] .empty{display:none}
+.cbar{flex:none;display:flex;flex-direction:column;gap:16px;padding:16px 24px;box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.cdays{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.cdays::-webkit-scrollbar{display:none}
+.cdays button{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:112px;padding:8px 12px;border-radius:12px;text-align:left;box-shadow:inset 0 0 0 var(--h) var(--border-secondary);transition:background .15s}
+.cdays button:hover{background:var(--bg-primary-hover)}
+.cdays button[aria-pressed="true"]{background:var(--bg-secondary-hover);box-shadow:inset 0 0 0 var(--h) var(--border-primary)}
+.cdays b{font-weight:500;color:var(--text-primary)}
+.cdays small{font-size:12px;line-height:16px;color:var(--text-tertiary)}
+.csum{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:13px;line-height:18px;color:var(--text-tertiary)}
+.csum b{margin-left:6px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.cfoot{flex:none;display:flex;align-items:center;gap:24px;padding:10px 24px;box-shadow:inset 0 var(--h) 0 var(--border-secondary);font-size:12px;line-height:16px;color:var(--text-tertiary)}
+.cfoot .hint{margin-left:auto;white-space:nowrap}
+.lgd2{display:flex;flex-wrap:wrap;gap:6px 16px}
+.lgd2 span{display:inline-flex;align-items:center;gap:6px}
+.lgd2 i{width:10px;height:10px;border-radius:3px;background:var(--k);opacity:.9}
+.lgd2 i.pend{background:none;box-shadow:inset 0 0 0 1.5px var(--ch-a)}
+.cgw{flex:1;min-height:0;overflow:auto;scrollbar-width:thin}
+.cg{--cl:152px;position:relative;display:flex;flex-direction:column;min-width:980px;min-height:100%}
+.chd,.crow{display:flex}
+.chd{position:sticky;top:0;z-index:5;height:36px;background:var(--bg-primary-alt);box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.clbl{position:sticky;left:0;z-index:3;flex:none;display:flex;flex-direction:column;justify-content:center;width:152px;padding:0 16px 0 24px;background:var(--bg-primary-alt);box-shadow:inset calc(-1 * var(--h)) 0 0 var(--border-secondary)}
+.chd .clbl{z-index:6}
+.clbl b{font-weight:500;color:var(--text-primary)}
+.clbl small{font-size:12px;line-height:16px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctl{position:relative;flex:1;min-width:0}
+.chd .ctl span{position:absolute;top:10px;font-size:12px;line-height:16px;color:var(--text-tertiary);font-variant-numeric:tabular-nums}
+.crow{flex:1 0 64px;box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.chd{flex:none}
+/* загрузка зала по получасам — под той же шкалой времени */
+.crow.cload{flex:none;height:88px;box-shadow:inset 0 var(--h) 0 var(--border-primary)}
+.cload .ctl{background-image:linear-gradient(to right,var(--border-secondary) 0 var(--h),transparent var(--h));background-size:calc(100% / 12) 100%}
+.cload .ctl i{position:absolute;bottom:12px;width:calc(100% / 24 - 6px);margin-left:3px;border-radius:3px 3px 1px 1px;background:color-mix(in srgb,var(--ch-a) 55%,transparent)}
+.cload .ctl i.past{background:var(--bg-quaternary)}
+.cload .ctl i.now{background:var(--ch-a)}
+.cload .ctl i:hover{background:var(--ch-a)}
+.crow .ctl{background-image:linear-gradient(to right,var(--border-secondary) 0 var(--h),transparent var(--h));background-size:calc(100% / 12) 100%}
+.crow:not(.cload):hover .ctl{background-color:color-mix(in srgb,var(--text-primary) 3%,transparent)}
+.crow:not(.cload):hover .clbl{background-image:linear-gradient(color-mix(in srgb,var(--text-primary) 3%,transparent),color-mix(in srgb,var(--text-primary) 3%,transparent))}
+.bkb{position:absolute;top:8px;bottom:8px;display:flex;flex-direction:column;justify-content:center;gap:1px;min-width:0;padding:0 8px 0 11px;border-radius:8px;overflow:hidden;text-align:left;
+  background:color-mix(in srgb,var(--k) 16%,transparent);box-shadow:inset 3px 0 0 var(--k);transition:background .15s}
+.bkb:hover{background:color-mix(in srgb,var(--k) 26%,transparent)}
+.bkb b{font-size:13px;line-height:18px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bkb small{font-size:12px;line-height:16px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bkb.pend{background:transparent;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ch-a) 70%,transparent),inset 3px 0 0 var(--ch-a)}
+.bkb.pend:hover{background:color-mix(in srgb,var(--ch-a) 8%,transparent)}
+.bkb.ns b{text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--text-primary) 40%,transparent)}
+.bkb{z-index:2}
+.cnow{position:absolute;top:0;bottom:0;z-index:1;width:2px;margin-left:-1px;background:#F04438;pointer-events:none}
+.cnow::before{content:"";position:absolute;top:30px;left:-3px;width:8px;height:8px;border-radius:9999px;background:#F04438}
+.bkinfo{display:flex;flex-direction:column;gap:2px;padding:8px 8px 10px;margin-bottom:4px;box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.bkinfo b{font-weight:600;color:var(--text-primary)}
+.bkinfo span{font-size:12px;line-height:18px;color:var(--text-tertiary);white-space:nowrap}
+@media (max-width:767px){.clbl small span{display:none}.cbar{padding:12px 16px}.clbl{width:112px;padding:0 12px 0 16px}.cg{--cl:112px;min-width:860px}.cfoot{padding:10px 16px}.cfoot .hint{display:none}}
 /* ================= Мультичат: все каналы в одной ленте — список · переписка · карточка гостя ================= */
 .chat{display:none}
 body[data-page="chat"] .chat{display:flex;position:absolute;inset:0}
@@ -652,6 +709,7 @@ body[data-page="home"] .addb{padding:0 8px 0 12px}
       <div class="empty" id="empty"><img src="img/empty-heart.png" alt="" width="96" height="96"><p data-w="157">Раздел пока пустой</p></div>
       <div class="home" id="home"></div>
       <div class="chat" id="chat"></div>
+      <div class="cal" id="cal"></div>
       <div class="portal" id="portal">
         <div class="psel d" role="tablist"><button role="tab" aria-selected="true" data-t="general"><span>Общее</span></button><button role="tab" aria-selected="false" data-t="cards"><span>Карточки</span></button><button role="tab" aria-selected="false" data-t="menu"><span>Меню</span></button><button role="tab" aria-selected="false" data-t="loyalty"><span>Лояльность</span></button><button role="tab" aria-selected="false" data-t="links"><span>Ссылки</span></button></div>
         <div id="pPanels"></div>
@@ -819,6 +877,57 @@ function wBook(){var r=hrng("bk"+new Date().toDateString()),slots=[],i,now=new D
     '<div class="wf"><span>Ближайшая бронь</span><b>18:00 · стол 4 · 2 гостя</b></div></section>'}
 function drawHome(){var h=$("#home");if(!h)return;h.innerHTML='<div class="hw">'+wOverview()+wLoyal()+wVisits()+wBack()+wBook()+'</div>';chBind()}
 $("#home").addEventListener("click",function(e){var kp=e.target.closest("[data-kp]");if(kp){OV=kp.dataset.kp;drawHome();return}var b=e.target.closest("[data-hgo]");if(!b)return;if(b.dataset.hgo=="loyalty"){location.hash="#portal";var t=document.querySelector('.portal .psel button[data-t="loyalty"]');if(t)t.click()}else location.hash="#"+b.dataset.hgo});
+/* ===== Календарь: брони по дням (демо). Строки — столы зала, время 8:00–20:00 ===== */
+var TBL=[[1,2,"у окна"],[2,2,"у окна"],[3,2,"у окна"],[4,4,"у бара"],[5,4,"в центре"],[6,6,"большой"],[7,2,"круглый"]],C0=480,C1=1200;
+var BKS={pt:"Портал",ig:"Instagram",ph:"Телефон",tg:"Telegram",wk:"Без брони"},BKST={ok:["Подтверждена","var(--ch-a)"],pend:["Ждёт подтверждения","var(--ch-a)"],came:["Пришли","var(--ch-g)"],ns:["Не пришли","var(--ch-p)"]};
+var BNAMES=["Вероника Л.","Злата К.","Ульяна Б.","Ростислав В.","Матвей Я.","Ева С.","Глеб Т.","Арина П.","Кирилл М.","Софья Д.","Лев Н.","Мирослава Ж.","Платон Р.","Василиса Г.","Ярослав Ш.","Дарина Ф.","Елисей К."];
+var BK={},CD=0;
+function bkDay(d){var k=hday(-d).toDateString();if(BK[k])return BK[k];var r=hrng("cal"+k),now=new Date(),nm=now.getHours()*60+now.getMinutes(),L=[],NM=BNAMES.slice().sort(function(){return r()-.5}),ni=0;
+  TBL.forEach(function(t){var cnt=1+Math.floor(r()*3),s=C0+Math.floor(r()*4)*30;
+    for(var i=0;i<cnt&&s<C1-60;i++){var dur=(2+Math.floor(r()*5))*30,e=Math.min(C1,s+dur),st,past=d<0||(d==0&&e<=nm);
+      st=past?(r()<.88?"came":"ns"):d==0&&s<=nm?"came":(r()<.72?"ok":"pend");
+      L.push({id:k+t[0]+i,t:t[0],s:s,e:e,g:Math.max(1,Math.min(t[1],1+Math.floor(r()*t[1]))),n:NM[ni++%NM.length],src:["pt","ig","ph","tg","pt"][Math.floor(r()*5)],st:st,ph:"+375 "+(r()<.5?"29":"33")+" •••-"+(10+Math.floor(r()*89))+"-"+(10+Math.floor(r()*89))});
+      s=e+(1+Math.floor(r()*4))*30}});
+  if(d==0)L.unshift({id:k+"x",t:4,s:1080,e:1200,g:2,n:"Тимур О.",src:"pt",st:"pend",ph:"+375 29 •••-45-67"}); /* та самая бронь с портала из «Мультичата» */
+  L=L.filter(function(b,i){return !L.some(function(o,j){return j<i&&o.t==b.t&&o.s<b.e&&b.s<o.e})});
+  return BK[k]=L}
+function hm2(m){return Math.floor(m/60)+":"+("0"+m%60).slice(-2)}
+function gw(n){var a=n%10,b=n%100;return n+" "+(a==1&&b!=11?"гость":a>=2&&a<=4&&(b<10||b>=20)?"гостя":"гостей")}
+function loadRow(L,nm){var bars="";for(var i=0;i<24;i++){var a=C0+i*30,b=a+30,n=L.filter(function(x){return x.st!="ns"&&x.s<b&&a<x.e}).length,cls=CD<0||(CD==0&&b<=nm)?"past":CD==0&&a<=nm&&nm<b?"now":"";
+    bars+='<i class="'+cls+'" style="left:'+(i/24*100).toFixed(4)+'%;height:'+Math.max(2,n/TBL.length*56).toFixed(1)+'px" title="'+hm2(a)+'–'+hm2(b)+': занято '+n+' из '+TBL.length+'"></i>'}
+  return '<div class="crow cload"><div class="clbl"><b>Загрузка</b><small>занято столов</small></div><div class="ctl">'+bars+'</div></div>'}
+function drawCal(){var el=$("#cal");if(!el)return;var L=bkDay(CD),now=new Date(),nm=now.getHours()*60+now.getMinutes(),
+    act=L.filter(function(b){return b.st!="ns"}),guests=act.reduce(function(s,b){return s+b.g},0),busy=act.reduce(function(s,b){return s+b.e-b.s},0),
+    load=Math.round(busy/(TBL.length*(C1-C0))*100),pend=L.filter(function(b){return b.st=="pend"}).length,days=[];
+  for(var d=-1;d<=5;d++)days.push(d);
+  var hours=[];for(var h=8;h<=20;h++)hours.push(h);
+  el.innerHTML='<div class="cbar"><div class="cdays">'+days.map(function(d){var x=hday(-d),n=bkDay(d).filter(function(b){return b.st!="ns"}).length;
+      return '<button data-cd="'+d+'" aria-pressed="'+(d==CD)+'"><b>'+(d==-1?"Вчера":d==0?"Сегодня":d==1?"Завтра":WD[x.getDay()])+'</b><small>'+dshort(x)+' · '+n+' '+(n%10==1&&n%100!=11?'бронь':n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'брони':'броней')+'</small></button>'}).join("")+'</div>'+
+    '<div class="csum"><span>Брони<b>'+act.length+'</b></span><span>Гостей<b>'+guests+'</b></span><span>Загрузка зала<b>'+load+'%</b></span>'+(pend?'<span>Ждут подтверждения<b>'+pend+'</b></span>':'')+
+      '</div></div>'+
+    '<div class="cgw" id="cgw"><div class="cg"><div class="chd"><div class="clbl"><small>Стол</small></div><div class="ctl">'+hours.map(function(h,i){return (i==12?'':'<span style="left:calc('+(i/12*100).toFixed(4)+'% + 4px)">'+h+':00</span>')}).join("")+'</div></div>'+
+    TBL.map(function(t){return '<div class="crow"><div class="clbl"><b>Стол '+t[0]+'</b><small>'+t[1]+' места<span> · '+t[2]+'</span></small></div><div class="ctl">'+
+      L.filter(function(b){return b.t==t[0]}).map(function(b){return '<button class="bkb '+(b.st=="pend"?'pend':b.st=="ns"?'ns':'')+'" data-bk="'+b.id+'" style="--k:'+BKST[b.st][1]+';left:calc('+((b.s-C0)/(C1-C0)*100).toFixed(3)+'% + 2px);width:calc('+((b.e-b.s)/(C1-C0)*100).toFixed(3)+'% - 4px)" title="'+esc(b.n+" · "+hm2(b.s)+"–"+hm2(b.e))+'"><b>'+esc(b.e-b.s<=60?b.n.split(" ")[0]:b.n)+'</b><small>'+(b.e-b.s<=60?hm2(b.s):gw(b.g)+' · '+hm2(b.s)+'–'+hm2(b.e))+'</small></button>'}).join("")+'</div></div>'}).join("")+
+    loadRow(L,nm)+(CD==0&&nm>C0&&nm<C1?'<div class="cnow" style="left:calc(var(--cl) + (100% - var(--cl)) * '+((nm-C0)/(C1-C0)).toFixed(4)+')"></div>':'')+'</div></div>';
+  el.insertAdjacentHTML("beforeend",'<div class="cfoot">'+'<span class="lgd2">'+["ok","pend","came","ns"].map(function(s){return '<span><i class="'+(s=="pend"?'pend':'')+'" style="--k:'+BKST[s][1]+'"></i>'+BKST[s][0]+'</span>'}).join("")+'</span>'+'<span class="hint">Нажмите на бронь, чтобы подтвердить или отметить визит</span></div>');
+  var gwd=$("#cgw");if(gwd&&CD==0&&innerWidth<1100){gwd.scrollLeft=Math.max(0,(nm-C0)/(C1-C0)*gwd.scrollWidth-gwd.clientWidth/2)}}
+function bkFind(id){return bkDay(CD).filter(function(b){return b.id==id})[0]}
+(function(){var el=$("#cal");
+  el.addEventListener("click",function(e){var d=e.target.closest("[data-cd]");if(d){CD=+d.dataset.cd;drawCal();return}
+    var b=e.target.closest("[data-bk]");if(!b)return;var k=bkFind(b.dataset.bk);if(!k)return;
+    var items=(k.st=="pend"?'<button class="mi" data-a="ok"><span>Подтвердить</span></button>':'')+(k.st!="came"?'<button class="mi" data-a="came"><span>Гости пришли</span></button>':'')+(k.st!="ns"?'<button class="mi" data-a="ns"><span>Не пришли</span></button>':'')+'<button class="mi danger" data-a="del"><span>Отменить бронь</span></button>';
+    actMenu(b,'<div class="bkinfo"><b>'+esc(k.n)+'</b><span>Стол '+k.t+' · '+gw(k.g)+'</span><span>'+hm2(k.s)+'–'+hm2(k.e)+' · '+BKS[k.src]+'</span><span>'+k.ph+' · '+BKST[k.st][0]+'</span></div>'+items,function(a){
+      var L=bkDay(CD);if(a=="del"){L.splice(L.indexOf(k),1);drawCal();toast("Бронь отменена",4000,null,function(){L.push(k);drawCal()});return}k.st=a;drawCal()})})})();
+function newBooking(){var opts=function(a){return a.map(function(x){return '<option value="'+x[0]+'"'+(x[2]?' selected':'')+'>'+x[1]+'</option>'}).join("")},st=[],du=[];
+  for(var m=C0;m<=C1-60;m+=30)st.push([m,hm2(m),m==1080]);[60,90,120,150,180].forEach(function(v){du.push([v,(v/60+"").replace(".",",")+" ч",v==120])});
+  var s=function(id,o){return '<span class="selw fullw"><select class="pin nat" id="'+id+'">'+o+'</select></span>'};
+  openModal({title:"Новая бронь · "+(CD==0?"сегодня":CD==1?"завтра":dshort(hday(-CD))),ok:"Создать",
+    body:fld("Имя гостя",fin("nbN","","Например, Арина"))+fld("Телефон",fin("nbP","","+375 29 000-00-00",' inputmode="tel"'))+
+      '<div class="two">'+fld("Стол",s("nbT",opts(TBL.map(function(t){return [t[0],"Стол "+t[0]+" · "+t[1]+" места"]}))))+fld("Гостей",s("nbG",opts([1,2,3,4,5,6].map(function(n){return [n,n,n==2]}))))+'</div>'+
+      '<div class="two">'+fld("Начало",s("nbS",opts(st)))+fld("Сколько",s("nbD",opts(du)))+'</div><p class="merr" id="nbE" hidden></p>',
+    valid:function(){var t=+$("#nbT").value,a=+$("#nbS").value,e=Math.min(C1,a+ +$("#nbD").value),c=bkDay(CD).some(function(b){return b.t==t&&b.st!="ns"&&b.s<e&&a<b.e}),
+      big=+$("#nbG").value>TBL.filter(function(x){return x[0]==t})[0][1],err=$("#nbE");err.hidden=!(c||big);err.textContent=c?"Стол занят в это время":big?"Гостей больше, чем мест за столом":"";return $("#nbN").value.trim()&&!c&&!big},
+    onOk:function(){var a=+$("#nbS").value;bkDay(CD).push({id:"n"+Date.now(),t:+$("#nbT").value,s:a,e:Math.min(C1,a+ +$("#nbD").value),g:+$("#nbG").value,n:$("#nbN").value.trim(),src:"ph",st:"ok",ph:$("#nbP").value.trim()||"—"});drawCal();toast("Бронь создана",2500)}})}
 /* ===== Мультичат (демо-переписки) ===== */
 var CHN={ig:["Instagram","#E1306C"],tg:["Telegram","#229ED9"],vb:["Viber","#7360F2"],wa:["WhatsApp","#25D366"],gis:["2ГИС","#2FBF4A"],gm:["Google Карты","#4285F4"],ym:["Яндекс Карты","#FC3F1D"],pt:["Портал","var(--brand-solid)"]};
 var AVC=["#7F56D9","#2E90FA","#12B76A","#F79009","#EE46BC","#6172F3","#0BA5EC","#DD2590"];
@@ -892,7 +1001,7 @@ function mcSend(t){var c=MCV.filter(function(x){return x.id==MCA})[0];if(!c||!t.
   el.addEventListener("keydown",function(e){if(e.target.id=="mcin"&&e.key=="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();mcSend(e.target.value)}})})();
 function route(){var h=location.hash.slice(1),it=NAV.filter(function(n){return n[0]==h})[0]||NAV.filter(function(n){return P.set&&n[1]==P.set.start})[0]||NAV[0];
   document.querySelectorAll("#nav a").forEach(function(a){if(a.dataset.id==it[0])a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
-  $("#title").textContent=it[1];document.body.dataset.page=it[0];$("#addTx").textContent=it[0]=="portal"?"Опубликовать":it[0]=="home"?PER_L[HD]:"Виджет";if(it[0]=="portal"||it[0]=="home")delete $("#addTx").dataset.w;else $("#addTx").dataset.w=47;if(it[0]=="home")drawHome();if(it[0]=="chat")drawChat();$("#addb").disabled=false;if(it[0]=="portal")pubBtn();document.title=it[1]+" — Портал";layout()}
+  $("#title").textContent=it[1];document.body.dataset.page=it[0];$("#addTx").textContent=it[0]=="portal"?"Опубликовать":it[0]=="home"?PER_L[HD]:it[0]=="calendar"?"Бронь":"Виджет";if(it[0]=="portal"||it[0]=="home"||it[0]=="calendar")delete $("#addTx").dataset.w;else $("#addTx").dataset.w=47;if(it[0]=="home")drawHome();if(it[0]=="chat")drawChat();if(it[0]=="calendar")drawCal();$("#addb").disabled=false;if(it[0]=="portal")pubBtn();document.title=it[1]+" — Портал";layout()}
 window.addEventListener("hashchange",route);
 /* ================= Портал: вкладки «Общее · Меню · Лояльность · Ссылки» =================
    Структура как в настройках Linear: заголовок раздела → карточки со строками «название + подпись | контрол».
@@ -1262,7 +1371,7 @@ async function doPublish(){pubBusy=true;pubBtn();var slug=P.slug,files=[],h=hash
     else if(e instanceof TypeError&&!/github\.io$/.test(location.hostname))toast("Отсюда GitHub недоступен. Опубликуйте из кабинета на nixroll.github.io",8000,"https://nixroll.github.io/portal/#portal")
     else toast("Не удалось опубликовать. Проверьте интернет и попробуйте ещё раз",5000)}
   pubBusy=false;pubBtn()}
-$("#addb").addEventListener("click",function(){if(document.body.dataset.page=="portal")publish();else if(document.body.dataset.page=="home")perMenu(this)});
+$("#addb").addEventListener("click",function(){if(document.body.dataset.page=="portal")publish();else if(document.body.dataset.page=="home")perMenu(this);else if(document.body.dataset.page=="calendar")newBooking()});
 function perMenu(b){actMenu(b,PER.map(function(d){return '<button class="mi" role="menuitemradio" aria-checked="'+(d==HD)+'" data-a="'+d+'"><span>'+PER_L[d]+'</span>'+(d==HD?CHECK:'')+'</button>'}).join(""),
   function(a){HD=+a;try{localStorage.setItem("portal-home-days",HD)}catch(e){}$("#addTx").textContent=PER_L[HD];snapText();drawHome()})}
 /* уведомление снизу: текст + «Открыть» или «Вернуть» */
