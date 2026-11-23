@@ -200,7 +200,54 @@ body.rzing{cursor:col-resize;user-select:none}
   body.nobadge .tabbar .bd{display:none}
 }
 /* ===== /TABBAR ===== */
-@media (prefers-reduced-motion:reduce){.side,.scrim{transition:none!important}}
+/* ===== MOBILE NAV как в Shopify (до 767 px): меню лежит под страницей, страница уезжает вправо со скруглением 55 и затемнением.
+   Замеры с admin.shopify.com на 390 px: меню 343 (100% − 46,8), страница сдвигается на 347,2, анимация 0,4 с cubic-bezier(.2,.8,0,1),
+   фон #0a0a0a + мягкое свечение, пункт 44 px, иконка 20, текст 15/22, выбранный — капсула белая 11 %, скругление 18; внизу «Настройки» и «×» по 48 px. ===== */
+.mlab,.mfoot{display:none}
+@media (max-width:767px){
+  html:has(body.nav-open),body.nav-open{background:#0a0a0a}
+  .side{z-index:1;width:calc(100% - 46.8px);display:flex;flex-direction:column;row-gap:0;padding:calc(12px + env(safe-area-inset-top)) 22px calc(88px + env(safe-area-inset-bottom)) 12px;
+    background:#0a0a0a radial-gradient(closest-side,rgba(255,255,255,.06),rgba(0,0,0,0));border-radius:0;box-shadow:none;transform:none;color-scheme:dark;
+    visibility:hidden;transition:visibility 0s linear .4s}
+  body.nav-open .side{transform:none;visibility:visible;transition:none}
+  .pg{z-index:2;transition:translate .4s cubic-bezier(.2,.8,0,1),border-radius .4s cubic-bezier(.2,.8,0,1)}
+  body.tb-on .tabbar{z-index:3;transition:translate .4s cubic-bezier(.2,.8,0,1),border-radius .4s cubic-bezier(.2,.8,0,1)}
+  .scrim{z-index:4;background:#0a0a0a;transition:opacity .4s cubic-bezier(.2,.8,0,1),translate .4s cubic-bezier(.2,.8,0,1),border-radius .4s cubic-bezier(.2,.8,0,1),visibility 0s linear .4s}
+  body.nav-open .pg,body.nav-open .scrim,body.nav-open.tb-on .tabbar{translate:calc(100vw - 42.8px) 0}
+  body.nav-open .pg{overflow:hidden;border-radius:55px 0 55px 55px}
+  body.nav-open.tb-on .pg{border-radius:55px 0 0 0}
+  body.nav-open.tb-on .tabbar{border-radius:0 0 0 55px}
+  body.nav-open .scrim{opacity:.7;border-radius:55px 0 55px 55px;transition:opacity .4s cubic-bezier(.2,.8,0,1),translate .4s cubic-bezier(.2,.8,0,1),border-radius .4s cubic-bezier(.2,.8,0,1)}
+  .side .s-top{flex:none;padding:0 8px;margin-bottom:14px}
+  .side .acct{height:36px;padding:0;gap:12px;background:none}
+  .side .acct .ava{width:32px;height:32px;border-radius:9px}
+  .side .acct .ava img{width:32px;height:32px}
+  .side .acct .ava::after{border-radius:9px;border-color:rgba(255,255,255,.1)}
+  .side .acct span{font-size:16px;line-height:22px;color:#f7f7f7}
+  .side .s-mid{flex:0 1 auto;display:block}
+  .side .nav{gap:0;padding:0}
+  .side .nav a,.side .loc{height:44px;padding:1px 12px 1px 8px;gap:10px;border-radius:18px;font-size:15px;line-height:22px;font-weight:450;letter-spacing:-.01em;color:#d0d0d0;background:none;box-shadow:none}
+  .side .nav a svg,.side .loc svg{flex:none;width:20px;height:20px;color:currentColor}
+  .side .nav a .c{font-size:13px;color:#8c8c8c}
+  .side .nav a:hover,.side .loc:hover{background:none;box-shadow:none;color:#d0d0d0}
+  .side .nav a:hover svg{color:currentColor}
+  .side .nav a[aria-current="page"]{background:rgba(255,255,255,.11);color:#f7f7f7;font-weight:500;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.02),inset 0 1px 1px rgba(255,255,255,.06),inset 0 0 12px 1px rgba(255,255,255,.06),0 1px 2px rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.1)}
+  .side .nav a[aria-current="page"] svg{color:#f7f7f7}
+  .side .nav a[data-id="settings"]{display:none}
+  .side .s-bot{display:block;padding:12px 0 0;overflow:visible}
+  .side .loc{display:flex;align-items:center;width:100%;margin:0}
+  .mlab{display:block;margin:0 0 4px;padding:0 8px;font-size:12px;line-height:16px;font-weight:500;color:#8c8c8c}
+  .mfoot{position:absolute;left:0;bottom:calc(20px + env(safe-area-inset-bottom));width:100vw;display:flex;justify-content:center;gap:8px}
+  .mset,.mcls{display:flex;align-items:center;justify-content:center;height:48px;border-radius:9999px;background:#222;color:#dcdcdc;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.02),inset 0 1px 1px rgba(255,255,255,.06),inset 0 0 12px 1px rgba(255,255,255,.06),0 1px 2px rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.1);-webkit-tap-highlight-color:transparent}
+  .mset{gap:8px;padding:0 16px;font-size:16px;line-height:20px;font-weight:400}
+  .mcls{width:48px}
+  .mset svg,.mcls svg{width:20px;height:20px}
+  .mset:active,.mcls:active{background:#2c2c2c}
+}
+/* ===== /MOBILE NAV ===== */
+@media (prefers-reduced-motion:reduce){.side,.scrim,.pg,.tabbar{transition:none!important}}
 /* =================== Портал (мини-сайт заведения): вкладки, настройки, превью справа =================== */
 /* Selector: 28 px, капсула, поля 0 12, рамка 0,5 border-primary, тень shadow-xs, текст Text xs/Medium 12/18.
    Normal — bg-primary_alt, text-secondary; Hover и Selected — bg-secondary_hover, text-primary */
@@ -828,8 +875,9 @@ body[data-page="home"] .addb{padding:0 8px 0 12px}
     </div>
     <div class="s-mid" id="sMid"><nav class="nav" id="nav"></nav></div>
     <div class="s-bot">
-      <button class="loc" id="loc" title="пл. Свободы 4"><svg id="locIc"></svg><span>пл. Свободы 4</span></button>
+      <p class="mlab">Заведение</p><button class="loc" id="loc" title="пл. Свободы 4"><svg id="locIc"></svg><span>пл. Свободы 4</span></button>
     </div>
+    <div class="mfoot"><a class="mset" href="#settings" id="mset"><svg id="msetIc"></svg><span>Настройки</span></a><button class="mcls" id="mcls" aria-label="Закрыть меню"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true"><path d="M12 4 4 12M4 4l8 8"/></svg></button></div>
     <div class="rz" id="rz" role="separator" aria-orientation="vertical" aria-label="Ширина меню"></div>
   </aside>
   <div class="scrim" id="scrim" aria-hidden="true"></div>
@@ -898,11 +946,12 @@ var NAV=[["home","Главная","home-smile"],["chat","Мультичат","in
 $("#nav").innerHTML=NAV.map(function(n){return '<a href="#'+n[0]+'" data-id="'+n[0]+'" title="'+n[1]+'">'+ico(n[2])+'<span class="t">'+n[1]+'</span>'+(n[3]!=null?'<span class="c">'+n[3]+'</span><i class="nd"></i>':'')+'</a>'}).join("");
 $("#locIc").outerHTML=ico("marker-pin-02");$("#sclIc").outerHTML=ico("layout-left",14);$("#plusIc").outerHTML=ico("plus",14);$("#addb").insertAdjacentHTML("beforeend",'<svg class="chv" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5"/></svg>');$("#addb").insertAdjacentHTML("afterbegin",'<svg class="pub" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15V16.2C21 17.88 21 18.72 20.67 19.36C20.39 19.93 19.93 20.39 19.36 20.67C18.72 21 17.88 21 16.2 21H7.8C6.12 21 5.28 21 4.64 20.67C4.07 20.39 3.61 19.93 3.33 19.36C3 18.72 3 17.88 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"/></svg>');$("#sbbIc").outerHTML=ico("layout-left",14);
 /* меню на планшете и телефоне: открывается кнопкой в тулбаре, закрывается выбором раздела, нажатием мимо или Esc */
-function navOpen(o){document.body.classList.toggle("nav-open",o);$("#sbb").setAttribute("aria-expanded",o?"true":"false");if(o)requestAnimationFrame(layout)}
+function navOpen(o){document.body.classList.toggle("nav-open",o);setThemeColor();$("#sbb").setAttribute("aria-expanded",o?"true":"false");if(o)requestAnimationFrame(layout)}
 $("#sbb").addEventListener("click",function(e){e.stopPropagation();navOpen(!document.body.classList.contains("nav-open"))});
 document.addEventListener("click",function(e){if(document.body.classList.contains("nav-open")&&!e.target.closest("#side"))navOpen(false)});
 document.addEventListener("keydown",function(e){if(e.key=="Escape")navOpen(false)});
 $("#nav").addEventListener("click",function(e){if(e.target.closest("a"))navOpen(false)});
+$("#msetIc").outerHTML=ico("settings-02");$("#mset").addEventListener("click",function(){navOpen(false)});$("#mcls").addEventListener("click",function(){navOpen(false)});
 
 /* навигация по центру между Top и Bottom — отступ в целых пикселях, чтобы текст не мылился */
 /* позиции округляем до физических пикселей экрана: на ретине допускаются половинки, как в Figma, на обычном экране — целые */
