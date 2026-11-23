@@ -331,6 +331,19 @@ button.thumb:hover{opacity:.85}
 body[data-page="settings"] .settings{display:block}
 body[data-page="settings"] .empty{display:none}
 body[data-page="settings"] .addb,body[data-page="chat"] .addb,body[data-page="clients"] .addb{visibility:hidden}
+/* ряды, которые листаются вбок, доходят до края панели: без резкой границы посреди экрана.
+   Справа — пустой хвост (::after), потому что Safari не учитывает правый отступ у прокручиваемого ряда */
+.cdays{margin:0 -24px;padding:0 24px}
+.cdays::after{content:"";flex:none;width:16px}
+.mcf .mcc{margin:0 -12px;padding:0 12px}
+.mcf .mcc::after{content:"";flex:none;width:6px}
+.clbar .mcc{margin-left:-16px;padding-left:16px}
+@media (max-width:767px){
+  .cdays{margin:0 -16px;padding:0 16px}
+  .cdays::after{width:8px}
+  .clbar .mcc{margin:0 -16px;padding:0 16px}
+  .clbar .mcc::after{content:"";flex:none;width:10px}
+}
 /* ================= Клиенты: база гостей из программы лояльности, таблица в духе Attio ================= */
 .cl{display:none}
 body[data-page="clients"] .cl{display:flex;flex-direction:column;position:absolute;inset:0;overflow:hidden}
