@@ -795,17 +795,20 @@ body[data-page="home"] .addb{padding:0 8px 0 12px}
 @media (max-width:1023px){
   /* планшет и телефон: те же вкладки и настройки портала, что на компьютере; превью гостя справа — только на широком экране */
   .psel.m{display:none}
-  /* переключатель «Настройки | Портал»: внизу по центру, над таб-баром; «Портал» показывает страницу гостя на весь экран */
+  /* переключатель «Настройки | Портал» — второй строкой под тулбаром; «Портал» показывает страницу гостя во всю панель */
   body[data-page="portal"] .pvsw{display:flex}
+  body[data-page="portal"] .body{margin-top:calc(44px + 52px + var(--h))}
   body.pvm[data-page="portal"] .body{visibility:hidden}
-  body.pvm[data-page="portal"] .view{display:block;position:absolute;top:calc(44px + var(--h));left:var(--h);right:var(--h);bottom:var(--h);padding:12px 12px 68px} /* снизу место под переключатель, чтобы он не закрывал таб-бар портала */
-  body[data-page="portal"] .body{padding-bottom:72px}
+  body.pvm[data-page="portal"] .view{display:block;position:absolute;top:calc(44px + 52px + var(--h));left:0;right:0;bottom:0;padding:0;overflow:hidden}
+  body.pvm[data-page="portal"] .pv{position:absolute;inset:0;height:auto;border-radius:0}
+  body.pvm[data-page="portal"] .pv::after{display:none}
+  /* iOS Safari растягивает iframe по ширине содержимого — фиксируем ширину так, чтобы вбок ничего не уезжало */
+  body.pvm[data-page="portal"] .pv iframe{position:absolute;top:0;left:0;width:1px;min-width:100%;height:100%}
 }
-.pvsw{display:none;position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));z-index:14;width:max-content;margin:0 auto;padding:4px;gap:2px;border-radius:9999px;
-  background:color-mix(in srgb,var(--bg-primary) 82%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:inset 0 0 0 var(--h) var(--border-secondary-alt),var(--shadow-lg)}
-body.tb-on .pvsw{bottom:calc(56px + 12px + env(safe-area-inset-bottom))}
-.pvsw button{height:36px;padding:0 18px;border-radius:9999px;font-weight:500;color:var(--text-tertiary);transition:background .15s,color .15s}
-.pvsw button[aria-selected="true"]{background:var(--text-primary);color:var(--bg-primary)}
+.pvsw{display:none;position:absolute;top:calc(44px + var(--h));left:0;right:0;z-index:6;height:52px;align-items:center;padding:0 16px;background:var(--bg-primary-alt);box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary-alt)}
+.pvsw .sg{flex:1;display:flex;gap:2px;max-width:420px;margin:0 auto;padding:2px;border-radius:10px;background:var(--bg-tertiary)}
+.pvsw button{flex:1 1 0;height:32px;border-radius:8px;font-weight:500;color:var(--text-tertiary);transition:background .15s,color .15s,box-shadow .15s}
+.pvsw button[aria-selected="true"]{background:var(--bg-primary-alt);color:var(--text-primary);box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs)}
 /* строки настроек подстраиваются под ширину своей колонки, а не окна: в узкой колонке поле уходит под подпись на всю ширину */
 .portal,.settings{container-type:inline-size}
 @container (max-width:640px){
@@ -848,7 +851,7 @@ body.tb-on .pvsw{bottom:calc(56px + 12px + env(safe-area-inset-bottom))}
       </div>
     </div>
     <div class="rzv" id="rzv" role="separator" aria-orientation="vertical" aria-label="Ширина превью" title="Потяните, чтобы изменить ширину. Двойной клик — по умолчанию"></div>
-    <div class="pvsw" id="pvsw" role="tablist" aria-label="Режим"><button role="tab" aria-selected="true" data-pv="0">Настройки</button><button role="tab" aria-selected="false" data-pv="1">Портал</button></div>
+    <div class="pvsw" id="pvsw"><div class="sg" role="tablist" aria-label="Режим"><button role="tab" aria-selected="true" data-pv="0">Настройки</button><button role="tab" aria-selected="false" data-pv="1">Так увидит гость</button></div></div>
     <aside class="view" id="view" aria-label="Так увидит гость">
       <div class="pvb" id="pvb"></div>
       <div class="pv"><iframe id="pvf" src="guest.html?embed=1" title="Так увидит гость" loading="eager"></iframe></div>
