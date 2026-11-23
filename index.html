@@ -331,13 +331,14 @@ body[data-page="clients"] .empty{display:none}
 .ctab th.n{text-align:right}
 .ctab .c0,.ctab .c1{position:sticky;z-index:1}
 .ctab .c0{left:0;width:40px;min-width:40px;padding:0;text-align:center}
-.ctab .c1{left:40px;min-width:220px;box-shadow:inset calc(-1 * var(--h)) calc(-1 * var(--h)) 0 var(--border-primary)}
+.ctab .c1{left:40px;min-width:220px;box-shadow:inset calc(-1 * var(--h)) 0 0 var(--border-primary),inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
 .ctab th.c0,.ctab th.c1{z-index:3}
 .ctab tbody tr{cursor:pointer}
 .ctab tbody tr:hover td{background-image:linear-gradient(color-mix(in srgb,var(--text-primary) 3%,transparent),color-mix(in srgb,var(--text-primary) 3%,transparent))}
 .ctab tbody tr.csl td{background-image:linear-gradient(color-mix(in srgb,var(--brand-solid) 8%,transparent),color-mix(in srgb,var(--brand-solid) 8%,transparent))}
 .ctab tbody tr.opn td{background-image:linear-gradient(color-mix(in srgb,var(--brand-solid) 12%,transparent),color-mix(in srgb,var(--brand-solid) 12%,transparent))}
 .ctab tfoot td{position:sticky;bottom:0;z-index:2;height:36px;font-size:12px;color:var(--text-tertiary);box-shadow:inset 0 var(--h) 0 var(--border-primary),inset calc(-1 * var(--h)) 0 0 var(--border-secondary)}
+.ctab tfoot .c1{box-shadow:inset 0 var(--h) 0 var(--border-primary),inset calc(-1 * var(--h)) 0 0 var(--border-primary)}
 .ctab tfoot td b{font-weight:600;color:var(--text-primary)}
 .ctab tfoot .c0,.ctab tfoot .c1{z-index:3}
 .cnm{display:flex;align-items:center;gap:8px;min-width:0}
@@ -399,32 +400,37 @@ body[data-page="calendar"] .empty{display:none}
 .cgw{flex:1;min-height:0;overflow:auto;scrollbar-width:thin}
 .cg{--cl:152px;position:relative;display:flex;flex-direction:column;min-width:980px;min-height:100%}
 .chd,.crow{display:flex}
-.chd{position:sticky;top:0;z-index:5;height:36px;background:var(--bg-primary-alt);box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
-.clbl{position:sticky;left:0;z-index:3;flex:none;display:flex;flex-direction:column;justify-content:center;width:152px;padding:0 16px 0 24px;background:var(--bg-primary-alt);box-shadow:inset calc(-1 * var(--h)) 0 0 var(--border-secondary)}
+.chd{position:sticky;top:0;z-index:5;height:36px;background:var(--bg-primary-alt)}
+.chd .clbl,.chd .ctl{box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.chd .clbl{box-shadow:inset calc(-1 * var(--h)) 0 0 var(--border-secondary),inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.clbl{position:sticky;left:0;z-index:3;flex:none;display:flex;flex-direction:column;justify-content:center;width:152px;padding:0 16px 0 24px;background:linear-gradient(var(--hv,transparent),var(--hv,transparent)),var(--bg-primary-alt);box-shadow:inset calc(-1 * var(--h)) 0 0 var(--border-secondary),inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
 .chd .clbl{z-index:6}
 .clbl b{font-weight:500;color:var(--text-primary)}
 .clbl small{font-size:12px;line-height:16px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ctl{position:relative;flex:1;min-width:0}
 .chd .ctl span{position:absolute;top:10px;font-size:12px;line-height:16px;color:var(--text-tertiary);font-variant-numeric:tabular-nums}
-.crow{flex:1 0 64px;box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
+.crow{flex:1 0 64px}
+.crow .ctl{box-shadow:inset 0 calc(-1 * var(--h)) 0 var(--border-secondary)}
 .chd{flex:none}
 /* загрузка зала по получасам — под той же шкалой времени */
-.crow.cload{flex:none;height:88px;box-shadow:inset 0 var(--h) 0 var(--border-primary)}
+.crow.cload{flex:none;height:88px}
+.cload .clbl,.cload .ctl{box-shadow:inset 0 var(--h) 0 var(--border-primary)}
+.cload .clbl{box-shadow:inset 0 var(--h) 0 var(--border-primary),inset calc(-1 * var(--h)) 0 0 var(--border-secondary)}
 .cload .ctl{background-image:linear-gradient(to right,var(--border-secondary) 0 var(--h),transparent var(--h));background-size:calc(100% / 12) 100%}
 .cload .ctl i{position:absolute;bottom:12px;width:calc(100% / 24 - 6px);margin-left:3px;border-radius:3px 3px 1px 1px;background:color-mix(in srgb,var(--ch-a) 55%,transparent)}
 .cload .ctl i.past{background:var(--bg-quaternary)}
 .cload .ctl i.now{background:var(--ch-a)}
 .cload .ctl i:hover{background:var(--ch-a)}
-.crow .ctl{background-image:linear-gradient(to right,var(--border-secondary) 0 var(--h),transparent var(--h));background-size:calc(100% / 12) 100%}
-.crow:not(.cload):hover .ctl{background-color:color-mix(in srgb,var(--text-primary) 3%,transparent)}
-.crow:not(.cload):hover .clbl{background-image:linear-gradient(color-mix(in srgb,var(--text-primary) 3%,transparent),color-mix(in srgb,var(--text-primary) 3%,transparent))}
+.crow .ctl{background-image:linear-gradient(var(--hv,transparent),var(--hv,transparent)),linear-gradient(to right,var(--border-secondary) 0 var(--h),transparent var(--h));background-size:100% 100%,calc(100% / 12) 100%}
+/* наведение: одна и та же лёгкая подсветка у стола и ленты, линии сетки остаются видны */
+.crow:not(.cload):hover{--hv:color-mix(in srgb,var(--text-primary) 4%,transparent)}
 .bkb{position:absolute;top:8px;bottom:8px;display:flex;flex-direction:column;justify-content:center;gap:1px;min-width:0;padding:0 8px 0 11px;border-radius:8px;overflow:hidden;text-align:left;
-  background:color-mix(in srgb,var(--k) 16%,transparent);box-shadow:inset 3px 0 0 var(--k);transition:background .15s}
-.bkb:hover{background:color-mix(in srgb,var(--k) 26%,transparent)}
+  background:color-mix(in srgb,var(--k) 16%,var(--bg-primary-alt));box-shadow:inset 3px 0 0 var(--k);transition:background .15s}
+.bkb:hover{background:color-mix(in srgb,var(--k) 26%,var(--bg-primary-alt))}
 .bkb b{font-size:13px;line-height:18px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bkb small{font-size:12px;line-height:16px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bkb.pend{background:transparent;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ch-a) 70%,transparent),inset 3px 0 0 var(--ch-a)}
-.bkb.pend:hover{background:color-mix(in srgb,var(--ch-a) 8%,transparent)}
+.bkb.pend{background:var(--bg-primary-alt);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ch-a) 70%,transparent),inset 3px 0 0 var(--ch-a)}
+.bkb.pend:hover{background:color-mix(in srgb,var(--ch-a) 8%,var(--bg-primary-alt))}
 .bkb.ns b{text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--text-primary) 40%,transparent)}
 .bkb{z-index:2}
 .cnow{position:absolute;top:0;bottom:0;z-index:1;width:2px;margin-left:-1px;background:#F04438;pointer-events:none}
