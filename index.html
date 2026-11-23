@@ -203,6 +203,7 @@ body.rzing{cursor:col-resize;user-select:none}
 .pr .tx small em{font-style:normal;color:var(--text-primary)}
 .pr .ct{flex:none;display:flex;align-items:center;gap:8px}
 /* Поле ввода портала: 32 px, скругление 8, bg-primary, рамка 0,5 border-primary, тень shadow-xs, текст Text sm/Regular; фокус — рамка border-brand */
+.pin.ta{height:auto;min-height:112px;padding:6px calc(10px + var(--h));line-height:20px;resize:vertical;font:inherit}
 .pin{display:block;width:280px;height:32px;padding:0 calc(10px + var(--h));border:0;border-radius:8px;background:var(--bg-primary-alt);color:var(--text-primary);
   box-shadow:inset 0 0 0 var(--h) var(--border-primary),var(--shadow-xs);font:400 14px/20px Inter,system-ui,sans-serif;outline:none;text-overflow:ellipsis}
 .pin::placeholder{color:var(--text-placeholder)}
@@ -392,12 +393,19 @@ body[data-page="portal"] .portal{display:block}
 body[data-page="portal"] .empty{display:none}
 @media (min-width:1024px){
   /* на десктопе раздел «Портал» делится на две колонки: настройки (с тулбаром) и превью 402 px */
-  body[data-page="portal"] .tb{top:1px;left:1px;right:403px}
-  body[data-page="portal"] .body{margin:calc(44px + var(--h)) calc(402px + var(--h)) var(--h) var(--h)}
-  body[data-page="portal"] .view{display:block;position:absolute;padding:16px;top:var(--h);right:var(--h);bottom:var(--h);width:402px;overflow-y:auto;scrollbar-width:none;
+  body[data-page="portal"] .tb{top:1px;left:1px;right:calc(var(--pvw,402px) + 1px)}
+  body[data-page="portal"] .body{margin:calc(44px + var(--h)) calc(var(--pvw,402px) + var(--h)) var(--h) var(--h)}
+  body[data-page="portal"] .view{display:block;position:absolute;padding:16px;top:var(--h);right:var(--h);bottom:var(--h);width:var(--pvw,402px);overflow-y:auto;scrollbar-width:none;
     box-shadow:inset var(--h) 0 0 var(--border-secondary-alt)}
   body[data-page="portal"] .view::-webkit-scrollbar{display:none}
+  /* ширину превью тянем за левый край, как сайдбар: так видно портал на узком и широком экране */
+  body[data-page="portal"] .rzv{display:block;position:absolute;top:var(--h);bottom:var(--h);right:calc(var(--pvw,402px) - 4px);width:8px;cursor:col-resize;touch-action:none;z-index:8}
+  body.rzing .view iframe{pointer-events:none}
+  .pvb{position:absolute;left:0;right:0;top:28px;z-index:3;width:max-content;margin:0 auto;padding:4px 10px;border-radius:9999px;background:var(--text-primary);color:var(--bg-primary);
+    font-size:12px;line-height:18px;font-weight:500;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .15s;pointer-events:none}
+  body.rzv-on .pvb{opacity:1}
 }
+.rzv{display:none}
 @media (max-width:1023px){
   /* планшет и телефон: те же вкладки и настройки портала, что на компьютере; превью гостя справа — только на широком экране */
   .psel.m{display:none}
@@ -430,7 +438,9 @@ body[data-page="portal"] .empty{display:none}
         <div id="sPanels"></div>
       </div>
     </div>
+    <div class="rzv" id="rzv" role="separator" aria-orientation="vertical" aria-label="Ширина превью" title="Потяните, чтобы изменить ширину. Двойной клик — по умолчанию"></div>
     <aside class="view" id="view" aria-label="Так увидит гость">
+      <div class="pvb" id="pvb"></div>
       <div class="pv"><iframe id="pvf" src="guest.html?embed=1" title="Так увидит гость" loading="eager"></iframe></div>
     </aside>
   </main>
@@ -523,7 +533,7 @@ function food(a){return a.map(function(r){return {id:fid(),cat:r[0],name:r[1],de
 /* меню из макета Figma «Портал / Меню»: порядок как во вкладке «Для вас» */
 var FOOD_FIGMA=[["Кофе","Фильтр-кофе","","",12,"img/menu-filter.jpg"],["Круассаны","Пряная ватрушка","","",21,"img/menu-vatrushka.jpg"],["Десерты","Творожный креп","","",21,"img/menu-krep.jpg"],
   ["Круассаны","Маковый рулет","","",15,"img/menu-mak.jpg"],["Круассаны","Яблочный штрудель","","",17,"img/menu-shtrudel.jpg"],["Десерты","Творожник","","",9,""]];
-var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак",addr:"пл. Свободы 4",phone:"+375 29 123-45-67",
+var P={online:true,seo:true,lang:"Русский",slug:"ranak",name:"Ранак",about:"Кофейня в скандинавском стиле в историческом центре Минска. Варим спешелти-кофе из зёрен разных обжарщиков, а выпечку каждое утро печём из французской муки.",addr:"пл. Свободы 4",phone:"+375 29 123-45-67",
   mode:"Ежедневно",open:"08:00",close:"20:00",pcolor:"Бордовый",logo:"img/portal-avatar.jpg",
   cards:[{id:"menu",kind:"menu",show:true,title:"Попробуй осень",sub:"Сезонное меню",img:"img/portal-card-autumn.jpg",sched:false,from:"01.09.2026",to:"30.11.2026",link:""},
          {id:"loyalty",kind:"loyalty",show:true,title:"Скидка на каждый заказ",sub:"Карта гостя",img:"img/portal-card-takeaway.jpg",sched:false,from:"",to:"",link:""},
@@ -583,7 +593,8 @@ $("#pPanels").innerHTML=
       row("Язык портала","",sel("lang","Язык портала"))])])+
     sec("Заведение",[
       card([row("Логотип","",photo("logo",P.logo,"logo")),
-            row("Название","",inp("name","","Название заведения"))]),
+            row("Название","",inp("name","","Название заведения")),
+            row("Описание","Во вкладке «О нас»",'<textarea class="pin ta" data-k="about" rows="4" placeholder="Пара предложений о заведении">'+esc(P.about)+'</textarea>')]),
       card([row("Адрес","",inp("addr","","Улица и дом")),
             row("Телефон","",inp("phone","","+375 ..."))])])+
     sec("Время работы",[card([
@@ -639,7 +650,7 @@ function inRange(c){if(!c.sched)return true;function d(s){var a=/^(\d\d)\.(\d\d)
   var f=d(c.from),t=d(c.to),n=new Date();n.setHours(0,0,0,0);return (!f||n>=f)&&(!t||n<=t)}
 /* данные для страницы гостя: rel — путь от страницы к общим картинкам ("" в превью, "../" в опубликованной папке) */
 function pdata(rel){var r=function(s){return !s||/^(data:|https?:|blob:)/.test(s)?s:rel+s};
-  return {name:P.name,hours:hours(),lang:{"Русский":"ru","Беларуская":"be","English":"en"}[P.lang]||"ru",color:PCOL[P.pcolor]||PCOL["Бордовый"],online:P.online,seo:P.seo,newtab:P.links.newtab,cur:"руб",logo:r(P.logo),addr:P.addr,phone:P.phone,
+  return {name:P.name,hours:hours(),lang:{"Русский":"ru","Беларуская":"be","English":"en"}[P.lang]||"ru",color:PCOL[P.pcolor]||PCOL["Бордовый"],online:P.online,seo:P.seo,newtab:P.links.newtab,cur:"руб",logo:r(P.logo),about:P.about,addr:P.addr,phone:P.phone,
     cards:P.cards.filter(function(c){return c.show&&(c.kind!="link"||c.link)}).map(function(c){var o={kind:c.kind,title:c.title,sub:c.sub,img:r(c.img)};if(c.kind=="link")o.href=href(c.link);if(c.kind=="menu"&&c.sched){o.from=c.from;o.to=c.to}return o}),
     menu:P.food.filter(function(f){return f.show}).map(function(f){return {cat:f.cat,name:f.name,desc:f.desc,out:f.out,price:f.price,img:r(f.img||"")}}),
     loyalty:{kind:P.loyalty.kind,size:P.loyalty.size,scope:P.loyalty.scope,stack:P.loyalty.stack,phone:P.loyalty.phone,welcome:P.loyalty.welcome},
@@ -780,7 +791,24 @@ function openScan(src,f){var steps=["Читаем текст на фото","Н�
 var TOKK="portal-gh-token",pubBusy=false;
 function tok(){try{return localStorage.getItem(TOKK)||""}catch(e){return ""}}
 function pubBtn(){var b=$("#addb");if(!b||document.body.dataset.page!="portal")return;b.disabled=pubBusy;$("#addTx").textContent=pubBusy?"Публикуем…":"Опубликовать";b.classList.toggle("dirty",P.online&&(!P.pub.at||dirty()))}
-function publish(){if(pubBusy)return;if(!tok())askToken();else doPublish()}
+/* «Опубликовать» в песочнице Claude: её браузер не пускает к GitHub, поэтому настройки уезжают в кабинет на GitHub Pages
+   (в адресе после #, на сервер не уходят), там — подтверждение и публикация тем же токеном */
+var HOME_KAB="https://nixroll.github.io/portal/";
+function canGH(){return /github\.io$/.test(location.hostname)||/^(localhost|127\.0\.0\.1)$/.test(location.hostname)}
+function publish(){if(pubBusy)return;if(!canGH()){handoff();return}if(!tok())askToken();else doPublish()}
+function b64url(bytes){var r="";for(var i=0;i<bytes.length;i+=8192)r+=String.fromCharCode.apply(null,bytes.subarray(i,i+8192));return btoa(r).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function unb64url(s){s=s.replace(/-/g,"+").replace(/_/g,"/");var b=atob(s),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+async function handoff(){var raw=new TextEncoder().encode(JSON.stringify(P)),url;
+  try{var gz=new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream("gzip"))).arrayBuffer());url=HOME_KAB+"#importgz="+b64url(gz)}
+  catch(e){url=HOME_KAB+"#import="+b64url(raw)}
+  var w=null;try{w=window.open(url,"_blank")}catch(e){}
+  toast(w?"Открыл кабинет на GitHub — подтвердите публикацию там":"Откройте кабинет на GitHub и подтвердите публикацию",8000,url)}
+async function takeImport(h){var m=/^#import(gz)?=([A-Za-z0-9_-]+)$/.exec(h);if(!m)return false;
+  try{var u=unb64url(m[2]);if(m[1])u=new Uint8Array(await new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer());
+    var d=JSON.parse(new TextDecoder().decode(u));if(!d||typeof d!="object"||!Array.isArray(d.cards))throw 0;
+    openModal({title:"Изменения из песочницы",ok:"Опубликовать",body:'<p class="mt">Пришли настройки портала из песочницы Claude. Они заменят настройки в этом браузере и опубликуются по адресу <em>'+purl()+'</em>.</p>',
+      onOk:function(){delete d.pub;d.pub=P.pub;try{localStorage.setItem("portal-settings-3",JSON.stringify(d));sessionStorage.setItem("portal-autopub","1")}catch(e){toast("Не хватает места в браузере",4000);return}location.reload()}})}
+  catch(e){toast("Не удалось прочитать настройки из песочницы",5000)}return true}
 function askToken(err){openModal({title:"Публикация на GitHub",ok:"Опубликовать",
   body:'<p class="mt">Портал публикуется в репозиторий <em>'+REPO+'</em> и открывается по адресу <em>'+purl()+'</em>. Нужен токен GitHub с правом Contents: Read and write. Он хранится только в этом браузере.</p>'+
     (err?'<p class="merr">'+err+'</p>':'')+fld("Токен",'<input class="pin" id="ghTok" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">')+
@@ -803,6 +831,8 @@ async function doPublish(){pubBusy=true;pubBtn();var slug=P.slug,files=[],h=hash
     await ghCommit(files,"Портал "+slug+": публикация из кабинета");
     P.pub={at:new Date().toISOString(),hash:h};save();render();toast("Опубликовано, страница обновится за минуту",6000,"https://"+purl()+"/")}
   catch(e){if(e.status==401||e.status==403||e.status==404){try{localStorage.removeItem(TOKK)}catch(x){}askToken(e.status==401?"Токен не подошёл. Создайте новый.":"У токена нет доступа к "+REPO+" (Contents: Read and write).")}
+    /* запрос не дошёл до GitHub: так бывает в песочнице Claude — её браузер не пускает к api.github.com. Публикуем из кабинета на GitHub Pages */
+    else if(e instanceof TypeError&&!/github\.io$/.test(location.hostname))toast("Отсюда GitHub недоступен. Опубликуйте из кабинета на nixroll.github.io",8000,"https://nixroll.github.io/portal/#portal")
     else toast("Не удалось опубликовать. Проверьте интернет и попробуйте ещё раз",5000)}
   pubBusy=false;pubBtn()}
 $("#addb").addEventListener("click",function(){if(document.body.dataset.page=="portal")publish()});
@@ -828,6 +858,18 @@ rz.addEventListener("pointerdown",function(e){e.preventDefault();rz.setPointerCa
     document.body.classList.remove("rzing");try{localStorage.setItem("portal-v3-side",w)}catch(e){}}
   rz.addEventListener("pointermove",mv);rz.addEventListener("pointerup",up);rz.addEventListener("pointercancel",up)});
 rz.addEventListener("dblclick",function(){setW(MIN);layout();try{localStorage.removeItem("portal-v3-side")}catch(e){}});
+/* ширина превью портала: страница гостя от 320 до 600 px (+32 поля), настройкам остаётся не меньше 480 px; двойной клик — 402 */
+var rzv=$("#rzv"),PVD=402;
+function setPV(w){var side=$("#side").getBoundingClientRect().width,mx=Math.max(352,Math.min(632,innerWidth-side-16-480));w=Math.round(Math.min(mx,Math.max(352,w)));
+  root.style.setProperty("--pvw",w+"px");$("#pvb").textContent=(w-32)+" px";return w}
+try{var pv0=+localStorage.getItem("portal-v3-view");if(pv0)setPV(pv0)}catch(e){}
+rzv.addEventListener("pointerdown",function(e){e.preventDefault();rzv.setPointerCapture(e.pointerId);document.body.classList.add("rzing","rzv-on");
+  var x0=e.clientX,w0=$("#view").getBoundingClientRect().width,w=setPV(w0);
+  function mv(ev){w=setPV(w0-(ev.clientX-x0))}
+  function up(){rzv.removeEventListener("pointermove",mv);rzv.removeEventListener("pointerup",up);rzv.removeEventListener("pointercancel",up);
+    document.body.classList.remove("rzing","rzv-on");try{localStorage.setItem("portal-v3-view",w)}catch(e){}}
+  rzv.addEventListener("pointermove",mv);rzv.addEventListener("pointerup",up);rzv.addEventListener("pointercancel",up)});
+rzv.addEventListener("dblclick",function(){setPV(PVD);root.style.removeProperty("--pvw");try{localStorage.removeItem("portal-v3-view")}catch(e){}});
 
 new ResizeObserver(layout).observe(document.body);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
@@ -1003,7 +1045,10 @@ function onNative(e){var t=e.target;if(!t.dataset||!t.dataset.nsel)return;var k=
   var b=t.previousElementSibling;b.querySelector("span").textContent=t.value;b.querySelector("span").style.width="";save();render();applySettings();snapText()}
 $("#pPanels").addEventListener("change",onNative);$("#sPanels").addEventListener("change",onNative);
 buildSettings();applySettings();render();
+var IMPH=/^#import(gz)?=[A-Za-z0-9_-]+$/.test(location.hash)?location.hash:"";if(IMPH)history.replaceState(null,"",location.pathname+location.search+"#portal"); /* пришло из песочницы — открываем «Портал» */
 route();
+if(IMPH)takeImport(IMPH);
+try{if(sessionStorage.getItem("portal-autopub")){sessionStorage.removeItem("portal-autopub");setTimeout(publish,300)}}catch(e){}
 
 /* ===== TABBAR: Главная · Мультичат · Календарь · «•••» (открывает боковое меню) ===== */
 (function(){var q=new URLSearchParams(location.search).get("tabbar");if(q=="0")return;document.body.classList.add("tb-on");
